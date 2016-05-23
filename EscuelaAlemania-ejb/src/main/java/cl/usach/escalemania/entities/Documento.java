@@ -6,6 +6,7 @@
 package cl.usach.escalemania.entities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -29,13 +30,15 @@ public class Documento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 300)
     private String nombre;
     @Column(nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaModificacion;
     @Column(nullable = false, length = 100)
     private String ubicacion;
+    @Column(nullable = true, length = 120)
+    private String observacion;
     @JoinColumn(nullable = false)
     @ManyToOne
     private EstadoDocumento estadoDocumento;
@@ -45,6 +48,25 @@ public class Documento implements Serializable {
     @JoinColumn(nullable = true)
     @ManyToMany
     private List<Programa> programas;
+    
+    private String fechaModificacionFormateada;
+
+    public String getFechaModificacionFormateada() {
+        fechaModificacionFormateada=new SimpleDateFormat("yyyy-MM-dd").format(fechaModificacion);
+        return fechaModificacionFormateada;
+    }
+
+    public void setFechaModificacionFormateada(String fechaModificacionFormateada) {
+        this.fechaModificacionFormateada = fechaModificacionFormateada;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
 
     public String getNombre() {
         return nombre;
@@ -57,7 +79,8 @@ public class Documento implements Serializable {
     public Date getFechaModificacion() {
         return fechaModificacion;
     }
-
+    
+ 
     public void setFechaModificacion(Date fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
     }

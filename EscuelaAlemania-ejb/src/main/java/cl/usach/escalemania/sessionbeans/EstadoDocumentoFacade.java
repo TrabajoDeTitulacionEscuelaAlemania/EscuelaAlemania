@@ -6,6 +6,7 @@
 package cl.usach.escalemania.sessionbeans;
 
 import cl.usach.escalemania.entities.EstadoDocumento;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +29,14 @@ public class EstadoDocumentoFacade extends AbstractFacade<EstadoDocumento> imple
     public EstadoDocumentoFacade() {
         super(EstadoDocumento.class);
     }
+
+    @Override
+    public EstadoDocumento obtenerEstadDocumentoPorId(List<EstadoDocumento> estadoDocumentos, String nombreEstado) {
+        for(EstadoDocumento ed:estadoDocumentos)
+            if(ed.getEstado().compareTo(nombreEstado)==0)
+                return ed;
+        return null;
+    }
+    
     
 }

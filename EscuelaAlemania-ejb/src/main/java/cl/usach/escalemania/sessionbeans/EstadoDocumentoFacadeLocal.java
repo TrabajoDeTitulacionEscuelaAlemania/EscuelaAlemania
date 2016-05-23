@@ -29,5 +29,7 @@ public interface EstadoDocumentoFacadeLocal {
     List<EstadoDocumento> findRange(int[] range);
 
     int count();
+
+    EstadoDocumento obtenerEstadDocumentoPorId(List<EstadoDocumento> estadoDocumentos, String idEstadoDocumento);
     
 }

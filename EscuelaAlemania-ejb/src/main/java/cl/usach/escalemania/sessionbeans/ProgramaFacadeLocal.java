@@ -5,6 +5,7 @@
  */
 package cl.usach.escalemania.sessionbeans;
 
+import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.Programa;
 import java.util.List;
 import javax.ejb.Local;
@@ -29,5 +30,7 @@ public interface ProgramaFacadeLocal {
     List<Programa> findRange(int[] range);
 
     int count();
+
+    List<Documento> DocumentosPorPrograma(String programa);
     
 }

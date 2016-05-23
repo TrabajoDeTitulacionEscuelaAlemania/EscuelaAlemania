@@ -6,6 +6,7 @@
 package cl.usach.escalemania.sessionbeans;
 
 import cl.usach.escalemania.entities.Documento;
+import cl.usach.escalemania.entities.EstadoDocumento;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,9 @@ public interface DocumentoFacadeLocal {
     List<Documento> findRange(int[] range);
 
     int count();
+
+    boolean editarDocumento(EstadoDocumento estado, Documento documento);
+
+    Documento obtenerDocumentoPorId(List<Documento> documentos, String idDocumento);
     
 }

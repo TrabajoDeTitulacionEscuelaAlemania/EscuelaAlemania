@@ -5,10 +5,13 @@
  */
 package cl.usach.escalemania.sessionbeans;
 
+import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.Programa;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +31,14 @@ public class ProgramaFacade extends AbstractFacade<Programa> implements Programa
     public ProgramaFacade() {
         super(Programa.class);
     }
+
+    @Override
+    public List<Documento> DocumentosPorPrograma(String programa) {
+        Query query=em.createNamedQuery("Programa.findByName").setParameter("programa", programa);
+        Programa programaObject=(Programa) query.getSingleResult();
+        return programaObject.getDocumentos();
+    }
+    
+    
     
 }

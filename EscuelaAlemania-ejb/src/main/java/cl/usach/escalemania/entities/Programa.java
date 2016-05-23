@@ -13,11 +13,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author Desarrollo
  */
+@NamedQueries({
+    @NamedQuery(name="Programa.findByName",
+                query="SELECT c FROM Programa c WHERE c.programa = :programa"),
+})
 @Entity
 public class Programa implements Serializable {
 
@@ -25,7 +31,7 @@ public class Programa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false,length = 20)
+    @Column(nullable = false,length = 100)
     private String programa;
     @ManyToMany(mappedBy = "programas")
     private List<Documento> documentos;

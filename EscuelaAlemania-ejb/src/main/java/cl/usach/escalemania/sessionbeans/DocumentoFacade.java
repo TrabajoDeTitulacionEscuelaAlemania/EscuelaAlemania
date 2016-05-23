@@ -6,6 +6,9 @@
 package cl.usach.escalemania.sessionbeans;
 
 import cl.usach.escalemania.entities.Documento;
+import cl.usach.escalemania.entities.EstadoDocumento;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +31,28 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
     public DocumentoFacade() {
         super(Documento.class);
     }
+
+    @Override
+    public boolean editarDocumento(EstadoDocumento estado, Documento documento) {
+        documento.setEstadoDocumento(estado);
+        documento.setFechaModificacion(new Date());
+        try{
+            edit(documento);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public Documento obtenerDocumentoPorId(List<Documento> documentos, String idDocumento) {
+        for(Documento d:documentos){
+            if(d.getId().compareTo(new Long(Integer.parseInt(idDocumento)))==0)
+                return d;
+        }
+        return null;
+    }
+    
+    
     
 }
