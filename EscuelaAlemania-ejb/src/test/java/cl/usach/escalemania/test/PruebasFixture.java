@@ -5,26 +5,23 @@
  */
 package cl.usach.escalemania.test;
 
+import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
 import fit.ColumnFixture;
+import javax.ejb.EJB;
 
 /**
  *
  * @author Desarrollo
  */
-public class PruebasFixture{
+public class PruebasFixture extends ColumnFixture{
     
-    private int numero;
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
+    @EJB
+    private DocumentoFacadeLocal documentoFacade;
+    
+    public int numero;
     
     public int suma(){
-        return numero+numero;
+        return documentoFacade.count();
     }
     
 }
