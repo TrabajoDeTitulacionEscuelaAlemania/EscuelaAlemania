@@ -6,6 +6,7 @@
 package cl.usach.escalemania.managedbeans;
 
 import cl.usach.escalemania.validaciones.ValidacionLocal;
+import java.io.Serializable;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -22,7 +23,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class ManagedBeanLogin {
+public class ManagedBeanLogin{
 
     @EJB
     private ValidacionLocal validacion;

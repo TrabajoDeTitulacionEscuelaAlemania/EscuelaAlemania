@@ -6,6 +6,7 @@
 package cl.usach.escalemania.sessionbeans;
 
 import cl.usach.escalemania.entities.Seccion;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +29,14 @@ public class SeccionFacade extends AbstractFacade<Seccion> implements SeccionFac
     public SeccionFacade() {
         super(Seccion.class);
     }
+
+    @Override
+    public Seccion obtenerPorNombre(String nombreSeccion, List<Seccion> secciones) {
+        for(Seccion sec:secciones)
+            if(sec.getSeccion().compareTo(nombreSeccion)==0)
+                return sec;
+        return null;
+    }
+    
     
 }

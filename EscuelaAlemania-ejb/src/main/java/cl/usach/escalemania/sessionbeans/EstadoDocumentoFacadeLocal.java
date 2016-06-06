@@ -8,12 +8,13 @@ package cl.usach.escalemania.sessionbeans;
 import cl.usach.escalemania.entities.EstadoDocumento;
 import java.util.List;
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
  * @author Desarrollo
  */
-@Local
+@Remote
 public interface EstadoDocumentoFacadeLocal {
 
     void create(EstadoDocumento estadoDocumento);
@@ -30,6 +31,6 @@ public interface EstadoDocumentoFacadeLocal {
 
     int count();
 
-    EstadoDocumento obtenerEstadDocumentoPorId(List<EstadoDocumento> estadoDocumentos, String idEstadoDocumento);
+    EstadoDocumento obtenerEstadDocumentoPorNombre(List<EstadoDocumento> estadoDocumentos, String idEstadoDocumento);
     
 }

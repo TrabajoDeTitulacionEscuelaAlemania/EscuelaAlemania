@@ -8,12 +8,13 @@ package cl.usach.escalemania.sessionbeans;
 import cl.usach.escalemania.entities.Seccion;
 import java.util.List;
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
  * @author Desarrollo
  */
-@Local
+@Remote
 public interface SeccionFacadeLocal {
 
     void create(Seccion seccion);
@@ -29,5 +30,7 @@ public interface SeccionFacadeLocal {
     List<Seccion> findRange(int[] range);
 
     int count();
+
+    Seccion obtenerPorNombre(String nombreSeccion, List<Seccion> secciones);
     
 }

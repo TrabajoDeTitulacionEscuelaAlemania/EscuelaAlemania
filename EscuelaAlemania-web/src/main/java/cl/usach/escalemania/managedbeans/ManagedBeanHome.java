@@ -20,7 +20,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class ManagedBeanHome implements Serializable {
+public class ManagedBeanHome {
 
     @EJB
     private DocumentoFacadeLocal documentoFacade;
@@ -80,13 +80,10 @@ public class ManagedBeanHome implements Serializable {
         fc=FacesContext.getCurrentInstance();
         Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
         usuario=(String)sesisonMap.get("usuario");
-        rol=(String)sesisonMap.get("usuario");
         if(usuario==null){
             fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/login.xhtml?faces-redirect=true");
         }else{
-            cantidadDocs=documentoFacade.count()+"";
-            
-            
+            cantidadDocs=documentoFacade.count()+"";            
         }
     }
     

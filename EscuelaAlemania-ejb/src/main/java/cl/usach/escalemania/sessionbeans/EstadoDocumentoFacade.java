@@ -31,7 +31,7 @@ public class EstadoDocumentoFacade extends AbstractFacade<EstadoDocumento> imple
     }
 
     @Override
-    public EstadoDocumento obtenerEstadDocumentoPorId(List<EstadoDocumento> estadoDocumentos, String nombreEstado) {
+    public EstadoDocumento obtenerEstadDocumentoPorNombre(List<EstadoDocumento> estadoDocumentos, String nombreEstado) {
         for(EstadoDocumento ed:estadoDocumentos)
             if(ed.getEstado().compareTo(nombreEstado)==0)
                 return ed;

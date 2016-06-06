@@ -17,12 +17,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 
 /**
  *
  * @author Desarrollo
  */
+
+@NamedQueries({
+    @NamedQuery(name="Documento.findByName",
+                query="SELECT c FROM Documento c WHERE c.nombre = :nombre"),
+    @NamedQuery(name="Documento.findByEstado",
+                query="SELECT c FROM Documento c WHERE c.estadoDocumento = :estadoDocumento")
+})
 @Entity
 public class Documento implements Serializable {
 

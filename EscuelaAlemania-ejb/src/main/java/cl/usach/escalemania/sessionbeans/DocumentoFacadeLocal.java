@@ -7,8 +7,10 @@ package cl.usach.escalemania.sessionbeans;
 
 import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.EstadoDocumento;
+import cl.usach.escalemania.entities.Seccion;
 import java.util.List;
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
@@ -31,8 +33,13 @@ public interface DocumentoFacadeLocal {
 
     int count();
 
-    boolean editarDocumento(EstadoDocumento estado, Documento documento);
 
     Documento obtenerDocumentoPorId(List<Documento> documentos, String idDocumento);
+
+    String editarDocumento(EstadoDocumento estadoDocumento, String ubicacion, Seccion seccion, String observacion, Documento documento);
+
+    List<Documento> obtenerDocumentoPorEstado(EstadoDocumento estadoDocumento);
+
+    List<Documento> buscarDocumento(String frase, List<Documento> documentos);
     
 }

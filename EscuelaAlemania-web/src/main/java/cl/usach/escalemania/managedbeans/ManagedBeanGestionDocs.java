@@ -12,11 +12,10 @@ import cl.usach.escalemania.entities.EstadoDocumento;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.EstadoDocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.ProgramaFacadeLocal;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -219,7 +218,6 @@ public class ManagedBeanGestionDocs {
         fc=FacesContext.getCurrentInstance();
         Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
         usuario=(String)sesisonMap.get("usuario");
-        rol=(String)sesisonMap.get("usuario");
         if(usuario==null){
             fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/login.xhtml?faces-redirect=true");
         }else{
@@ -234,7 +232,7 @@ public class ManagedBeanGestionDocs {
     }
     
     public void editar(){
-        if(documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorId(estadoDocumentos, nombreEstado), documentoElegido))
+        //if(documentoFacade.editarDoc(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, nombreEstado), documentoElegido))
             recargar();
             
     }
