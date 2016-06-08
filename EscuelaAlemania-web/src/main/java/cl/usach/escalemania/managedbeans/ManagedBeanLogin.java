@@ -6,7 +6,6 @@
 package cl.usach.escalemania.managedbeans;
 
 import cl.usach.escalemania.validaciones.ValidacionLocal;
-import java.io.Serializable;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;

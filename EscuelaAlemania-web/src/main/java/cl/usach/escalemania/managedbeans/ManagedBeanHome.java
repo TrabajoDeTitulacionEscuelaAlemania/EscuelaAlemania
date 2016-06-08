@@ -7,7 +7,6 @@ package cl.usach.escalemania.managedbeans;
 
 
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
-import java.io.Serializable;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -80,6 +79,7 @@ public class ManagedBeanHome {
         fc=FacesContext.getCurrentInstance();
         Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
         usuario=(String)sesisonMap.get("usuario");
+        rol=(String)sesisonMap.get("rol");
         if(usuario==null){
             fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/login.xhtml?faces-redirect=true");
         }else{

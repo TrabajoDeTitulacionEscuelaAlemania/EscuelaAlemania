@@ -13,6 +13,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,6 +33,9 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
 
     @PersistenceContext(unitName = "cl.usach.escalemania_EscuelaAlemania-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
+    
+    @EJB
+    private EstadoDocumentoFacadeLocal estadoDocumentoFacade;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -123,5 +127,14 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
 		}
 		return result;
 	}
+
+    @Override
+    public List<Documento> alertaDocumentos() {
+        List<EstadoDocumento> estadoDocumentos=estadoDocumentoFacade.findAll();
+        List<Documento> alerta=obtenerDocumentoPorEstado(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, "Sin informacion"));
+        alerta.addAll(obtenerDocumentoPorEstado(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, "Desactualizado")));
+        alerta.addAll(obtenerDocumentoPorEstado(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, "Incompleto")));
+        return alerta;
+    }
     
 }

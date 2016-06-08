@@ -41,5 +41,7 @@ public interface DocumentoFacadeLocal {
     List<Documento> obtenerDocumentoPorEstado(EstadoDocumento estadoDocumento);
 
     List<Documento> buscarDocumento(String frase, List<Documento> documentos);
+
+    List<Documento> alertaDocumentos();
     
 }
