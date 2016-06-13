@@ -5,11 +5,13 @@
  */
 package cl.usach.escalemania.sessionbeans;
 
+import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.EstadoDocumento;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -36,6 +38,12 @@ public class EstadoDocumentoFacade extends AbstractFacade<EstadoDocumento> imple
             if(ed.getEstado().compareTo(nombreEstado)==0)
                 return ed;
         return null;
+    }
+
+    @Override
+    public List<Documento> obtenerDocumentoPorId(String idEstadoDocumento) {
+        Query query=em.createNamedQuery("EstadoDocumento.findById").setParameter("id", new Integer(idEstadoDocumento));
+        return ((EstadoDocumento)query.getSingleResult()).getDocumentos();
     }
     
     

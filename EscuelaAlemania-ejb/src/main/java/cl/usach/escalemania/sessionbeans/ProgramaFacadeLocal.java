@@ -32,5 +32,7 @@ public interface ProgramaFacadeLocal {
     int count();
 
     List<Documento> DocumentosPorPrograma(String programa);
+
+    Programa obtenerProgramaPorNombre(List<Programa> programas, String nombrePrograma);
     
 }

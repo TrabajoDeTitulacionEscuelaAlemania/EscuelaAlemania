@@ -6,43 +6,66 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Sistema de control de archivos</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
+        <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
+        <h:outputStylesheet name="font-awesome/css/font-awesome.css" />
+        <h:outputStylesheet name="plugins/pace/pace-theme-big-counter.css" />
         <h:outputStylesheet name="css/style.css" />
-        <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'></link>
+        <h:outputStylesheet name="css/main-style.css" />
 
-<f:metadata>
-    <f:event type="preRenderView" listener="#{managedBeanLogin.init}" />
+
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{managedBeanLogin.init}" />
         </f:metadata>
 
     </h:head>
 
-    <h:body>
-        <h:form>
-            
-            <div class="login">
-                <div class="login-header">
-                    <h1>Bienvenid@</h1>
-                </div>
-                <div class="login-form">
-                    <h3>Usuario:</h3>
-                    <p:inputText  value="#{managedBeanLogin.usuario}"  id="username" />
-                    <h3>Contraseña:</h3>
-                    <p:password  value="#{managedBeanLogin.contraseña}" id="password"/>
-                    <br></br>
-                    <p:commandButton value="Ingresar al sistema" action="#{managedBeanLogin.loign()}" />
-                    <br></br>
-                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+   
 
+
+    <h:body class="body-Login-back">
+
+        <h:form>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 text-center logo-margin ">
+
+                    <img src="resources/img/logo.png" alt="" width="35%" height="35%"/>
+                </div>
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="login-panel panel panel-default">                  
+
+                        <div class="panel-body">
+                            
+                                <fieldset>
+                                    <div class="form-group">
+                                        <p:inputText class="form-control" placeholder="Usuario" value="#{managedBeanLogin.usuario}"></p:inputText>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <p:inputText class="form-control" placeholder="Password"  type="password"  value="#{managedBeanLogin.contraseña}" />
+                                    </div>
+
+                                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+                                    <!-- Change this to a button or input when using this as a form -->
+                                    <h:commandButton  class="btn btn-lg btn-success btn-block" value="Ingresar" action="#{managedBeanLogin.login()}"/> 
+
+                                </fieldset>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+            </h:form>
 
+        <!-- Core Scripts - Include with every page -->
 
-
-        </h:form>
-
-
-
-
+        <h:outputScript  name="plugins/jquery-1.10.2.js" />
+        <h:outputScript  name="plugins/bootstrap/bootstrap.min.js" />
+        <h:outputScript name="plugins/metisMenu/jquery.metisMenu.js" />
 
 
 

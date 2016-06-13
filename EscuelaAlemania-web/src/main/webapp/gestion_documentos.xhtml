@@ -5,405 +5,349 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <meta charset="utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <meta name="description" content=""/>
-        <meta name="author" content=""/>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
         <f:metadata>
             <f:event type="preRenderView" listener="#{managedBeanGestionDocs.init}" />
         </f:metadata>
 
         <title>Sistema de control de documentos-Gestion de documentos</title>
 
-        <!-- Bootstrap Core CSS -->
-        <h:outputStylesheet name="css/bootstrap.min.css" />
+        <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
+        <h:outputStylesheet name="font-awesome/css/font-awesome.css" />
+        <h:outputStylesheet name="plugins/pace/pace-theme-big-counter.css" />
+        <h:outputStylesheet name="css/style.css" />
+        <h:outputStylesheet name="css/main-style.css" />
+        <h:outputStylesheet name="plugins/morris/morris-0.4.3.min.css" />
 
 
-        <!-- Custom CSS -->
 
-        <h:outputStylesheet name="css/sb-admin.css" />
-        <!-- Custom Fonts -->
 
-        <h:outputStylesheet name="font-awesome/css/font-awesome.min.css" />
-
-     
     </h:head>
 
     <h:body>
 
+
         <div id="wrapper">
+            <!-- navbar top -->
+            <h:form>
+                <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
+                    <!-- navbar-header -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="home.xhtml">
+                            <img src="resources/img/insignia.png" alt="" />
+                        </a>
+                    </div>
+                    <!-- end navbar-header -->
+                    <!-- navbar-top-links -->
+                    <ul class="nav navbar-top-links navbar-right">
+                        <!-- main dropdown -->
 
-            <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="home.xhtml">Pagina de inicio</a>
-                </div>
-                <!-- Top Menu Items -->
-                <ul class="nav navbar-right top-nav nav nav-pills">
-                    <li role="presentation" class="active"><a href="#"> Mis Alertas <span class="badge">42</span></a></li>
-                    <li role="presentation" class="active"><a href="login.xhtml"> Salir </a></li>
-
-                </ul>
-                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav side-nav">
-                        <li class="active">
-                            <a href="gestion_documentos.xhtml"><i class="fa fa-fw fa-edit"></i> Gestion de documentos</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-edit"></i> Gestion de secciones y programas</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-bookmark"></i> Documentos por estado</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-search"></i> Búsqueda de documentos</a>
-                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <span class="top-label label label-danger">#{managedBeanGestionDocs.alertas}</span>  <i class="fa fa-bell fa-3x"></i>
+                            </a>
+                            <!-- dropdown alerts-->
+                            <ul class="dropdown-menu dropdown-alerts">
+                                <li>
+                                    <a href="comodin.xhtml">
+                                        <div>
+                                            <i class="fa fa-comment fa-fw"></i>Alertas del sistema
+                                            <span class="pull-right text-muted small">#{managedBeanGestionDocs.alertas}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="comodin.xhtml">
+                                        <div>
+                                            <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
+                                            <span class="pull-right text-muted small">0</span>
+                                        </div>
+                                    </a>
+                                </li>
 
 
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-desktop"></i> Simulación de evaluación</a>
+                            </ul>
+                            <!-- end dropdown-alerts -->
                         </li>
 
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-user fa-3x"></i>
+                            </a>
+                            <!-- dropdown user-->
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#"><i class="fa fa-gear fa-fw"></i>Configuración del sistema</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="login.xhtml"><i class="fa fa-sign-out fa-fw"></i>Desconectarse</a>
+                                </li>
+                            </ul>
+                            <!-- end dropdown-user -->
+                        </li>
+                        <!-- end main dropdown -->
                     </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </nav>
+                    <!-- end navbar-top-links -->
+
+                </nav>
+                <!-- end navbar top -->
+
+                <!-- navbar side -->
+                <nav class="navbar-default navbar-static-side" role="navigation">
+                    <!-- sidebar-collapse -->
+                    <div class="sidebar-collapse">
+                        <!-- side-menu -->
+                        <ul class="nav" id="side-menu">
+                            <li>
+                                <!-- user image section-->
+                                <div class="user-section">
+
+                                </div>
+                                <!--end user image section-->
+                            </li>
+
+                            <li>
+                                <a href="home.xhtml"><i class="fa fa-dashboard fa-fw"></i>Inicio</a>
+                            </li>
+                            <li  class="selected">
+                                <a href="#"><i class="fa fa-edit fa-fw"></i>Gestion documentos<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <p:commandLink value="Todos los documentos" action="#{managedBeanGestionDocs.redirigir('1')}"  /> 
+                                    </li>
+                                    <li>
+                                        <p:commandLink value="Documentos por programa" action="#{managedBeanGestionDocs.redirigir('2')}"  /> 
+                                    </li>
+                                    <li>
+                                        <p:commandLink value="Documentos por estado" action="#{managedBeanGestionDocs.redirigir('3')}"  /> 
+                                    </li>
+                                    <li>
+                                        <p:commandLink value="Documentos por seccion" action="#{managedBeanGestionDocs.redirigir('4')}"  /> 
+                                    </li>
+
+                                </ul>
+                                <!-- second-level-items -->
+                            </li>
+                            <li>
+                                <a href="comodin.xhtml"><i class="fa fa-clock-o fa-fw"></i>Ver últimos cambios</a>
+                            </li>
+                            <li>
+                                <a href="comodin.xhtml"><i class="fa fa-search fa-fw"></i>Buscar documento</a>
+                            </li>
+                            <li>
+                                <a href="comodin.xhtml"><i class="fa fa-exclamation fa-fw"></i>Alertar documento</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-gears fa-fw"></i>Simulaciones<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="#">Ver resultados <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <p:commandLink value="Programa de Integracion Escolar"   /> 
+                                            </li>
+                                            <li>
+                                                <p:commandLink value="Subvención Escolar Preferencial"   /> 
+                                            </li>
+                                            <li>
+                                                <p:commandLink value="Fiscalización Integral"   /> 
+                                            </li>
+                                            <li>
+                                                <p:commandLink value="Traspaso a nuevos directores"   /> 
+                                            </li>
+                                        </ul>
+                                        <!-- third-level-items -->
+                                    </li>
+                                    <li>
+                                        <a href="#">Realizar simulación<span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <p:commandLink value="Programa de Integracion Escolar"   /> 
+                                            </li>
+                                            <li>
+                                                <p:commandLink value="Subvención Escolar Preferencial"   /> 
+                                            </li>
+                                            <li>
+                                                <p:commandLink value="Fiscalización Integral"   /> 
+                                            </li>
+                                            <li>
+                                                <p:commandLink value="Traspaso a nuevos directores"   /> 
+                                            </li>
+                                        </ul>
+                                        <!-- third-level-items -->
+                                    </li>
+                                </ul>
+                                <!-- second-level-items -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-plus-circle fa-fw"></i>Agregar elementos<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <p:commandLink value="Agregar documento"   /> 
+
+                                    </li>
+                                    <li>
+                                        <p:commandLink value="Agregar sección"   /> 
+
+                                    </li>
+
+                                </ul>
+                                <!-- second-level-items -->
+                            </li>
+                            <li>
+                                <a href="comodin.xhtml"><i class="fa fa-folder-open-o fa-fw"></i>Gestionar sección</a>
+                            </li>
+                        </ul>
+                        <!-- end side-menu -->
+                    </div>
+                    <!-- end sidebar-collapse -->
+                </nav>
+            </h:form>
 
             <div id="page-wrapper">
 
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-
-                    <p:tabView id="tv">
-                        <p:tab title="Completo" id="tc">
-                            <h:form id="formC">
-                                <p:dataTable var="doc1" value="#{managedBeanGestionDocs.documentos}"  rows="5"
-                                             paginator="true"  rowsPerPageTemplate="5,10,15"
-                                             emptyMessage="No se econtraron documentos para ese criterio" filteredValue="#{managedBeanGestionDocs.documentosFiltrados}">
-
-                                    <p:column filterBy="#{doc1.nombre}" headerText="Nombre" footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc1.nombre}" />
-                                    </p:column>
-                                    <p:column headerText="Estado">
-                                        <h:outputText value="#{doc1.estadoDocumento.estado}" />
-                                    </p:column>
-                                    <p:column headerText="Última modificación">
-                                        <h:outputText value="#{doc1.fechaModificacionFormateada}" />
-                                    </p:column>
-                                    <p:column headerText="Ubicación" filterBy="#{doc1.ubicacion}"  footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc1.ubicacion}" />
-                                    </p:column>
-                                    <p:column headerText="Sección">
-                                        <h:outputText value="#{doc1.seccion.seccion}" />
-                                    </p:column>
-                                    <p:column headerText="Observación" filterBy="#{doc1.observacion}"  footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc1.observacion}" />
-                                    </p:column>
-                                    <p:column headerText="Editar"   >
-                                        <p:commandButton update=":tv:formC:docDetalle" oncomplete="PF('docDialogo').show()" icon="ui-icon-search" title="Editar">
-                                            <f:setPropertyActionListener value="#{doc1}" target="#{managedBeanGestionDocs.documentoElegido}" />
-                                        </p:commandButton>
-                                    </p:column>
-                                </p:dataTable>
-
-                                <p:dialog  header="Información documento" widgetVar="docDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                    <p:outputPanel id="docDetalle" style="text-align:center;">
-                                        <p:panelGrid  columns="2" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
-
-                                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                                            <br></br>
-                                            <h:outputText value="Nombre:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.nombre}" />
-                                            <h:outputText value="Estado:" />
-                                            <p:selectOneMenu  value="#{managedBeanGestionDocs.nombreEstado}" >
-                                                <f:selectItem itemLabel="#{managedBeanGestionDocs.documentoElegido.estadoDocumento.estado}" itemValue="#{managedBeanGestionDocs.documentoElegido.estadoDocumento.estado}" />
-                                                <f:selectItems value="#{managedBeanGestionDocs.estadoDocumentos}" var="docs" itemLabel="#{docs.estado}" itemValue="#{docs.estado}"/>
-                                            </p:selectOneMenu>
-                                            <h:outputText value="Ubicación:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.ubicacion}" />
-                                            <h:outputText value="Observación:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.observacion}" />
-                                            <p:commandButton value="Modificar" action="#{managedBeanGestionDocs.editar()}" >
-
-                                            </p:commandButton>
-
-
-
-                                        </p:panelGrid>
-                                    </p:outputPanel>
-                                </p:dialog>
-
-                            </h:form>
-                        </p:tab>
-                        <p:tab title="PIE" id="tp">
-                            <h:form id="formP">
-                                <p:dataTable var="doc2" value="#{managedBeanGestionDocs.documentosPIE}"  rows="5"
-                                             paginator="true"  rowsPerPageTemplate="5,10,15"
-                                             emptyMessage="No se econtraron documentos para ese criterio" filteredValue="#{managedBeanGestionDocs.documentosFiltradosPIE}">
-
-                                    <p:column filterBy="#{doc2.nombre}" headerText="Nombre" footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc2.nombre}" />
-                                    </p:column>
-                                    <p:column headerText="Estado">
-                                        <h:outputText value="#{doc2.estadoDocumento.estado}" />
-                                    </p:column>
-                                    <p:column headerText="Última modificación">
-                                        <h:outputText value="#{doc2.fechaModificacionFormateada}" />
-                                    </p:column>
-                                    <p:column headerText="Ubicación" filterBy="#{doc2.ubicacion}"  footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc2.ubicacion}" />
-                                    </p:column>
-                                    <p:column headerText="Sección">
-                                        <h:outputText value="#{doc2.seccion.seccion}" />
-                                    </p:column>
-                                    <p:column headerText="Observación" filterBy="#{doc2.observacion}"  footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc2.observacion}" />
-                                    </p:column>
-                                    <p:column headerText="Editar"   >
-                                        <p:commandButton update=":tv:formP:docDetalleP" oncomplete="PF('docDialogoP').show()" icon="ui-icon-search" title="Editar">
-                                            <f:setPropertyActionListener value="#{doc2}" target="#{managedBeanGestionDocs.documentoElegido}" />
-                                        </p:commandButton>
-                                    </p:column>
-                                </p:dataTable>
-
-                                <p:dialog  header="Información documento" widgetVar="docDialogoP" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                    <p:outputPanel id="docDetalleP" style="text-align:center;">
-                                        <p:panelGrid  columns="2" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
-
-                                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                                            <br></br>
-                                            <h:outputText value="Nombre:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.nombre}" />
-                                            <h:outputText value="Estado:" />
-                                            <p:selectOneMenu  value="#{managedBeanGestionDocs.nombreEstado}" >
-                                                <f:selectItem itemLabel="#{managedBeanGestionDocs.documentoElegido.estadoDocumento.estado}" itemValue="#{managedBeanGestionDocs.documentoElegido.estadoDocumento.estado}" />
-                                                <f:selectItems value="#{managedBeanGestionDocs.estadoDocumentos}" var="docs" itemLabel="#{docs.estado}" itemValue="#{docs.estado}"/>
-                                            </p:selectOneMenu>
-                                            <h:outputText value="Ubicación:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.ubicacion}" />
-                                            <h:outputText value="Observación:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.observacion}" />
-                                            <p:commandButton value="Modificar" action="#{managedBeanGestionDocs.editar()}" >
-
-                                            </p:commandButton>
-
-
-
-                                        </p:panelGrid>
-                                    </p:outputPanel>
-                                </p:dialog>
-                            </h:form>
-                        </p:tab>
-                        <p:tab title="SEP" id="ts">
-                            <h:form id="formS">
-                                <p:dataTable var="doc3" value="#{managedBeanGestionDocs.documentosSEP}" rows="5"
-                                             paginator="true"  rowsPerPageTemplate="5,10,15"
-                                             emptyMessage="No se econtraron documentos para ese criterio" filteredValue="#{managedBeanGestionDocs.documentosFiltradosSEP}">
-
-                                    <p:column filterBy="#{doc3.nombre}" headerText="Nombre" footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc3.nombre}" />
-                                    </p:column>
-                                    <p:column headerText="Estado">
-                                        <h:outputText value="#{doc3.estadoDocumento.estado}" />
-                                    </p:column>
-                                    <p:column headerText="Última modificación">
-                                        <h:outputText value="#{doc3.fechaModificacionFormateada}" />
-                                    </p:column>
-                                    <p:column headerText="Ubicación" filterBy="#{doc3.ubicacion}"  footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc3.ubicacion}" />
-                                    </p:column>
-                                    <p:column headerText="Sección">
-                                        <h:outputText value="#{doc3.seccion.seccion}" />
-                                    </p:column>
-                                    <p:column headerText="Observación" filterBy="#{doc3.observacion}"  footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc3.observacion}" />
-                                    </p:column>
-                                    <p:column headerText="Editar"   >
-                                        <p:commandButton update=":tv:formS:docDetalleS" oncomplete="PF('docDialogoS').show()" icon="ui-icon-search" title="Editar">
-                                            <f:setPropertyActionListener value="#{doc3}" target="#{managedBeanGestionDocs.documentoElegido}" />
-                                        </p:commandButton>
-                                    </p:column>
-                                </p:dataTable>
-
-                                <p:dialog  header="Información documento" widgetVar="docDialogoS" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                    <p:outputPanel id="docDetalleS" style="text-align:center;">
-                                        <p:panelGrid  columns="2" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
-
-                                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                                            <br></br>
-                                            <h:outputText value="Nombre:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.nombre}" />
-                                            <h:outputText value="Estado:" />
-                                            <p:selectOneMenu  value="#{managedBeanGestionDocs.nombreEstado}" >
-                                                <f:selectItem itemLabel="#{managedBeanGestionDocs.documentoElegido.estadoDocumento.estado}" itemValue="#{managedBeanGestionDocs.documentoElegido.estadoDocumento.estado}" />
-                                                <f:selectItems value="#{managedBeanGestionDocs.estadoDocumentos}" var="docs" itemLabel="#{docs.estado}" itemValue="#{docs.estado}"/>
-                                            </p:selectOneMenu>
-                                            <h:outputText value="Ubicación:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.ubicacion}" />
-                                            <h:outputText value="Observación:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.observacion}" />
-                                            <p:commandButton value="Modificar" action="#{managedBeanGestionDocs.editar()}" >
-
-                                            </p:commandButton>
-
-
-
-                                        </p:panelGrid>
-                                    </p:outputPanel>
-                                </p:dialog>
-                            </h:form>
-                        </p:tab>
-                        <p:tab title="Integral" id="ti">
-                            <h:form id="formI">
-                                <p:dataTable var="doc" value="#{managedBeanGestionDocs.documentosIntegral}"  rows="5"
-                                             paginator="true"  rowsPerPageTemplate="5,10,15"
-                                             emptyMessage="No se econtraron documentos para ese criterio" filteredValue="#{managedBeanGestionDocs.documentosFiltradosIntegral}">
-
-                                    <p:column filterBy="#{doc.nombre}" headerText="Nombre" footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc.nombre}" />
-                                    </p:column>
-                                    <p:column headerText="Estado">
-                                        <h:outputText value="#{doc.estadoDocumento.estado}" />
-                                    </p:column>
-                                    <p:column headerText="Última modificación">
-                                        <h:outputText value="#{doc.fechaModificacionFormateada}" />
-                                    </p:column>
-                                    <p:column headerText="Ubicación" filterBy="#{doc.ubicacion}"  footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc.ubicacion}" />
-                                    </p:column>
-                                    <p:column headerText="Sección">
-                                        <h:outputText value="#{doc.seccion.seccion}" />
-                                    </p:column>
-                                    <p:column headerText="Observación" filterBy="#{doc.observacion}"  footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc.observacion}" />
-                                    </p:column>
-                                    <p:column headerText="Editar"   >
-                                        <p:commandButton update=":tv:formI:docDetalleI" oncomplete="PF('docDialogoI').show()" icon="ui-icon-search" title="Editar">
-                                            <f:setPropertyActionListener value="#{doc}" target="#{managedBeanGestionDocs.documentoElegido}" />
-                                        </p:commandButton>
-                                    </p:column>
-                                </p:dataTable>
-
-                                <p:dialog  header="Información documento" widgetVar="docDialogoI" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                    <p:outputPanel id="docDetalleI" style="text-align:center;">
-                                        <p:panelGrid  columns="2" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
-
-                                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                                            <br></br>
-                                            <h:outputText value="Nombre:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.nombre}" />
-                                            <h:outputText value="Estado:" />
-                                            <p:selectOneMenu  value="#{managedBeanGestionDocs.nombreEstado}" >
-                                                <f:selectItem itemLabel="#{managedBeanGestionDocs.documentoElegido.estadoDocumento.estado}" itemValue="#{managedBeanGestionDocs.documentoElegido.estadoDocumento.estado}" />
-                                                <f:selectItems value="#{managedBeanGestionDocs.estadoDocumentos}" var="docs" itemLabel="#{docs.estado}" itemValue="#{docs.estado}"/>
-                                            </p:selectOneMenu>
-                                            <h:outputText value="Ubicación:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.ubicacion}" />
-                                            <h:outputText value="Observación:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.observacion}" />
-                                            <p:commandButton value="Modificar" action="#{managedBeanGestionDocs.editar()}" >
-
-                                            </p:commandButton>
-
-
-
-                                        </p:panelGrid>
-                                    </p:outputPanel>
-                                </p:dialog>
-                            </h:form>
-                        </p:tab>
-                        <p:tab title="Traspaso a nuevos directores" id="tt">
-                            <h:form id="formT">
-                                <p:dataTable var="doc" value="#{managedBeanGestionDocs.documentosDirector}"  rows="5"
-                                             paginator="true"  rowsPerPageTemplate="5,10,15"
-                                             emptyMessage="No se econtraron documentos para ese criterio" filteredValue="#{managedBeanGestionDocs.documentosFiltradosDirector}">
-
-                                    <p:column filterBy="#{doc.nombre}" headerText="Nombre" footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc.nombre}" />
-                                    </p:column>
-                                    <p:column headerText="Estado">
-                                        <h:outputText value="#{doc.estadoDocumento.estado}" />
-                                    </p:column>
-                                    <p:column headerText="Última modificación">
-                                        <h:outputText value="#{doc.fechaModificacionFormateada}" />
-                                    </p:column>
-                                    <p:column headerText="Ubicación" filterBy="#{doc.ubicacion}"  footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc.ubicacion}" />
-                                    </p:column>
-                                    <p:column headerText="Sección">
-                                        <h:outputText value="#{doc.seccion.seccion}" />
-                                    </p:column>
-                                    <p:column headerText="Observación" filterBy="#{doc.observacion}"  footerText="contiene" filterMatchMode="contains">
-                                        <h:outputText value="#{doc.observacion}" />
-                                    </p:column>
-                                    <p:column headerText="Editar"   >
-                                        <p:commandButton update=":tv:formT:docDetalleT" oncomplete="PF('docDialogoT').show()" icon="ui-icon-search" title="Editar">
-                                            <f:setPropertyActionListener value="#{doc}" target="#{managedBeanGestionDocs.documentoElegido}" />
-                                        </p:commandButton>
-                                    </p:column>
-                                </p:dataTable>
-
-                                <p:dialog  header="Información documento" widgetVar="docDialogoT" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                    <p:outputPanel id="docDetalleT" style="text-align:center;">
-                                        <p:panelGrid  columns="2" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
-
-                                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                                            <br></br>
-                                            <h:outputText value="Nombre:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.nombre}" />
-                                            <h:outputText value="Estado:" />
-                                            <p:selectOneMenu  value="#{managedBeanGestionDocs.nombreEstado}" >
-                                                <f:selectItem itemLabel="#{managedBeanGestionDocs.documentoElegido.estadoDocumento.estado}" itemValue="#{managedBeanGestionDocs.documentoElegido.estadoDocumento.estado}" />
-                                                <f:selectItems value="#{managedBeanGestionDocs.estadoDocumentos}" var="docs" itemLabel="#{docs.estado}" itemValue="#{docs.estado}"/>
-                                            </p:selectOneMenu>
-                                            <h:outputText value="Ubicación:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.ubicacion}" />
-                                            <h:outputText value="Observación:" />
-                                            <h:inputText value="#{managedBeanGestionDocs.documentoElegido.observacion}" />
-                                            <p:commandButton value="Modificar" action="#{managedBeanGestionDocs.editar()}" >
-
-                                            </p:commandButton>
-
-
-
-                                        </p:panelGrid>
-                                    </p:outputPanel>
-                                </p:dialog>
-                            </h:form>
-                        </p:tab>
-                    </p:tabView>
-
-
-
-
-                    <!-- /.row -->
-
-
+                <div class="row">
+                    <!-- Page Header -->
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Gestion de documentos</h1>
+                    </div>
+                    <!--End Page Header -->
                 </div>
-                <!-- /.container-fluid -->
+
+                <h:form>
+                    <h:panelGrid columns="1" style=" margin: 0 auto;" cellpadding="5" rendered="#{managedBeanGestionDocs.tipoDoc == '2'}" id="Programa">
+                        
+                        <h:panelGroup style="display:block; text-align:center">
+
+                            <h3><strong>Seleccione el/los programa(s)</strong></h3>
+                            <p:selectManyButton value="#{managedBeanGestionDocs.categoriaSeleccionada}" style="text-align: center">
+                                <p:ajax listener="#{managedBeanGestionDocs.filtrarPorPrograma}" update="@([id$=Documentos])" />
+                                <f:selectItems value="#{managedBeanGestionDocs.programas}" var="programa" itemLabel="#{programa.programa}" itemValue="#{programa.programa}" />
+                            </p:selectManyButton>
+
+
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    </h:form>
+                
+                    <h:form>
+                    <h:panelGrid columns="1" style="margin: 0 auto;" cellpadding="5" rendered="#{managedBeanGestionDocs.tipoDoc == '3'}" id="Estado">
+                         <h:panelGroup style="display:block; text-align:center">
+                        <h3><strong>Seleccione el/los estado(s)</strong></h3>
+                        <p:selectManyButton value="#{managedBeanGestionDocs.categoriaSeleccionada}">
+                            <p:ajax listener="#{managedBeanGestionDocs.filtrarPorEstado()}" update="@([id$=Documentos])" />
+                            <f:selectItems value="#{managedBeanGestionDocs.estadoDocumentos}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.estado}" />
+                        </p:selectManyButton>
+
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    </h:form>
+                
+                <h:form>
+                    <h:panelGrid columns="1" style="margin: 0 auto;" cellpadding="5" rendered="#{managedBeanGestionDocs.tipoDoc == '4'}" id="Seccion">
+                         <h:panelGroup style="display:block; text-align:center">
+                        <h3><strong>Seleccione el/las sección(es)</strong></h3>
+                        <p:selectManyButton value="#{managedBeanGestionDocs.categoriaSeleccionada}">
+                            <p:ajax listener="#{managedBeanGestionDocs.filtrarPorSeccion()}" update="@([id$=Documentos])" />
+                            <f:selectItems value="#{managedBeanGestionDocs.secciones}" var="seccion" itemLabel="#{seccion.seccion}" itemValue="#{seccion.seccion}" />
+                        </p:selectManyButton>
+
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    </h:form>
+                    <br/><br/>
+                <h:form id="form">
+                    <p:dataTable id="Documentos" var="doc" value="#{managedBeanGestionDocs.documentos}"  rows="5"
+                                 paginator="true"  rowsPerPageTemplate="5,10,15" 
+                                 emptyMessage="No se econtraron documentos para ese criterio" filteredValue="#{managedBeanGestionDocs.documentosFiltrados}">
+
+                        <p:column filterBy="#{doc.nombre}" headerText="Nombre" footerText="" filterMatchMode="contains" >
+                            <h:outputText value="#{doc.nombre}" />
+                        </p:column>
+                        <p:column style="width:150px" headerText="Estado">
+                            <h:outputText value="#{doc.estadoDocumento.estado}" />
+                        </p:column>
+                        <p:column style="width:130px" headerText="Última modificación">
+                            <h:outputText value="#{doc.fechaModificacionFormateada}" />
+                        </p:column>
+                        <p:column headerText="Ubicación" filterBy="#{doc.ubicacion}"  footerText="" filterMatchMode="contains">
+                            <h:outputText value="#{doc.ubicacion}" />
+                        </p:column>
+                        <p:column headerText="Observación" filterBy="#{doc.observacion}"  footerText="" filterMatchMode="contains">
+                            <h:outputText value="#{doc.observacion}" />
+                        </p:column>
+                        
+                        <p:column style="width:60px; text-align: center" >
+                           
+                            <p:commandButton update=":form:docDetalle" oncomplete="PF('docDialogo').show()" title="Editar" 
+                                             icon="ui-icon-pencil" ajax="true" action="#{managedBeanGestionDocs.irAEditar()}">
+                                <f:setPropertyActionListener value="#{doc}" target="#{managedBeanGestionDocs.documentoElegido}" />
+                            </p:commandButton> 
+                        </p:column>
+                           
+                    </p:dataTable>
+
+                    <p:dialog  header="Información documento" widgetVar="docDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="docDetalle" style="text-align:left">
+                            <p:panelGrid  columns="2" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
+
+                                <br></br>
+                                <strong>Nombre:</strong>
+                                <h:outputText value="#{managedBeanGestionDocs.documentoElegido.nombre}" />
+                                <strong>Estado:</strong>
+                                <p:selectOneMenu  value="#{managedBeanGestionDocs.nombreEstadoDocumento}" >
+                                    <f:selectItems value="#{managedBeanGestionDocs.estadoDocumentos}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.estado}"/>
+                                </p:selectOneMenu>
+                                <strong>Sección:</strong>
+                                <p:selectOneMenu  value="#{managedBeanGestionDocs.nombreSeccion}" >
+                                    <f:selectItems value="#{managedBeanGestionDocs.secciones}" var="seccion" itemLabel="#{seccion.seccion}" itemValue="#{seccion.seccion}"/>
+                                </p:selectOneMenu>
+                                <strong>Ubicación:</strong>
+                                <p:inputText value="#{managedBeanGestionDocs.ubicacion}" />
+                                <strong>Observación:</strong>
+                                <p:inputText value="#{managedBeanGestionDocs.observacion}" />
+                                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                                <p:commandButton value="Modificar"  action="#{managedBeanGestionDocs.editar()}"/>
+
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+
+                </h:form>
+
+
+
 
             </div>
-            <!-- /#page-wrapper -->
+            <!-- end page-wrapper -->
 
         </div>
-        <!-- /#wrapper -->
+        <!-- end wrapper -->
+
+
+
+
+
+
+
+
+
+
 
         <!-- jQuery -->
-        <script src="js/jquery.js"></script>
+        <h:outputScript  name="plugins/bootstrap/bootstrap.min.js" />
+        <h:outputScript name="plugins/metisMenu/jquery.metisMenu.js" />
+        <h:outputScript  name="plugins/pace/pace.js" />
+        <h:outputScript  name="scripts/siminta.js" />
+        <h:outputScript name="plugins/morris/raphael-2.1.0.min.js" />
+        <h:outputScript  name="plugins/morris/morris.js" />
 
-        <!-- Bootstrap Core JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
 
     </h:body>
 </html>

@@ -33,15 +33,18 @@ public interface DocumentoFacadeLocal {
 
     int count();
 
-
-    Documento obtenerDocumentoPorId(List<Documento> documentos, String idDocumento);
-
     String editarDocumento(EstadoDocumento estadoDocumento, String ubicacion, Seccion seccion, String observacion, Documento documento);
-
-    List<Documento> obtenerDocumentoPorEstado(EstadoDocumento estadoDocumento);
 
     List<Documento> buscarDocumento(String frase, List<Documento> documentos);
 
     List<Documento> alertaDocumentos();
+
+    List<Documento> filtrarPorPrograma(List<Documento> documentos, String nombreProggrama);
+
+    List<Documento> eliminarDuplicados(List<Documento> documentos);
+
+    List<Documento> filtrarPorEstado(List<Documento> documentos, String nombreEstado);
+
+    List<Documento> filtrarPorSeccion(List<Documento> documentos, String nombreSeccion);
     
 }
