@@ -21,8 +21,8 @@ import javax.persistence.NamedQuery;
  * @author Desarrollo
  */
 @NamedQueries({
-    @NamedQuery(name="Programa.findByName",
-                query="SELECT c FROM Programa c WHERE c.programa = :programa"),
+    @NamedQuery(name="Programa.findByid",
+                query="SELECT c FROM Programa c WHERE c.id = :id"),
 })
 @Entity
 public class Programa implements Serializable {

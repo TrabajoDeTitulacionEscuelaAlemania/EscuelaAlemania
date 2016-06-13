@@ -7,17 +7,21 @@ package cl.usach.escalemania.sessionbeans;
 
 import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.EstadoDocumento;
+import cl.usach.escalemania.entities.Programa;
 import cl.usach.escalemania.entities.Seccion;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.es.SpanishAnalyzer;
@@ -48,15 +52,6 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
 
 
     @Override
-    public Documento obtenerDocumentoPorId(List<Documento> documentos, String idDocumento) {
-        for(Documento d:documentos){
-            if(d.getId().compareTo(new Long(Integer.parseInt(idDocumento)))==0)
-                return d;
-        }
-        return null;
-    }
-
-    @Override
     public String editarDocumento(EstadoDocumento estadoDocumento, String ubicacion, Seccion seccion, String observacion, Documento documento) {
         if(ubicacion.isEmpty())
             return "Campo vacio";
@@ -67,16 +62,6 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
         documento.setFechaModificacion(new Date());
         edit(documento);
         return "OK";
-    }
-
-    @Override
-    public List<Documento> obtenerDocumentoPorEstado(EstadoDocumento estadoDocumento) {
-        Query query=em.createNamedQuery("Documento.findByEstado").setParameter("estadoDocumento", estadoDocumento);
-        List<Documento> documentos=query.getResultList();
-        if(documentos.isEmpty())
-            return null;
-        else
-            return documentos;
     }
 
     @Override
@@ -130,11 +115,58 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
 
     @Override
     public List<Documento> alertaDocumentos() {
-        List<EstadoDocumento> estadoDocumentos=estadoDocumentoFacade.findAll();
-        List<Documento> alerta=obtenerDocumentoPorEstado(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, "Sin informacion"));
-        alerta.addAll(obtenerDocumentoPorEstado(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, "Desactualizado")));
-        alerta.addAll(obtenerDocumentoPorEstado(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, "Incompleto")));
+        List<Documento> sinInformacion=estadoDocumentoFacade.obtenerDocumentoPorId("4");
+        List<Documento> desactualizado=estadoDocumentoFacade.obtenerDocumentoPorId("3");
+        List<Documento> incompleto=estadoDocumentoFacade.obtenerDocumentoPorId("2");
+        List<Documento> alerta=new ArrayList<>();
+        if(!sinInformacion.isEmpty())
+            alerta.addAll(sinInformacion);
+        if(!desactualizado.isEmpty())
+            alerta.addAll(desactualizado);
+        if(!incompleto.isEmpty())
+            alerta.addAll(incompleto);
         return alerta;
     }
+
+    @Override
+    public List<Documento> filtrarPorPrograma(List<Documento> documentos, String nombreProggrama) {
+        List<Documento> resultado=new ArrayList<>();
+        for(Documento doc:documentos)
+            for(Programa prog: doc.getProgramas())
+                if(prog.getPrograma().compareToIgnoreCase(nombreProggrama)==0){
+                    resultado.add(doc);
+                    break;
+                }
+        return resultado;
+    }
+
+    @Override
+    public List<Documento> eliminarDuplicados(List<Documento> documentos) {
+        Map<Long,Documento> filtro=new HashMap<>();
+        for(Documento doc: documentos)
+            filtro.put(doc.getId(), doc);
+        documentos.clear();
+        documentos.addAll(filtro.values());
+        return documentos;
+    }
+
+    @Override
+    public List<Documento> filtrarPorEstado(List<Documento> documentos, String nombreEstado) {
+        List<Documento> resultado=new ArrayList<>();
+        for(Documento doc:documentos)
+            if(doc.getEstadoDocumento().getEstado().compareToIgnoreCase(nombreEstado)==0)
+                resultado.add(doc);
+        return resultado;
+    }
+
+    @Override
+    public List<Documento> filtrarPorSeccion(List<Documento> documentos, String nombreSeccion) {
+        List<Documento> resultado=new ArrayList<>();
+        for(Documento doc:documentos)
+            if(doc.getSeccion().getSeccion().compareToIgnoreCase(nombreSeccion)==0)
+                resultado.add(doc);
+        return resultado;
+    }
+     
     
 }

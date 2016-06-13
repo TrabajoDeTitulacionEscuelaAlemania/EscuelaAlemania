@@ -9,16 +9,23 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
  *
  * @author Desarrollo
  */
+@NamedQueries({
+    @NamedQuery(name="EstadoDocumento.findById",
+                query="SELECT c FROM EstadoDocumento c WHERE c.id = :id"),
+})
 @Entity
 public class EstadoDocumento implements Serializable {
 
@@ -28,7 +35,7 @@ public class EstadoDocumento implements Serializable {
     private Long id;
     @Column(nullable = false, length = 15)
     private String estado;
-    @OneToMany(mappedBy = "estadoDocumento")
+    @OneToMany(fetch = FetchType.EAGER ,mappedBy = "estadoDocumento")
     private List<Documento> documentos;    
 
     public String getEstado() {

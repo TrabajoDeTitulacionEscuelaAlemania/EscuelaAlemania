@@ -38,7 +38,14 @@ public class ProgramaFacade extends AbstractFacade<Programa> implements Programa
         Programa programaObject=(Programa) query.getSingleResult();
         return programaObject.getDocumentos();
     }
-    
-    
+
+    @Override
+    public Programa obtenerProgramaPorNombre(List<Programa> programas, String nombrePrograma) {
+        for(Programa prog:programas)
+            if(prog.getPrograma().compareToIgnoreCase(nombrePrograma)==0)
+                return prog;
+        return null;
+    }
+     
     
 }

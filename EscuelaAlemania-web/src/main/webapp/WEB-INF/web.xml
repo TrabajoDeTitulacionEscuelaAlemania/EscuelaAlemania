@@ -19,11 +19,11 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/Prueba.xhtml</welcome-file>
+        <welcome-file>faces/login.xhtml</welcome-file>
     </welcome-file-list>
-       <context-param>  
+<!--       <context-param>  
             <param-name>primefaces.THEME</param-name>  
-            <param-value>bluesky</param-value>  
-        </context-param>  
+            <param-value>start</param-value>  
+        </context-param>  -->
 
 </web-app>
