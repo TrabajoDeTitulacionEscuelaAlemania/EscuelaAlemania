@@ -6,6 +6,11 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{managedBeanBuscarDocumento.init}" />
+        </f:metadata>
+
+        <title>Sistema de control de documentos-Gestion de documentos</title>
 
         <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
         <h:outputStylesheet name="font-awesome/css/font-awesome.css" />
@@ -15,20 +20,13 @@
         <h:outputStylesheet name="plugins/morris/morris-0.4.3.min.css" />
 
 
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{managedBeanHome.init}" />
-        </f:metadata>
-
-        <title>Sistema de control de documentos</title>
 
 
     </h:head>
 
-
     <h:body>
 
 
-        <!--  wrapper -->
         <div id="wrapper">
             <!-- navbar top -->
             <h:form>
@@ -52,7 +50,7 @@
 
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <span class="top-label label label-danger">#{managedBeanHome.alertas}</span>  <i class="fa fa-bell fa-3x"></i>
+                                <span class="top-label label label-danger">#{managedBeanBuscarDocumento.alertas}</span>  <i class="fa fa-bell fa-3x"></i>
                             </a>
                             <!-- dropdown alerts-->
                             <ul class="dropdown-menu dropdown-alerts">
@@ -60,7 +58,7 @@
                                     <a href="comodin.xhtml">
                                         <div>
                                             <i class="fa fa-comment fa-fw"></i>Alertas del sistema
-                                            <span class="pull-right text-muted small">#{managedBeanHome.alertas}</span>
+                                            <span class="pull-right text-muted small">#{managedBeanBuscarDocumento.alertas}</span>
                                         </div>
                                     </a>
                                 </li>
@@ -114,23 +112,23 @@
                                 <!--end user image section-->
                             </li>
 
-                            <li class="selected">
+                            <li>
                                 <a href="home.xhtml"><i class="fa fa-dashboard fa-fw"></i>Inicio</a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-edit fa-fw"></i>Gestion documentos<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <p:commandLink value="Todos los documentos" action="#{managedBeanHome.redirigir('1')}"  /> 
+                                        <p:commandLink value="Todos los documentos" action="#{managedBeanBuscarDocumento.redirigir('1')}"  /> 
                                     </li>
                                     <li>
-                                        <p:commandLink value="Documentos por programa" action="#{managedBeanHome.redirigir('2')}"  /> 
+                                        <p:commandLink value="Documentos por programa" action="#{managedBeanBuscarDocumento.redirigir('2')}"  /> 
                                     </li>
                                     <li>
-                                        <p:commandLink value="Documentos por estado" action="#{managedBeanHome.redirigir('3')}"  /> 
+                                        <p:commandLink value="Documentos por estado" action="#{managedBeanBuscarDocumento.redirigir('3')}"  /> 
                                     </li>
                                     <li>
-                                        <p:commandLink value="Documentos por seccion" action="#{managedBeanHome.redirigir('4')}"  /> 
+                                        <p:commandLink value="Documentos por seccion" action="#{managedBeanBuscarDocumento.redirigir('4')}"  /> 
                                     </li>
 
                                 </ul>
@@ -139,7 +137,7 @@
                             <li>
                                 <a href="comodin.xhtml"><i class="fa fa-clock-o fa-fw"></i>Ver últimos cambios</a>
                             </li>
-                            <li>
+                            <li class="selected">
                                 <a href="buscar_documento.xhtml"><i class="fa fa-search fa-fw"></i>Buscar documento</a>
                             </li>
                             <li>
@@ -211,58 +209,107 @@
                     <!-- end sidebar-collapse -->
                 </nav>
             </h:form>
-            <!-- end navbar side -->
-            <!--  page-wrapper -->
+
             <div id="page-wrapper">
 
                 <div class="row">
                     <!-- Page Header -->
                     <div class="col-lg-12">
-                        <h1 class="page-header">Información</h1>
+                        <h1 class="page-header">Gestion de documentos</h1>
                     </div>
                     <!--End Page Header -->
                 </div>
 
-                <div class="row">
-                    <!-- Welcome -->
-                    <div class="col-lg-12">
-                        <div class="alert alert-info">
-                            <i class="fa fa-folder-open"></i>&nbsp;Bienvenido <b>#{managedBeanHome.rol}.</b>
-                            <br/>&nbsp;Actualmente existen <b>#{managedBeanHome.total}</b> documentos en el sistema.
+                
+                <h:form id="form">
+                    
+                    <h:panelGrid columns="1" style="margin: 0 auto;" cellpadding="5" >
+                         <h:panelGroup style="display:block; text-align:center">
+                        <h3><strong>Ingrese el documento a buscar</strong></h3>
+                        
+                        
+                        <div class="input-group custom-search-form">
+                           <p:inputText  placeholder="Buscar..." value="#{managedBeanBuscarDocumento.busqueda}" style="width: 500px"/>
+                            &nbsp;
+                            <span class="input-group-btn">
+                                <p:commandButton class="btn btn-default" update="Documentos" value="Buscar" action="#{managedBeanBuscarDocumento.buscar()}">
+                                
+                                    
+                                </p:commandButton>
+                            </span>
                         </div>
-                    </div>
-                    <!--end  Welcome -->
-                </div>
+                        
+                        
+                       
+                            
+                            
+                            
+                                
+                              
+                        
+                            
+                        
 
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <br/>
+                    <p:dataTable id="Documentos" var="doc" value="#{managedBeanBuscarDocumento.resultadoDocumentos}"  rows="5"
+                                 paginator="true"  rowsPerPageTemplate="5,10,15" 
+                                 emptyMessage="No se econtraron documentos para ese criterio" >
 
-                <div class="row">
-                    <!--quick info section -->
-                    <div class="col-lg-3">
-                        <div class="alert alert-success text-center">
-                            <i class="fa fa-check-circle-o fa-3x"></i><b>&nbsp;#{managedBeanHome.completos}</b> Documentos<br/>completos
+                        <p:column filterBy="#{doc.nombre}" headerText="Nombre" footerText="" filterMatchMode="contains" >
+                            <h:outputText value="#{doc.nombre}" />
+                        </p:column>
+                        <p:column style="width:150px" headerText="Estado">
+                            <h:outputText value="#{doc.estadoDocumento.estado}" />
+                        </p:column>
+                        <p:column style="width:130px" headerText="Última modificación">
+                            <h:outputText value="#{doc.fechaModificacionFormateada}" />
+                        </p:column>
+                        <p:column headerText="Ubicación" filterBy="#{doc.ubicacion}"  footerText="" filterMatchMode="contains">
+                            <h:outputText value="#{doc.ubicacion}" />
+                        </p:column>
+                        <p:column headerText="Observación" filterBy="#{doc.observacion}"  footerText="" filterMatchMode="contains">
+                            <h:outputText value="#{doc.observacion}" />
+                        </p:column>
+                        
+                        <p:column style="width:60px; text-align: center" >
+                           
+                            <p:commandButton update=":form:docDetalle" oncomplete="PF('docDialogo').show()" title="Editar" 
+                                             icon="ui-icon-pencil" ajax="true" action="#{managedBeanBuscarDocumento.irAEditar()}">
+                                <f:setPropertyActionListener value="#{doc}" target="#{managedBeanBuscarDocumento.documentoElegido}" />
+                            </p:commandButton> 
+                        </p:column>
+                           
+                    </p:dataTable>
 
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="alert alert-warning text-center">
-                            <i class="fa fa-exclamation fa-3x"></i><b>&nbsp;#{managedBeanHome.incompletos}</b> Documentos<br/>incompletos  
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="alert alert-warning text-center">
-                            <i class="fa fa-exclamation fa-3x"></i><b>&nbsp;#{managedBeanHome.desactualizados}</b> Documentos<br/>desactualizados
+                    <p:dialog  header="Información documento" widgetVar="docDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="docDetalle" style="text-align:left">
+                            <p:panelGrid  columns="2" rendered="#{not empty managedBeanBuscarDocumento.documentoElegido}"  >
 
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="alert alert-danger text-center">
-                            <i class="fa fa-exclamation-triangle fa-3x"></i><b>&nbsp;#{managedBeanHome.sinInformacion}</b> Documentos<br/>sin informacion
-                        </div>
-                    </div>
-                    <!--end quick info section -->
-                </div>
+                                <br></br>
+                                <strong>Nombre:</strong>
+                                <h:outputText value="#{managedBeanBuscarDocumento.documentoElegido.nombre}" />
+                                <strong>Estado:</strong>
+                                <p:selectOneMenu  value="#{managedBeanBuscarDocumento.nombreEstadoDocumento}" >
+                                    <f:selectItems value="#{managedBeanBuscarDocumento.estadoDocumentos}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.estado}"/>
+                                </p:selectOneMenu>
+                                <strong>Sección:</strong>
+                                <p:selectOneMenu  value="#{managedBeanBuscarDocumento.nombreSeccion}" >
+                                    <f:selectItems value="#{managedBeanBuscarDocumento.secciones}" var="seccion" itemLabel="#{seccion.seccion}" itemValue="#{seccion.seccion}"/>
+                                </p:selectOneMenu>
+                                <strong>Ubicación:</strong>
+                                <p:inputText value="#{managedBeanBuscarDocumento.ubicacion}" />
+                                <strong>Observación:</strong>
+                                <p:inputText value="#{managedBeanBuscarDocumento.observacion}" />
+                                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                                <p:commandButton value="Modificar"  action="#{managedBeanBuscarDocumento.editar()}"/>
 
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
 
+                </h:form>
 
 
 
@@ -275,18 +322,23 @@
 
 
 
-        <h:outputScript  name="plugins/jquery-1.10.2.js" />
+
+
+
+
+
+
+
+
+        <!-- jQuery -->
         <h:outputScript  name="plugins/bootstrap/bootstrap.min.js" />
         <h:outputScript name="plugins/metisMenu/jquery.metisMenu.js" />
         <h:outputScript  name="plugins/pace/pace.js" />
         <h:outputScript  name="scripts/siminta.js" />
         <h:outputScript name="plugins/morris/raphael-2.1.0.min.js" />
         <h:outputScript  name="plugins/morris/morris.js" />
-        <h:outputScript  name="scripts/dashboard-demo.js" />
+
 
     </h:body>
-
-
-
 </html>
 
