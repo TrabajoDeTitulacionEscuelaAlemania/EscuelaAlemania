@@ -289,7 +289,7 @@
 
                                 <br></br>
                                 <strong>Nombre:</strong>
-                                <h:outputText value="#{managedBeanBuscarDocumento.documentoElegido.nombre}" />
+                                <h:inputText value="#{managedBeanBuscarDocumento.documentoElegido.nombre}" />
                                 <strong>Estado:</strong>
                                 <p:selectOneMenu  value="#{managedBeanBuscarDocumento.nombreEstadoDocumento}" >
                                     <f:selectItems value="#{managedBeanBuscarDocumento.estadoDocumentos}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.estado}"/>

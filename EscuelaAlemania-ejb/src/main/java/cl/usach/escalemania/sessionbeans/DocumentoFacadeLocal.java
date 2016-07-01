@@ -16,7 +16,7 @@ import javax.ejb.Remote;
  *
  * @author Desarrollo
  */
-@Local
+@Remote
 public interface DocumentoFacadeLocal {
 
     void create(Documento documento);
