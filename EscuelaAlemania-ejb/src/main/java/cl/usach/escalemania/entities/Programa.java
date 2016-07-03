@@ -9,9 +9,11 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -33,7 +35,7 @@ public class Programa implements Serializable {
     private Long id;
     @Column(nullable = false,length = 100)
     private String programa;
-    @ManyToMany(mappedBy = "programas")
+    @ManyToMany(mappedBy = "programas", fetch=FetchType.EAGER)
     private List<Documento> documentos;
 
     public String getPrograma() {

@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <title>Sistema de control de documentos-Gestion de documentos</title>
+        
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{managedBeanPlantilla.init}" />
+        </f:metadata>
+        
+        <ui:insert name="hojasestilo">Aqui van los css</ui:insert>
+        <ui:insert name="init">Aquí van los init</ui:insert>
+
+        <style type="text/css">
+         .ui-growl {
+             top:15%;
+             
+         }
+         .selection tr {
+float: left;
+ width: 33%;
+}
+        </style>
+
+    </h:head>
+
+    <h:body>
+
+
+        <div id="wrapper">
+            <!-- navbar top -->
+            <h:form>
+                <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
+                    <!-- navbar-header -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="home.xhtml">
+                            <img src="resources/img/insignia.png" alt="" />
+                        </a>
+                    </div>
+                    <!-- end navbar-header -->
+                    <!-- navbar-top-links -->
+                    <ul class="nav navbar-top-links navbar-right">
+                        <!-- main dropdown -->
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <span class="top-label label label-danger">#{managedBeanPlantilla.alertas}</span>  <i class="fa fa-bell fa-3x"></i>
+                            </a>
+                            <!-- dropdown alerts-->
+                            <ul class="dropdown-menu dropdown-alerts">
+                                <li>
+                                    <a href="comodin.xhtml">
+                                        <div>
+                                            <i class="fa fa-comment fa-fw"></i>Alertas del sistema
+                                            <span class="pull-right text-muted small">#{managedBeanPlantilla.alertas}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="comodin.xhtml">
+                                        <div>
+                                            <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
+                                            <span class="pull-right text-muted small">0</span>
+                                        </div>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                            <!-- end dropdown-alerts -->
+                        </li>
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-user fa-3x"></i>
+                            </a>
+                            <!-- dropdown user-->
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#"><i class="fa fa-gear fa-fw"></i>Configuración del sistema</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="login.xhtml"><i class="fa fa-sign-out fa-fw"></i>Desconectarse</a>
+                                </li>
+                            </ul>
+                            <!-- end dropdown-user -->
+                        </li>
+                        <!-- end main dropdown -->
+                    </ul>
+                    <!-- end navbar-top-links -->
+
+                </nav>
+                <!-- end navbar top -->
+
+                <!-- navbar side -->
+                <nav class="navbar-default navbar-static-side" role="navigation">
+                    <!-- sidebar-collapse -->
+                    <div class="sidebar-collapse">
+                        <!-- side-menu -->
+                        <ul class="nav" id="side-menu">
+                            <li>
+                                <!-- user image section-->
+                                <div class="user-section">
+
+                                </div>
+                                <!--end user image section-->
+                            </li>
+
+                            <li>
+                                <a href="home.xhtml"><i class="fa fa-dashboard fa-fw"></i>Inicio</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-edit fa-fw"></i>Gestion documentos<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <p:commandLink value="Todos los documentos" action="#{managedBeanPlantilla.redirigir('1')}"  /> 
+                                    </li>
+                                    <li>
+                                        <p:commandLink value="Documentos por programa" action="#{managedBeanPlantilla.redirigir('2')}"  /> 
+                                    </li>
+                                    <li>
+                                        <p:commandLink value="Documentos por estado" action="#{managedBeanPlantilla.redirigir('3')}"  /> 
+                                    </li>
+                                    <li>
+                                        <p:commandLink value="Documentos por seccion" action="#{managedBeanPlantilla.redirigir('4')}"  /> 
+                                    </li>
+
+                                </ul>
+                                <!-- second-level-items -->
+                            </li>
+                            <li>
+                                <a href="comodin.xhtml"><i class="fa fa-clock-o fa-fw"></i>Ver últimos cambios</a>
+                            </li>
+                            <li>
+                                <a href="buscar_documento.xhtml"><i class="fa fa-search fa-fw"></i>Buscar documento</a>
+                            </li>
+                            <li>
+                                <a href="comodin.xhtml"><i class="fa fa-exclamation fa-fw"></i>Alertar documento</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-gears fa-fw"></i>Simulaciones<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="#">Ver resultados <span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <p:commandLink value="Programa de Integracion Escolar"   /> 
+                                            </li>
+                                            <li>
+                                                <p:commandLink value="Subvención Escolar Preferencial"   /> 
+                                            </li>
+                                            <li>
+                                                <p:commandLink value="Fiscalización Integral"   /> 
+                                            </li>
+                                            <li>
+                                                <p:commandLink value="Traspaso a nuevos directores"   /> 
+                                            </li>
+                                        </ul>
+                                        <!-- third-level-items -->
+                                    </li>
+                                    <li>
+                                        <a href="#">Realizar simulación<span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <p:commandLink value="Programa de Integracion Escolar"   /> 
+                                            </li>
+                                            <li>
+                                                <p:commandLink value="Subvención Escolar Preferencial"   /> 
+                                            </li>
+                                            <li>
+                                                <p:commandLink value="Fiscalización Integral"   /> 
+                                            </li>
+                                            <li>
+                                                <p:commandLink value="Traspaso a nuevos directores"   /> 
+                                            </li>
+                                        </ul>
+                                        <!-- third-level-items -->
+                                    </li>
+                                </ul>
+                                <!-- second-level-items -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-plus-circle fa-fw"></i>Agregar elementos<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <p:commandLink value="Agregar documento"   /> 
+
+                                    </li>
+                                    <li>
+                                        <p:commandLink value="Agregar sección"   /> 
+
+                                    </li>
+
+                                </ul>
+                                <!-- second-level-items -->
+                            </li>
+                            <li>
+                                <a href="comodin.xhtml"><i class="fa fa-folder-open-o fa-fw"></i>Gestionar sección</a>
+                            </li>
+                        </ul>
+                        <!-- end side-menu -->
+                    </div>
+                    <!-- end sidebar-collapse -->
+                </nav>
+            </h:form>
+            
+                
+                <ui:insert name="contenido">El contenido</ui:insert>
+            <!-- end page-wrapper -->
+
+        </div>
+        <!-- end wrapper -->
+
+
+        <!-- jQuery -->
+        <ui:insert name="script">Aqui van los script</ui:insert>
+
+
+    </h:body>
+</html>
+

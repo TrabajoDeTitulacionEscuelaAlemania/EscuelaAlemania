@@ -18,6 +18,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 
 
@@ -40,12 +41,6 @@ public class ManagedBeanBuscarDocumento {
     private String usuario;
     private String rol;
     private List<Documento> documentos;
-    private int completos;
-    private int incompletos;
-    private int desactualizados;
-    private int sinInformacion;
-    private int alertas;
-    private int total;
     
     private String busqueda;
     private List<Documento> resultadoDocumentos;
@@ -60,7 +55,7 @@ public class ManagedBeanBuscarDocumento {
     private String msg;
 
 
-    public void init(){
+    public void cargarDatos(){
         System.out.println("INIT");
         fc=FacesContext.getCurrentInstance();
         Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
@@ -68,18 +63,51 @@ public class ManagedBeanBuscarDocumento {
         rol=(String)sesisonMap.get("rol");
         if(usuario==null)
             fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
-        else{ 
-            busqueda="";
-            documentos=documentoFacade.findAll();
-            estadoDocumentos=estadoDocumentoFacade.findAll();
-            secciones=seccionFacade.findAll();
-            completos=estadoDocumentoFacade.obtenerDocumentoPorId("1").size();
-            incompletos=estadoDocumentoFacade.obtenerDocumentoPorId("2").size();
-            desactualizados=estadoDocumentoFacade.obtenerDocumentoPorId("3").size();
-            sinInformacion=estadoDocumentoFacade.obtenerDocumentoPorId("4").size();
-            alertas=incompletos+desactualizados+sinInformacion;
-            total=alertas+completos;
+        else{
+            if (!FacesContext.getCurrentInstance().isPostback()){
+                documentos=documentoFacade.findAll();
+                estadoDocumentos=estadoDocumentoFacade.findAll();
+                secciones=seccionFacade.findAll();      
+                busqueda="";
+                resultadoDocumentos=null;
+            }
         }
+    }
+    
+    public void irAEditar(){
+        System.out.println("Ir a editar");
+        System.out.println(documentoElegido.getNombre());
+        nombreEstadoDocumento=documentoElegido.getEstadoDocumento().getEstado();
+        ubicacion=documentoElegido.getUbicacion();
+        nombreSeccion=documentoElegido.getSeccion().getSeccion();
+        observacion=documentoElegido.getObservacion();
+        
+    }
+    
+    public void editar(){
+        System.out.println("Editar");
+        fc=FacesContext.getCurrentInstance();
+        msg=documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, nombreEstadoDocumento), 
+                ubicacion, 
+                seccionFacade.obtenerPorNombre(nombreSeccion, secciones), 
+                observacion, 
+                documentoElegido);
+        if(msg.compareToIgnoreCase("ok")==0){
+            documentos=documentoFacade.findAll();
+            resultadoDocumentos=documentoFacade.buscarDocumento(busqueda, documentos);
+            RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El documento se ha modificado correctamente"));
+        }else
+            if(msg.compareTo("Campo vacio")==0)
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, "La ubicación del documento no puede estar vacia")); 
+            else
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, msg, "Ocurrió un error al modificar el documento. Inténtelo nuevamente")); 
+    }
+    
+    public void buscar(){
+        System.out.println("Buscar");
+        resultadoDocumentos=documentoFacade.buscarDocumento(busqueda, documentos);
     }
 
     public String getUsuario() {
@@ -96,54 +124,6 @@ public class ManagedBeanBuscarDocumento {
 
     public void setRol(String rol) {
         this.rol = rol;
-    }
-
-    public int getCompletos() {
-        return completos;
-    }
-
-    public void setCompletos(int completos) {
-        this.completos = completos;
-    }
-
-    public int getIncompletos() {
-        return incompletos;
-    }
-
-    public void setIncompletos(int incompletos) {
-        this.incompletos = incompletos;
-    }
-
-    public int getDesactualizados() {
-        return desactualizados;
-    }
-
-    public void setDesactualizados(int desactualizados) {
-        this.desactualizados = desactualizados;
-    }
-
-    public int getSinInformacion() {
-        return sinInformacion;
-    }
-
-    public void setSinInformacion(int sinInformacion) {
-        this.sinInformacion = sinInformacion;
-    }
-
-    public int getAlertas() {
-        return alertas;
-    }
-
-    public void setAlertas(int alertas) {
-        this.alertas = alertas;
-    }
-
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
     }
 
     public String getBusqueda() {
@@ -221,41 +201,5 @@ public class ManagedBeanBuscarDocumento {
     public ManagedBeanBuscarDocumento() {
         
     }
-    
-    public void redirigir(String tipoDoc){
-        System.out.println("Redirigir");
-        fc=FacesContext.getCurrentInstance();
-        fc.getExternalContext().getSessionMap().put("tipoDoc", tipoDoc);
-        fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/gestion_documentos.xhtml?faces-redirect=true");
-    }
-    
-    public void irAEditar(){
-        System.out.println("Ir a editar");
-        System.out.println(documentoElegido.getNombre());
-        nombreEstadoDocumento=documentoElegido.getEstadoDocumento().getEstado();
-        ubicacion=documentoElegido.getUbicacion();
-        nombreSeccion=documentoElegido.getSeccion().getSeccion();
-        observacion=documentoElegido.getObservacion();
-        
-    }
-    
-    public void editar(){
-        System.out.println("Editar");
-        fc=FacesContext.getCurrentInstance();
-        msg=documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, nombreEstadoDocumento), 
-                ubicacion, 
-                seccionFacade.obtenerPorNombre(nombreSeccion, secciones), 
-                observacion, 
-                documentoElegido);
-        if(msg.compareToIgnoreCase("ok")==0){
-            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
-            fc.addMessage(null, new FacesMessage("Finalizado",  "El cambio se realizó correctamente" ) );
-        }else
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg, "La ubicación del documento no puede estar vacia")); 
-    }
-    
-    public void buscar(){
-        System.out.println("Buscar");
-        resultadoDocumentos=documentoFacade.buscarDocumento(busqueda, documentos);
-    }
+   
 }
