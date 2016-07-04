@@ -95,20 +95,19 @@ public class ManagedBeanBuscarDocumento {
                 observacion, 
                 nombreDocumento,
                 documentoElegido);
-        if(msg.compareToIgnoreCase("ok")==0){
+        if(msg.compareToIgnoreCase("Cambios realizados correctamente")==0){
             documentos=documentoFacade.findAll();
             resultadoDocumentos=documentoFacade.buscarDocumento(busqueda, documentos);
             RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El documento se ha modificado correctamente"));
-        }else{
-            if(msg.compareTo("Campo vacio")==0)
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, "La ubicación del documento no puede estar vacia")); 
-            if(msg.compareTo("Nombre existe")==0)
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, "El nombre del documento ya existe")); 
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", msg));
+        }else
+            if(msg.compareTo("Error al modificar")==0)
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, 
+                        msg, "Ocurrió un error al modificar el documento. Inténtelo nuevamente")); 
             else
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, msg, "Ocurrió un error al modificar el documento. Inténtelo nuevamente")); 
-        }
+                FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Información", msg));
     }
     
     public void buscar(){

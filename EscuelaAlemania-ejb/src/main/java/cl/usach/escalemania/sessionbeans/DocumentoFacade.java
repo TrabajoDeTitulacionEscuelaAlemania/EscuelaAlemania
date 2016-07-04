@@ -61,10 +61,13 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
     @Override
     public String editarDocumento(EstadoDocumento estadoDocumento, String ubicacion, Seccion seccion, String observacion, String nombreDocumento, Documento documento) {
         try{
-            if(!nombreExiste(nombreDocumento))
-                return "Nombre existe";
+            if(nombreDocumento.isEmpty())
+                return "El nombre del documento no puede estar vacío";
+            if(nombreDocumento.compareToIgnoreCase(documento.getNombre())!=0)
+                if(!nombreExiste(nombreDocumento))
+                return "El nombre del documento ya existe";
         if(ubicacion.isEmpty())
-            return "Campo vacio";
+            return "El campo ubicación no puede estar vacío";
         documento.setNombre(nombreDocumento);
         documento.setEstadoDocumento(estadoDocumento);
         documento.setObservacion(observacion);
@@ -72,7 +75,7 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
         documento.setUbicacion(ubicacion);
         documento.setFechaModificacion(new Date());
         edit(documento);
-        return "OK";
+        return "Cambios realizados correctamente";
         }catch(Exception e){
             return "Error al modificar";
         }
