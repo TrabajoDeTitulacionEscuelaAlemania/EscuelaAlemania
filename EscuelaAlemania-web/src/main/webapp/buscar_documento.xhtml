@@ -35,7 +35,7 @@
                 <div class="row">
                     <!-- Page Header -->
                     <div class="col-lg-12">
-                        <h1 class="page-header">Búsqueda de documentos</h1>
+                        <p:outputLabel class="page-header" value="Búsqueda de documentos" style="font-size: 33px "/>
                     </div>
                     <!--End Page Header -->
                 </div>
@@ -94,7 +94,7 @@
 
                             <br></br>
                             <strong>Nombre:</strong>
-                            <h:inputText value="#{managedBeanBuscarDocumento.documentoElegido.nombre}" />
+                            <p:outputLabel value="#{managedBeanBuscarDocumento.documentoElegido.nombre}" />
                             <strong>Estado:</strong>
                             <p:selectOneMenu  value="#{managedBeanBuscarDocumento.nombreEstadoDocumento}" >
                                 <f:selectItems value="#{managedBeanBuscarDocumento.estadoDocumentos}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.estado}"/>

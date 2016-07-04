@@ -76,6 +76,7 @@ public class ManagedBeanGestionDocs {
     private int alertas;
     private int total;
     private String msg;
+    private String tipoNombre;
 
     public String getRol() {
         return rol;
@@ -237,6 +238,14 @@ public class ManagedBeanGestionDocs {
         this.total = total;
     }
 
+    public String getTipoNombre() {
+        return tipoNombre;
+    }
+
+    public void setTipoNombre(String tipoNombre) {
+        this.tipoNombre = tipoNombre;
+    }
+
     
     public ManagedBeanGestionDocs() {
     }
@@ -252,7 +261,8 @@ public class ManagedBeanGestionDocs {
         if(tipoDoc==null)
             fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
         else{
-            programas=programaFacade.findAll();
+            if (!FacesContext.getCurrentInstance().isPostback()){
+                programas=programaFacade.findAll();
             estadoDocumentos=estadoDocumentoFacade.findAll();
             secciones=seccionFacade.findAll();
             switch (Integer.parseInt(tipoDoc)){
@@ -261,29 +271,31 @@ public class ManagedBeanGestionDocs {
                 break;
             case 1:
                 documentos=documentoFacade.findAll();
+                tipoNombre="Todos";
                 break;
             case 2:
-                documentos=documentosPrograma;
+                tipoNombre="Por programa";
+                categoriaSeleccionada=null;
+                documentos=null;
                 documentosTotales=documentoFacade.findAll();
                 break;
             case 3:
-                documentos=documentosEstado;
+                tipoNombre="Por estado";
+                categoriaSeleccionada=null;
+                documentos=null;
                 documentosTotales=documentoFacade.findAll();
                 break;
             case 4:
-                documentos=documentosSeccion;
+                tipoNombre="Por sección";
+                categoriaSeleccionada=null;
+                documentos=null;
                 documentosTotales=documentoFacade.findAll();
                 break;
             default:
                 fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
                 break;
         }
-            completos=estadoDocumentoFacade.obtenerDocumentoPorId("1").size();
-            incompletos=estadoDocumentoFacade.obtenerDocumentoPorId("2").size();
-            desactualizados=estadoDocumentoFacade.obtenerDocumentoPorId("3").size();
-            sinInformacion=estadoDocumentoFacade.obtenerDocumentoPorId("4").size();
-            alertas=incompletos+desactualizados+sinInformacion;
-            total=alertas+completos;
+            }
         }
     }
     
@@ -295,8 +307,10 @@ public class ManagedBeanGestionDocs {
                 documentosPrograma.addAll(documentoFacade.filtrarPorPrograma(documentosTotales, programa));
             }
             documentosPrograma=documentoFacade.eliminarDuplicados(documentosPrograma);
+            documentos=documentosPrograma;
             System.out.println(documentosPrograma.size());
-        }
+        }else
+            documentos=null;
     }
     
     public void filtrarPorEstado() {
@@ -307,8 +321,10 @@ public class ManagedBeanGestionDocs {
                 documentosEstado.addAll(documentoFacade.filtrarPorEstado(documentosTotales, estado));
             }
             documentosEstado = documentoFacade.eliminarDuplicados(documentosEstado);
+            documentos=documentosEstado;
             System.out.println(documentosEstado.size());
-        }
+        }else
+            documentos=null;
     }
 
     public void filtrarPorSeccion() {
@@ -319,8 +335,10 @@ public class ManagedBeanGestionDocs {
                 documentosSeccion.addAll(documentoFacade.filtrarPorSeccion(documentosTotales, seccion));
             }
             documentosSeccion = documentoFacade.eliminarDuplicados(documentosSeccion);
+            documentos=documentosSeccion;
             System.out.println(documentosSeccion.size());
-        }
+        }else
+            documentos=null;
     }
 
     
@@ -333,18 +351,39 @@ public class ManagedBeanGestionDocs {
                 observacion, 
                 documentoElegido);
         if(msg.compareToIgnoreCase("ok")==0){
-            fc.addMessage(null, new FacesMessage("Finalizado",  "El cambio se realizó correctamente" ) );
-            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
+            switch (Integer.parseInt(tipoDoc)){
+            case 0:
+                fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
+                break;
+            case 1:
+                documentos=documentoFacade.findAll();
+                break;
+            case 2:
+                documentosTotales=documentoFacade.findAll();
+                filtrarPorPrograma();
+                break;
+            case 3:
+                documentosTotales=documentoFacade.findAll();
+                filtrarPorEstado();
+                break;
+            case 4:
+                documentosTotales=documentoFacade.findAll();
+                filtrarPorSeccion();
+                break;
+            default:
+                fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
+                break;
+        }
+            RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El documento se ha modificado correctamente"));
         }else
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg, "La ubicación del documento no puede estar vacia")); 
+            if(msg.compareTo("Campo vacio")==0)
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, "La ubicación del documento no puede estar vacia")); 
+            else
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, msg, "Ocurrió un error al modificar el documento. Inténtelo nuevamente")); 
     }
     
-    public void redirigir(String tipoDoc){
-        System.out.println("Redirigir");
-        fc=FacesContext.getCurrentInstance();
-        fc.getExternalContext().getSessionMap().put("tipoDoc", tipoDoc);
-        fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/gestion_documentos.xhtml?faces-redirect=true");
-    }
     
     public void irAEditar(){
         System.out.println("Ir a editar");

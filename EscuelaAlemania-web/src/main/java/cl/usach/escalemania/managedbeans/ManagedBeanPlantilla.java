@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 
 
@@ -58,6 +59,8 @@ public class ManagedBeanPlantilla {
             int desactualizados = estadoDocumentoFacade.obtenerDocumentoPorId("3").size();
             int sinInformacion = estadoDocumentoFacade.obtenerDocumentoPorId("4").size();
             alertas=incompletos+desactualizados+sinInformacion;
+            RequestContext.getCurrentInstance().update("plantilla");
+            System.out.println("Plantilla alertas: "+alertas);
         
     }
     

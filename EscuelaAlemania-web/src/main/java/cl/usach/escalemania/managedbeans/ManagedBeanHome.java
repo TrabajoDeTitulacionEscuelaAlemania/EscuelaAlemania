@@ -138,14 +138,7 @@ public class ManagedBeanHome {
             incompletos=estadoDocumentoFacade.obtenerDocumentoPorId("2").size();
             desactualizados=estadoDocumentoFacade.obtenerDocumentoPorId("3").size();
             sinInformacion=estadoDocumentoFacade.obtenerDocumentoPorId("4").size();
-            alertas=incompletos+desactualizados+sinInformacion;
-            total=alertas+completos;
+            total=incompletos+desactualizados+sinInformacion+completos;
         }
-    }
-    
-    public void redirigir(String tipoDoc){
-        fc=FacesContext.getCurrentInstance();
-        fc.getExternalContext().getSessionMap().put("tipoDoc", tipoDoc);
-        fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/gestion_documentos.xhtml?faces-redirect=true");
     }
 }
