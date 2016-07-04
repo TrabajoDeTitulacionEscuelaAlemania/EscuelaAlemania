@@ -50,12 +50,22 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
         super(Documento.class);
     }
 
-
+    public boolean nombreExiste(String nombreDocumento){
+        List<Documento> documentos=findAll();
+        for(Documento doc: documentos)
+            if(doc.getNombre().compareToIgnoreCase(nombreDocumento)==0)
+                return false;
+        return true;
+    }
+    
     @Override
-    public String editarDocumento(EstadoDocumento estadoDocumento, String ubicacion, Seccion seccion, String observacion, Documento documento) {
+    public String editarDocumento(EstadoDocumento estadoDocumento, String ubicacion, Seccion seccion, String observacion, String nombreDocumento, Documento documento) {
         try{
+            if(!nombreExiste(nombreDocumento))
+                return "Nombre existe";
         if(ubicacion.isEmpty())
             return "Campo vacio";
+        documento.setNombre(nombreDocumento);
         documento.setEstadoDocumento(estadoDocumento);
         documento.setObservacion(observacion);
         documento.setSeccion(seccion);

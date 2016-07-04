@@ -94,7 +94,7 @@
 
                             <br></br>
                             <strong>Nombre:</strong>
-                            <p:outputLabel value="#{managedBeanBuscarDocumento.documentoElegido.nombre}" />
+                            <p:inputTextarea value="#{managedBeanBuscarDocumento.nombreDocumento}" maxlength="300"/>
                             <strong>Estado:</strong>
                             <p:selectOneMenu  value="#{managedBeanBuscarDocumento.nombreEstadoDocumento}" >
                                 <f:selectItems value="#{managedBeanBuscarDocumento.estadoDocumentos}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.estado}"/>
@@ -104,9 +104,9 @@
                                 <f:selectItems value="#{managedBeanBuscarDocumento.secciones}" var="seccion" itemLabel="#{seccion.seccion}" itemValue="#{seccion.seccion}"/>
                             </p:selectOneMenu>
                             <strong>Ubicación:</strong>
-                            <p:inputText value="#{managedBeanBuscarDocumento.ubicacion}" />
+                            <p:inputText value="#{managedBeanBuscarDocumento.ubicacion}" maxlength="100"/>
                             <strong>Observación:</strong>
-                            <p:inputText value="#{managedBeanBuscarDocumento.observacion}" />
+                            <p:inputText value="#{managedBeanBuscarDocumento.observacion}" maxlength="120"/>
                             <p:commandButton value="Modificar"  action="#{managedBeanBuscarDocumento.editar()}" 
                                          update=":formulario:growl :formulario:Documentos"/>
                         </p:panelGrid>

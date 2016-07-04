@@ -47,6 +47,7 @@ public class ManagedBeanVerAlertas {
     private String observacion;
     private List<EstadoDocumento> estadoDocumentos;
     private List<Seccion> secciones;
+    private String nombreDocumento;
 
     public void init(){
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -69,6 +70,7 @@ public class ManagedBeanVerAlertas {
      public void irAEditar(){
         System.out.println("Ir a editar");
         System.out.println(documentoElegido.getNombre());
+        nombreDocumento=documentoElegido.getNombre();
         nombreEstadoDocumento=documentoElegido.getEstadoDocumento().getEstado();
         ubicacion=documentoElegido.getUbicacion();
         nombreSeccion=documentoElegido.getSeccion().getSeccion();
@@ -82,6 +84,7 @@ public class ManagedBeanVerAlertas {
                 ubicacion,
                 seccionFacade.obtenerPorNombre(nombreSeccion, secciones),
                 observacion, 
+                nombreDocumento,
                 documentoElegido);
         if(msg.compareToIgnoreCase("ok")==0){
             documentosAlertas=estadoDocumentoFacade.obtenerDocumentoPorId("2");
@@ -90,11 +93,22 @@ public class ManagedBeanVerAlertas {
             RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El documento se ha modificado correctamente"));
-        }else
+        }else{
             if(msg.compareTo("Campo vacio")==0)
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, "La ubicación del documento no puede estar vacia")); 
+            if(msg.compareTo("Nombre existe")==0)
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, "El nombre del documento ya existe")); 
             else
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, msg, "Ocurrió un error al modificar el documento. Inténtelo nuevamente")); 
+        }
+    }
+
+    public String getNombreDocumento() {
+        return nombreDocumento;
+    }
+
+    public void setNombreDocumento(String nombreDocumento) {
+        this.nombreDocumento = nombreDocumento;
     }
      
     public String getUsuario() {

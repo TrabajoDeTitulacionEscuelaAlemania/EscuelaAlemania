@@ -53,6 +53,7 @@ public class ManagedBeanBuscarDocumento {
     private List<EstadoDocumento> estadoDocumentos;
     private List<Seccion> secciones;
     private String msg;
+    private String nombreDocumento;
 
 
     public void cargarDatos(){
@@ -77,6 +78,7 @@ public class ManagedBeanBuscarDocumento {
     public void irAEditar(){
         System.out.println("Ir a editar");
         System.out.println(documentoElegido.getNombre());
+        nombreDocumento=documentoElegido.getNombre();
         nombreEstadoDocumento=documentoElegido.getEstadoDocumento().getEstado();
         ubicacion=documentoElegido.getUbicacion();
         nombreSeccion=documentoElegido.getSeccion().getSeccion();
@@ -91,6 +93,7 @@ public class ManagedBeanBuscarDocumento {
                 ubicacion, 
                 seccionFacade.obtenerPorNombre(nombreSeccion, secciones), 
                 observacion, 
+                nombreDocumento,
                 documentoElegido);
         if(msg.compareToIgnoreCase("ok")==0){
             documentos=documentoFacade.findAll();
@@ -98,16 +101,27 @@ public class ManagedBeanBuscarDocumento {
             RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El documento se ha modificado correctamente"));
-        }else
+        }else{
             if(msg.compareTo("Campo vacio")==0)
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, "La ubicación del documento no puede estar vacia")); 
+            if(msg.compareTo("Nombre existe")==0)
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, "El nombre del documento ya existe")); 
             else
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, msg, "Ocurrió un error al modificar el documento. Inténtelo nuevamente")); 
+        }
     }
     
     public void buscar(){
         System.out.println("Buscar");
         resultadoDocumentos=documentoFacade.buscarDocumento(busqueda, documentos);
+    }
+
+    public String getNombreDocumento() {
+        return nombreDocumento;
+    }
+
+    public void setNombreDocumento(String nombreDocumento) {
+        this.nombreDocumento = nombreDocumento;
     }
 
     public String getUsuario() {

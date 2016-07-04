@@ -76,7 +76,7 @@
 
                             <br></br>
                             <strong>Nombre:</strong>
-                            <p:inputText disabled="true" value="#{managedBeanVerAlertas.documentoElegido.nombre}" />
+                            <p:inputTextarea value="#{managedBeanVerAlertas.nombreDocumento}" maxlength="300"/>
                             <strong>Estado:</strong>
                             <p:selectOneMenu  value="#{managedBeanVerAlertas.nombreEstadoDocumento}" >
                                 <f:selectItems value="#{managedBeanVerAlertas.estadoDocumentos}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.estado}"/>
@@ -86,9 +86,9 @@
                                 <f:selectItems value="#{managedBeanVerAlertas.secciones}" var="seccion" itemLabel="#{seccion.seccion}" itemValue="#{seccion.seccion}"/>
                             </p:selectOneMenu>
                             <strong>Ubicación:</strong>
-                            <p:inputText value="#{managedBeanVerAlertas.ubicacion}" />
+                            <p:inputText value="#{managedBeanVerAlertas.ubicacion}" maxlength="100"/>
                             <strong>Observación:</strong>
-                            <p:inputText value="#{managedBeanVerAlertas.observacion}" />
+                            <p:inputText value="#{managedBeanVerAlertas.observacion}" maxlength="120" />
                             <p:commandButton value="Modificar"  action="#{managedBeanVerAlertas.editar()}" 
                                          update=":formulario:growl :formulario:Documentos"/>
                         </p:panelGrid>

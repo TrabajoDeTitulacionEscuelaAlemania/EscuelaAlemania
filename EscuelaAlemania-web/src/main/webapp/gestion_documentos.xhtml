@@ -119,7 +119,7 @@
 
                                 <br></br>
                                 <strong>Nombre:</strong>
-                                <p:outputLabel value="#{managedBeanGestionDocs.documentoElegido.nombre}" />
+                                <p:inputTextarea maxlength="300" value="#{managedBeanGestionDocs.nombreDocumento}" />
                                 <strong>Estado:</strong>
                                 <p:selectOneMenu  value="#{managedBeanGestionDocs.nombreEstadoDocumento}" >
                                     <f:selectItems value="#{managedBeanGestionDocs.estadoDocumentos}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.estado}"/>
@@ -129,9 +129,9 @@
                                     <f:selectItems value="#{managedBeanGestionDocs.secciones}" var="seccion" itemLabel="#{seccion.seccion}" itemValue="#{seccion.seccion}"/>
                                 </p:selectOneMenu>
                                 <strong>Ubicación:</strong>
-                                <p:inputText value="#{managedBeanGestionDocs.ubicacion}" />
+                                <p:inputText value="#{managedBeanGestionDocs.ubicacion}" maxlength="100" />
                                 <strong>Observación:</strong>
-                                <p:inputText value="#{managedBeanGestionDocs.observacion}" />
+                                <p:inputText value="#{managedBeanGestionDocs.observacion}" maxlength="120" />
                                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                                 <p:commandButton value="Modificar"  action="#{managedBeanGestionDocs.editar()}" update=":form:growl :form:Documentos"/>
 
