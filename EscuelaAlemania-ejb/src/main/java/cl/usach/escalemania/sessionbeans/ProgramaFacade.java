@@ -36,8 +36,8 @@ public class ProgramaFacade extends AbstractFacade<Programa> implements Programa
     @Override
     public List<Documento> DocumentosPorPrograma(String programa) {
         Query query=em.createNamedQuery("Programa.findByName").setParameter("programa", programa);
-        Programa programaObject=(Programa) query.getSingleResult();
-        return programaObject.getDocumentos();
+        Programa resultado=(Programa) query.getSingleResult();
+        return resultado.getDocumentos();
     }
 
     @Override

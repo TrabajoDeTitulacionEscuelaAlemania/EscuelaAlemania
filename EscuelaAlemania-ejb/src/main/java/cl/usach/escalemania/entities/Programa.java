@@ -17,6 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 /**
  *
@@ -25,6 +27,8 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name="Programa.findByid",
                 query="SELECT c FROM Programa c WHERE c.id = :id"),
+    @NamedQuery(name="Programa.findByName",
+                query="SELECT c FROM Programa c WHERE c.programa = :programa"),
 })
 @Entity
 public class Programa implements Serializable {
@@ -37,6 +41,17 @@ public class Programa implements Serializable {
     private String programa;
     @ManyToMany(mappedBy = "programas", fetch=FetchType.EAGER)
     private List<Documento> documentos;
+    @OneToMany(mappedBy = "programa", fetch = FetchType.EAGER)
+    @OrderBy("id ASC")
+    private List<Simulacion> simulaciones;
+
+    public List<Simulacion> getSimulaciones() {
+        return simulaciones;
+    }
+
+    public void setSimulaciones(List<Simulacion> simulaciones) {
+        this.simulaciones = simulaciones;
+    }
 
     public String getPrograma() {
         return programa;
