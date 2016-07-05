@@ -185,5 +185,33 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
         return resultado;
     }
      
-    
+    @Override
+    public String crearDocumento(String nombre, String ubicacion, String observacion, EstadoDocumento estadoDocumento, Seccion seccion, List<Programa> programas){
+        try {
+            if (nombre.isEmpty()) {
+                return "El campo nombre no puede estar vacío";
+            }
+            if (ubicacion.isEmpty()) {
+                return "El campo ubicación no puede estar vacío";
+            }
+            if (programas.isEmpty()) {
+                return "El documento debe pertenecer al menos a un programa";
+            }
+            if (!nombreExiste(nombre)) {
+                return "El documento ya existe";
+            }
+            Documento documento=new Documento();
+            documento.setNombre(nombre);
+            documento.setEstadoDocumento(estadoDocumento);
+            documento.setFechaModificacion(new Date());
+            documento.setObservacion(observacion);
+            documento.setProgramas(programas);
+            documento.setSeccion(seccion);
+            documento.setUbicacion(ubicacion);
+            create(documento);
+            return "Documento creado existosamente";
+        } catch (Exception e) {
+            return "Error";
+        }
+    }
 }

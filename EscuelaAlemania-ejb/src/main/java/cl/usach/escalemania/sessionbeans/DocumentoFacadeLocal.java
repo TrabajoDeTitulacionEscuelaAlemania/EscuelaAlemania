@@ -7,6 +7,7 @@ package cl.usach.escalemania.sessionbeans;
 
 import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.EstadoDocumento;
+import cl.usach.escalemania.entities.Programa;
 import cl.usach.escalemania.entities.Seccion;
 import java.util.List;
 import javax.ejb.Local;
@@ -46,5 +47,7 @@ public interface DocumentoFacadeLocal {
     List<Documento> filtrarPorEstado(List<Documento> documentos, String nombreEstado);
 
     List<Documento> filtrarPorSeccion(List<Documento> documentos, String nombreSeccion);
+    
+    String crearDocumento(String nombre, String ubicacion, String observacion, EstadoDocumento estadoDocumento, Seccion seccion, List<Programa> programas);
     
 }

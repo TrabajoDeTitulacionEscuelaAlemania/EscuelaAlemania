@@ -7,6 +7,7 @@ package cl.usach.escalemania.sessionbeans;
 
 import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.Programa;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -47,5 +48,11 @@ public class ProgramaFacade extends AbstractFacade<Programa> implements Programa
         return null;
     }
      
-    
+    @Override
+    public List<Programa> obtenerListaDeProgramas(List<String> programa, List<Programa> programas){
+        List<Programa> resultado=new ArrayList<>();
+        for(String p:programa)
+            resultado.add(obtenerProgramaPorNombre(programas, p));
+        return resultado;
+    }
 }

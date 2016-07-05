@@ -9,12 +9,13 @@ import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.Programa;
 import java.util.List;
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
  * @author Desarrollo
  */
-@Local
+@Remote
 public interface ProgramaFacadeLocal {
 
     void create(Programa programa);
@@ -34,5 +35,7 @@ public interface ProgramaFacadeLocal {
     List<Documento> DocumentosPorPrograma(String programa);
 
     Programa obtenerProgramaPorNombre(List<Programa> programas, String nombrePrograma);
+    
+    List<Programa> obtenerListaDeProgramas(List<String> programa, List<Programa> programas);
     
 }
