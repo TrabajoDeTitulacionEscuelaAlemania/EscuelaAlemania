@@ -214,4 +214,14 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
             return "Error";
         }
     }
+    
+    @Override
+    public String eliminarDocumento(Documento documento){
+        try{
+            remove(documento);
+            return "Documento eliminado exitosamente";
+        }catch(Exception e){
+            return "Error al eliminar el documento";
+        }
+    }
 }

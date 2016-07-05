@@ -115,6 +115,18 @@ public class ManagedBeanBuscarDocumento {
         resultadoDocumentos=documentoFacade.buscarDocumento(busqueda, documentos);
     }
 
+    public void eliminarDocumento(){
+        String resultado=documentoFacade.eliminarDocumento(documentoElegido);
+        if(resultado.compareTo("Documento eliminado exitosamente")==0){
+            documentos=documentoFacade.findAll();
+            resultadoDocumentos=documentoFacade.buscarDocumento(busqueda, documentos);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
+        }else
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", resultado));
+    }
+    
     public String getNombreDocumento() {
         return nombreDocumento;
     }

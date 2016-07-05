@@ -224,6 +224,39 @@ public class ManagedBeanGestionDocs {
         observacion=documentoElegido.getObservacion();
         
     }
+    
+    public void eliminarDocumento(){
+        String resultado=documentoFacade.eliminarDocumento(documentoElegido);
+        if(resultado.compareTo("Documento eliminado exitosamente")==0){
+            switch (Integer.parseInt(tipoDoc)){
+            case 0:
+                fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
+                break;
+            case 1:
+                documentos=documentoFacade.findAll();
+                break;
+            case 2:
+                documentosTotales=documentoFacade.findAll();
+                filtrarPorPrograma();
+                break;
+            case 3:
+                documentosTotales=documentoFacade.findAll();
+                filtrarPorEstado();
+                break;
+            case 4:
+                documentosTotales=documentoFacade.findAll();
+                filtrarPorSeccion();
+                break;
+            default:
+                fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
+                break;
+            }
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
+        }else
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", resultado));
+    }
 
     public String getNombreDocumento() {
         return nombreDocumento;

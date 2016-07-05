@@ -103,12 +103,17 @@
                             <h:outputText value="#{doc.observacion}" />
                         </p:column>
                         
-                        <p:column style="width:60px; text-align: center" >
+                        <p:column style="width:110px; text-align: center" >
                            
                             <p:commandButton update=":form:docDetalle" oncomplete="PF('docDialogo').show()" title="Editar" 
                                              icon="ui-icon-pencil" ajax="true" action="#{managedBeanGestionDocs.irAEditar()}">
                                 <f:setPropertyActionListener value="#{doc}" target="#{managedBeanGestionDocs.documentoElegido}" />
                             </p:commandButton> 
+                            <p:spacer width="5" />
+                        <p:commandButton update=":form:growl :form:Documentos"  title="Eliminar" 
+                                         icon="fa fa-times"   action="#{managedBeanGestionDocs.eliminarDocumento()}">
+                            <f:setPropertyActionListener value="#{doc}" target="#{managedBeanGestionDocs.documentoElegido}" />
+                        </p:commandButton> 
                         </p:column>
                            
                     </p:dataTable>
@@ -132,7 +137,6 @@
                                 <p:inputText value="#{managedBeanGestionDocs.ubicacion}" maxlength="100" />
                                 <strong>Observación:</strong>
                                 <p:inputText value="#{managedBeanGestionDocs.observacion}" maxlength="120" />
-                                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                                 <p:commandButton value="Modificar"  action="#{managedBeanGestionDocs.editar()}" update=":form:growl :form:Documentos"/>
 
                             </p:panelGrid>

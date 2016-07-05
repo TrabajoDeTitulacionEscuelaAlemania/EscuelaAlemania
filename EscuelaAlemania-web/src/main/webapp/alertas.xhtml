@@ -60,11 +60,16 @@
                         <h:outputText value="#{doc.observacion}" />
                     </p:column>
 
-                    <p:column style="width:60px; text-align: center" >
+                    <p:column style="width:110px; text-align: center" >
 
                         <p:commandButton update=":formulario:docDetalle" oncomplete="PF('docDialogo').show()" title="Editar" 
-                                         icon="ui-icon-pencil"  action="#{managedBeanVerAlertas.irAEditar()}">
+                                         icon="fa fa-pencil"   action="#{managedBeanVerAlertas.irAEditar()}">
                             <f:setPropertyActionListener value="#{doc}" target="#{managedBeanVerAlertas.documentoElegido}" />
+                        </p:commandButton> 
+                        <p:spacer width="5" />
+                        <p:commandButton update=":formulario:growl :formulario:Documentos"  title="Eliminar" 
+                                         icon="fa fa-times"   action="#{managedBeanVerAlertas.eliminarDocumento()}">
+                         <f:setPropertyActionListener value="#{doc}" target="#{managedBeanVerAlertas.documentoElegido}" />
                         </p:commandButton> 
                     </p:column>
 

@@ -102,6 +102,19 @@ public class ManagedBeanVerAlertas {
                     new FacesMessage(FacesMessage.SEVERITY_WARN, "Información", msg));
     }
 
+    public void eliminarDocumento(){
+        String resultado=documentoFacade.eliminarDocumento(documentoElegido);
+        if(resultado.compareTo("Documento eliminado exitosamente")==0){
+            documentosAlertas=estadoDocumentoFacade.obtenerDocumentoPorId("2");
+            documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("3"));
+            documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("4"));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
+        }else
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", resultado));
+    }
+     
     public String getNombreDocumento() {
         return nombreDocumento;
     }

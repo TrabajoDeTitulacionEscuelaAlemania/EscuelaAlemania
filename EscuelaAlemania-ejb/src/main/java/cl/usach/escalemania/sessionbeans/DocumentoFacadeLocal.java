@@ -49,5 +49,6 @@ public interface DocumentoFacadeLocal {
     List<Documento> filtrarPorSeccion(List<Documento> documentos, String nombreSeccion);
     
     String crearDocumento(String nombre, String ubicacion, String observacion, EstadoDocumento estadoDocumento, Seccion seccion, List<Programa> programas);
-    
+ 
+    String eliminarDocumento(Documento documento);
 }
