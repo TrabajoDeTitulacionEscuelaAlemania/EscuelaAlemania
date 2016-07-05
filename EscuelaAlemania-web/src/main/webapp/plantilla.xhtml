@@ -18,7 +18,7 @@
 
         <style type="text/css">
          .ui-growl {
-             top:12%;
+             top:15%;
              
          }
          .selection tr {
@@ -50,6 +50,8 @@ float: left;
                     </div>
                     <!-- end navbar-header -->
                     <!-- navbar-top-links -->
+                    <p:outputPanel style="display:block" id="alert" >
+
                     <ul class="nav navbar-top-links navbar-right">
                         <!-- main dropdown -->
                         
@@ -101,6 +103,7 @@ float: left;
                         </li>
                         <!-- end main dropdown -->
                     </ul>
+                        </p:outputPanel>
                     <!-- end navbar-top-links -->
 
                 </nav>
@@ -143,7 +146,10 @@ float: left;
                                 <!-- second-level-items -->
                             </li>
                             <li>
-                                <a href="comodin.xhtml"><i class="fa fa-clock-o fa-fw"></i>Ver últimos cambios</a>
+                                <a href="crear_documento.xhtml"><i class="fa fa-plus-circle fa-fw"></i>Agregar documento</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-clock-o fa-fw"></i>Ver últimos cambios</a>
                             </li>
                             <li>
                                 <a href="buscar_documento.xhtml"><i class="fa fa-search fa-fw"></i>Buscar documento</a>
@@ -194,22 +200,7 @@ float: left;
                                 <!-- second-level-items -->
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-plus-circle fa-fw"></i>Agregar elementos<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <p:commandLink value="Agregar documento"   /> 
-
-                                    </li>
-                                    <li>
-                                        <p:commandLink value="Agregar sección"   /> 
-
-                                    </li>
-
-                                </ul>
-                                <!-- second-level-items -->
-                            </li>
-                            <li>
-                                <a href="comodin.xhtml"><i class="fa fa-folder-open-o fa-fw"></i>Gestionar sección</a>
+                                <a href="#"><i class="fa fa-folder-open-o fa-fw"></i>Gestionar sección</a>
                             </li>
                         </ul>
                         <!-- end side-menu -->

@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="plantilla.xhtml">
+        
+        <ui:define name="hojasestilo">
+            
+            <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
+        <h:outputStylesheet name="font-awesome/css/font-awesome.css" />
+        <h:outputStylesheet name="plugins/pace/pace-theme-big-counter.css" />
+        <h:outputStylesheet name="css/style.css" />
+        <h:outputStylesheet name="css/main-style.css" />
+        <h:outputStylesheet name="plugins/morris/morris-0.4.3.min.css" />
+            
+        </ui:define>
+        
+        <ui:define name="init">
+            
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{managedBeanCrearDocumento.init}" />
+            </f:metadata>
+            
+        </ui:define>
+        
+        <ui:define name="contenido">
+            
+            <div id="page-wrapper">
+
+                <div class="row">
+                    <!-- Page Header -->
+                    <div class="col-lg-12">
+                        <p:outputLabel class="page-header" value="Crear documento" style="font-size: 33px "/>
+                        
+                    </div>
+                    <!--End Page Header -->
+                </div>
+
+               
+                
+                
+                <h:form id="formularioCrear">
+                    <p:growl id="growl" showDetail="true" />
+                    <div class="panel panel-default" style="margin-left: 10%;margin-right: 10%">
+                        <div class="panel-heading">
+                            <p:outputLabel  value="Complete el formulario" style="font-size: 15px "/>
+                        </div>
+                        <div class="panel-body">
+                                        <div class="form-group">
+                                            <label>*Nombre del documento</label>
+                                            <br/>
+                                            <p:inputTextarea class="form-control" value="#{managedBeanCrearDocumento.nombre}" 
+                                                             maxlength="300" style="width: 700px" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>*Programa(s)</label>
+                                            <br/>
+                                            <p:selectManyButton  value="#{managedBeanCrearDocumento.programa}">
+                                                <f:selectItems value="#{managedBeanCrearDocumento.programas}" var="programa"
+                                                               itemLabel="#{programa.programa}" itemValue="#{programa.programa}" />
+                                            </p:selectManyButton>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>*Sección</label>
+                                            <br/>
+                                            <p:selectOneButton  value="#{managedBeanCrearDocumento.seccion}">
+                                                <f:selectItems value="#{managedBeanCrearDocumento.secciones}" var="seccion"
+                                                               itemLabel="#{seccion.seccion}" itemValue="#{seccion.seccion}" />
+                                            </p:selectOneButton>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>*Estado del documento</label>
+                                            <br/>
+                                            <p:selectOneButton  value="#{managedBeanCrearDocumento.estadoDocumento}">
+                                                <f:selectItems value="#{managedBeanCrearDocumento.estadoDocumentos}" var="estDoc"
+                                                               itemLabel="#{estDoc.estado}" itemValue="#{estDoc.estado}" />
+                                            </p:selectOneButton>
+                                        </div>
+                            <div class="form-group">
+                                            <label>*Ubicación</label>
+                                            <br/>
+                                            <p:inputText value="#{managedBeanCrearDocumento.ubicación}" maxlength="100"
+                                                         style="width: 700px"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Observaciones</label>
+                                            <br/>
+                                            <p:inputText value="#{managedBeanCrearDocumento.observacion}" maxlength="120" 
+                                                         style="width: 700px"/>
+                                        </div>
+                            
+                            <p:commandButton class="btn btn-primary" value="Crear" action="#{managedBeanCrearDocumento.crearDocumento()}"
+                                             update="growl formularioCrear" />
+                                        
+                                   
+                                </div>
+                            </div>
+                       
+                   
+                    </h:form>
+                    
+            </div>
+            
+</ui:define>
+        
+        <ui:define name="script">
+            
+        <h:outputScript  name="plugins/bootstrap/bootstrap.min.js" />
+        <h:outputScript name="plugins/metisMenu/jquery.metisMenu.js" />
+        <h:outputScript  name="plugins/pace/pace.js" />
+        <h:outputScript  name="scripts/siminta.js" />
+        <h:outputScript name="plugins/morris/raphael-2.1.0.min.js" />
+        <h:outputScript  name="plugins/morris/morris.js" />
+        
+        </ui:define>
+        
+    </ui:composition>
+   
+    
+</html>
+
+

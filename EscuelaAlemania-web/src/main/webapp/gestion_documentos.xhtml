@@ -82,7 +82,7 @@
                     </h:form>
                     <br/><br/>
                 <h:form id="form">
-                    <p:growl id="growl" showDetail="true" />
+                    <p:growl id="growl" showDetail="true" autoUpdate="false" />
                     <p:dataTable id="Documentos" var="doc" value="#{managedBeanGestionDocs.documentos}"  rows="5"
                                  paginator="true"  rowsPerPageTemplate="5,10,15" 
                                  emptyMessage="No se econtraron documentos para ese criterio" filteredValue="#{managedBeanGestionDocs.documentosFiltrados}">

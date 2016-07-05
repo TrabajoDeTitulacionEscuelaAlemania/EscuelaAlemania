@@ -59,7 +59,7 @@ public class ManagedBeanPlantilla {
             int desactualizados = estadoDocumentoFacade.obtenerDocumentoPorId("3").size();
             int sinInformacion = estadoDocumentoFacade.obtenerDocumentoPorId("4").size();
             alertas=incompletos+desactualizados+sinInformacion;
-            RequestContext.getCurrentInstance().update("plantilla");
+            RequestContext.getCurrentInstance().update("plantilla:alert");
             System.out.println("Plantilla alertas: "+alertas);
         
     }
