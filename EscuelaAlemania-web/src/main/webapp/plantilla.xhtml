@@ -179,14 +179,19 @@ float: left;
                     <!-- end sidebar-collapse -->
                 </nav>
             </h:form>
-            
+                
                 
                 <ui:insert name="contenido">El contenido</ui:insert>
             <!-- end page-wrapper -->
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
+              <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                  <p:graphicImage name="img\cargando.gif" />
+              </p:dialog>
         </div>
         <!-- end wrapper -->
-
+        
+        
 
         <!-- jQuery -->
         <ui:insert name="script">Aqui van los script</ui:insert>

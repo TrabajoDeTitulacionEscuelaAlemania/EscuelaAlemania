@@ -67,14 +67,28 @@
                             <f:setPropertyActionListener value="#{doc}" target="#{managedBeanVerAlertas.documentoElegido}" />
                         </p:commandButton> 
                         <p:spacer width="5" />
-                        <p:commandButton update=":formulario:growl :formulario:Documentos"  title="Eliminar" 
-                                         icon="fa fa-times"   action="#{managedBeanVerAlertas.eliminarDocumento()}">
+                        <p:commandButton title="Eliminar" icon="fa fa-trash-o"   onclick="PF('elimDialog').show();">
                          <f:setPropertyActionListener value="#{doc}" target="#{managedBeanVerAlertas.documentoElegido}" />
                         </p:commandButton> 
                     </p:column>
 
                 </p:dataTable>
 
+                 <p:dialog  header="Eliminar documento" widgetVar="elimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="elimDetalle" style="display:block; text-align:center;margin: 0 auto;">
+                        <p:panelGrid  columns="" rendered="#{not empty managedBeanVerAlertas.documentoElegido}"  >
+
+                            <br></br>
+                            <strong>¿Desea eliminar el documento seleccionado?</strong>
+                            <br/>
+                        </p:panelGrid>
+                        <p:commandButton  value="Si"  action="#{managedBeanVerAlertas.eliminarDocumento()}"  onclick="PF('elimDialog').hide();"
+                                         update=":formulario:growl :formulario:Documentos" icon="fa fa-check-circle-o"/>
+                        <p:spacer width="3" />
+                        <p:commandButton  value="No" onclick="PF('elimDialog').hide();" icon="fa fa-times-circle-o"/>
+                    </p:outputPanel>
+                </p:dialog>
+                
                 <p:dialog  header="Información documento" widgetVar="docDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="docDetalle" style="text-align:left">
                         <p:panelGrid  columns="2" rendered="#{not empty managedBeanVerAlertas.documentoElegido}"  >
@@ -94,10 +108,9 @@
                             <p:inputText value="#{managedBeanVerAlertas.ubicacion}" maxlength="100"/>
                             <strong>Observación:</strong>
                             <p:inputText value="#{managedBeanVerAlertas.observacion}" maxlength="120" />
-                            <p:commandButton value="Modificar"  action="#{managedBeanVerAlertas.editar()}" 
-                                         update=":formulario:growl :formulario:Documentos"/>
                         </p:panelGrid>
-                        
+                        <p:commandButton  value="Modificar"  action="#{managedBeanVerAlertas.editar()}" 
+                                         style="display:block; text-align:center;margin: 0 auto;" update=":formulario:growl :formulario:Documentos"/>
                     </p:outputPanel>
                 </p:dialog>
        
