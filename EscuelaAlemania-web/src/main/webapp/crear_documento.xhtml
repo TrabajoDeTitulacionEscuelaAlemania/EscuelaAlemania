@@ -44,7 +44,7 @@
                 
                 <h:form id="formularioCrear">
                     <p:growl id="growl" showDetail="true" />
-                    <div class="panel panel-default" style="margin-left: 10%;margin-right: 10%">
+                    <div class="panel panel-primary" style="margin-left: 10%;margin-right: 10%">
                         <div class="panel-heading">
                             <p:outputLabel  value="Complete el formulario" style="font-size: 15px "/>
                         </div>
@@ -91,9 +91,9 @@
                                             <p:inputText value="#{managedBeanCrearDocumento.observacion}" maxlength="120" 
                                                          style="width: 700px"/>
                                         </div>
-                            
-                            <p:commandButton class="btn btn-primary" value="Crear" action="#{managedBeanCrearDocumento.crearDocumento()}"
-                                             update="growl formularioCrear" />
+                            <br/>
+                            <p:commandButton class="btn btn-primary" value="Crear documento" action="#{managedBeanCrearDocumento.crearDocumento()}"
+                                             style="display:block; text-align:center; margin: 0 auto" update="growl formularioCrear" />
                                         
                                    
                                 </div>

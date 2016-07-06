@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="plantilla.xhtml">
+        
+        <ui:define name="hojasestilo">
+            
+            <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
+        <h:outputStylesheet name="font-awesome/css/font-awesome.css" />
+        <h:outputStylesheet name="plugins/pace/pace-theme-big-counter.css" />
+        <h:outputStylesheet name="css/style.css" />
+        <h:outputStylesheet name="css/main-style.css" />
+        <h:outputStylesheet name="plugins/morris/morris-0.4.3.min.css" />
+            
+        </ui:define>
+        
+        <ui:define name="init">
+            
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{managedBeanRealizarSimulacion.init}" />
+            </f:metadata>
+            
+        </ui:define>
+        
+        <ui:define name="contenido">
+            
+            <div id="page-wrapper">
+
+                <div class="row">
+                    <!-- Page Header -->
+                    <div class="col-lg-12">
+                        <p:outputLabel class="page-header" value="Realizar simulación" style="font-size: 33px "/>
+                        
+                    </div>
+                    <!--End Page Header -->
+                </div>
+
+                <h:form>
+                    
+                        
+                        <h:panelGroup style="display:block; text-align:center">
+
+                            <h3><strong>Seleccione el programa que desea evaluar:</strong></h3>
+                            <p:spacer width="5"/>
+                            <p:selectOneMenu value="#{managedBeanRealizarSimulacion.nombrePrograma}" effect="fold" >
+                                <f:selectItems value="#{managedBeanRealizarSimulacion.programas}" var="programa"
+                                               itemLabel="#{programa.programa}" itemValue="#{programa.programa}" />
+                            </p:selectOneMenu>
+                            <br/>
+                            <p:commandButton class="btn btn-primary" value="Iniciar evaluación" 
+                                             update="resultados" action="#{managedBeanRealizarSimulacion.realizarSimulacion()}"/>
+                        </h:panelGroup>
+                    <br/>
+                    
+                    <div class="col-lg-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            Resultados
+                        </div>
+                        <div class="panel-body">
+                            <p:panelGrid id="resultados" style="margin: 0 auto;display:block; text-align:center;">
+                                
+                                <f:facet name="header">
+                                    <p:row>
+                                        <p:column colspan="3">Programa evaluado: "#{managedBeanRealizarSimulacion.nombrePrograma}"</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="width:500px">Parámetro evaluado</p:column>
+                                        <p:column>Resultado anterior</p:column>
+                                        <p:column>Resultado actual</p:column>
+                                    </p:row>
+                                </f:facet>
+                                <p:row>
+                                    <p:column style="width:500px">Documentos completos</p:column>
+                                    <p:column rendered="#{managedBeanRealizarSimulacion.simulacionAnterior eq null}">-</p:column>
+                                    <p:column rendered="#{not empty managedBeanRealizarSimulacion.simulacionAnterior}">#{managedBeanRealizarSimulacion.simulacionAnterior.docCompletos}</p:column>
+                                    <p:column style="font-weight: bold;">#{managedBeanRealizarSimulacion.simulacionActual.docCompletos}</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="width:500px">Documentos incompletos</p:column>
+                                    <p:column rendered="#{managedBeanRealizarSimulacion.simulacionAnterior eq null}">-</p:column>
+                                    <p:column rendered="#{not empty managedBeanRealizarSimulacion.simulacionAnterior}">#{managedBeanRealizarSimulacion.simulacionAnterior.docIncompletos}</p:column>
+                                    <p:column style="font-weight: bold;">#{managedBeanRealizarSimulacion.simulacionActual.docIncompletos}</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="width:500px">Documentos desactualizados</p:column>
+                                    <p:column rendered="#{managedBeanRealizarSimulacion.simulacionAnterior eq null}">-</p:column>
+                                    <p:column rendered="#{not empty managedBeanRealizarSimulacion.simulacionAnterior}">#{managedBeanRealizarSimulacion.simulacionAnterior.docDesactualizados}</p:column>
+                                    <p:column style="font-weight: bold;">#{managedBeanRealizarSimulacion.simulacionActual.docDesactualizados}</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="width:500px">Documentos sin información</p:column>
+                                    <p:column rendered="#{managedBeanRealizarSimulacion.simulacionAnterior eq null}">-</p:column>
+                                    <p:column rendered="#{not empty managedBeanRealizarSimulacion.simulacionAnterior}">#{managedBeanRealizarSimulacion.simulacionAnterior.docSinInformacion}</p:column>
+                                    <p:column style="font-weight: bold;">#{managedBeanRealizarSimulacion.simulacionActual.docSinInformacion}</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="font-weight: bold;width:500px">Porcentaje de aprobación de la simulación</p:column>
+                                    <p:column rendered="#{managedBeanRealizarSimulacion.simulacionAnterior eq null}">-</p:column>
+                                    <p:column rendered="#{not empty managedBeanRealizarSimulacion.simulacionAnterior}">#{managedBeanRealizarSimulacion.simulacionAnterior.porcentajeAprobacion}%</p:column>
+                                    <p:column style="font-weight: bold;"><h2>#{managedBeanRealizarSimulacion.simulacionActual.porcentajeAprobacion}%</h2></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="font-weight: bold;width:500px">Nota obtenida en la simulación</p:column>
+                                    <p:column rendered="#{managedBeanRealizarSimulacion.simulacionAnterior eq null}">-</p:column>
+                                    <p:column rendered="#{not empty managedBeanRealizarSimulacion.simulacionAnterior}">#{managedBeanRealizarSimulacion.simulacionAnterior.nota}</p:column>
+                                    <p:column style="font-weight: bold;"><h2>#{managedBeanRealizarSimulacion.simulacionActual.nota}</h2></p:column>
+                                </p:row>
+                                
+                            </p:panelGrid>
+                        </div>
+                    </div>
+                </div>
+                  
+                    </h:form>
+                
+            </div>
+                
+</ui:define>
+        
+        <ui:define name="script">
+            
+        <h:outputScript  name="plugins/bootstrap/bootstrap.min.js" />
+        <h:outputScript name="plugins/metisMenu/jquery.metisMenu.js" />
+        <h:outputScript  name="plugins/pace/pace.js" />
+        <h:outputScript  name="scripts/siminta.js" />
+        <h:outputScript name="plugins/morris/raphael-2.1.0.min.js" />
+        <h:outputScript  name="plugins/morris/morris.js" />
+        
+        </ui:define>
+        
+    </ui:composition>
+   
+    
+</html>
+
+
+
+

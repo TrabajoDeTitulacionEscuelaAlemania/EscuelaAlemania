@@ -41,6 +41,50 @@ public class Simulacion implements Serializable {
     @JoinColumn(nullable = false)
     @ManyToOne
     private Programa programa;
+    
+    @Column(nullable = false)
+    private int docCompletos;
+    
+    @Column(nullable = false)
+    private int docIncompletos;
+    
+    @Column(nullable = false)
+    private int docSinInformacion;
+    
+    @Column(nullable = false)
+    private int docDesactualizados;
+
+    public int getDocCompletos() {
+        return docCompletos;
+    }
+
+    public void setDocCompletos(int docCompletos) {
+        this.docCompletos = docCompletos;
+    }
+
+    public int getDocIncompletos() {
+        return docIncompletos;
+    }
+
+    public void setDocIncompletos(int docIncompletos) {
+        this.docIncompletos = docIncompletos;
+    }
+
+    public int getDocSinInformacion() {
+        return docSinInformacion;
+    }
+
+    public void setDocSinInformacion(int docSinInformacion) {
+        this.docSinInformacion = docSinInformacion;
+    }
+
+    public int getDocDesactualizados() {
+        return docDesactualizados;
+    }
+
+    public void setDocDesactualizados(int docDesactualizados) {
+        this.docDesactualizados = docDesactualizados;
+    }
 
     public Programa getPrograma() {
         return programa;

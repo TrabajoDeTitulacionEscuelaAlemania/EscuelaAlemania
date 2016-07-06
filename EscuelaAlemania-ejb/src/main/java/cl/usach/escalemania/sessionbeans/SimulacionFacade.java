@@ -10,11 +10,13 @@ import cl.usach.escalemania.entities.Programa;
 import cl.usach.escalemania.entities.Simulacion;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,6 +30,8 @@ public class SimulacionFacade extends AbstractFacade<Simulacion> implements Simu
     
     @EJB
     private ProgramaFacadeLocal programaFacade;
+    @EJB
+    private DocumentoFacadeLocal documentoFacade;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -90,6 +94,35 @@ public class SimulacionFacade extends AbstractFacade<Simulacion> implements Simu
         puntajeTotal=docVital*5+docImportante*3+docNormal;
         double resultado=Math.round(((puntajeReal*100.0)/puntajeTotal)*100.0)/100.0;
         return resultado;
+    }
+    
+    @Override
+    public Simulacion crearSimulacion(String nombrePrograma, List<Programa> programas){
+        Programa programa=programaFacade.obtenerProgramaPorNombre(programas, nombrePrograma);
+        double nota=notaSimulacion(nombrePrograma);
+        double porcentaje=porcentajeSimulacion(nombrePrograma);
+        Simulacion simulacion=new Simulacion();
+        simulacion.setFecha(new Date());
+        simulacion.setNota(nota);
+        simulacion.setPorcentajeAprobacion(porcentaje);
+        simulacion.setPrograma(programa);
+        List<Documento> documentos=programaFacade.DocumentosPorPrograma(nombrePrograma);
+        simulacion.setDocCompletos(documentoFacade.filtrarPorEstado(documentos, "Completo").size());
+        simulacion.setDocDesactualizados(documentoFacade.filtrarPorEstado(documentos, "Desactualizado").size());
+        simulacion.setDocIncompletos(documentoFacade.filtrarPorEstado(documentos, "Incompleto").size());
+        simulacion.setDocSinInformacion(documentoFacade.filtrarPorEstado(documentos, "Sin informacion").size());
+        create(simulacion);
+        return simulacion;
+    }
+    
+    @Override
+    public Simulacion ultimaSimulacion(String nombrePrograma, List<Programa> programas){
+        Programa programa=programaFacade.obtenerProgramaPorNombre(programas, nombrePrograma);
+        int ultimo=programa.getSimulaciones().size();
+        if(ultimo==0)
+            return null;
+        Simulacion simulacion=programa.getSimulaciones().get(ultimo-1);
+        return simulacion;
     }
     
 }

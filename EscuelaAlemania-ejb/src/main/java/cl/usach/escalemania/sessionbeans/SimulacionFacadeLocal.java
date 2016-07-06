@@ -36,4 +36,8 @@ public interface SimulacionFacadeLocal {
     
     double porcentajeSimulacion(String nombrePrograma);
     
+    Simulacion crearSimulacion(String nombrePrograma, List<Programa> programas);
+    
+    Simulacion ultimaSimulacion(String nombrePrograma, List<Programa> programas);
+    
 }
