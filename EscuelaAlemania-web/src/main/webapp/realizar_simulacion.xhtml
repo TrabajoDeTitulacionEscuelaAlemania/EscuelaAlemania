@@ -51,12 +51,12 @@
                                                itemLabel="#{programa.programa}" itemValue="#{programa.programa}" />
                             </p:selectOneMenu>
                             <br/>
-                            <p:commandButton class="btn btn-primary" value="Iniciar evaluación" 
+                            <p:commandButton  class="btn btn-primary" value="Iniciar evaluación" 
                                              update="resultados" action="#{managedBeanRealizarSimulacion.realizarSimulacion()}"/>
                         </h:panelGroup>
                     <br/>
                     
-                    <div class="col-lg-4">
+                    
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             Resultados
@@ -66,46 +66,46 @@
                                 
                                 <f:facet name="header">
                                     <p:row>
-                                        <p:column colspan="3">Programa evaluado: "#{managedBeanRealizarSimulacion.nombrePrograma}"</p:column>
+                                        <p:column colspan="3"><h4><strong>Programa evaluado: "#{managedBeanRealizarSimulacion.nombrePrograma}"</strong></h4></p:column>
                                     </p:row>
                                     <p:row>
-                                        <p:column style="width:500px">Parámetro evaluado</p:column>
+                                        <p:column style="width:400px">Parámetro evaluado</p:column>
                                         <p:column>Resultado anterior</p:column>
                                         <p:column>Resultado actual</p:column>
                                     </p:row>
                                 </f:facet>
                                 <p:row>
-                                    <p:column style="width:500px">Documentos completos</p:column>
+                                    <p:column>Documentos completos</p:column>
                                     <p:column rendered="#{managedBeanRealizarSimulacion.simulacionAnterior eq null}">-</p:column>
                                     <p:column rendered="#{not empty managedBeanRealizarSimulacion.simulacionAnterior}">#{managedBeanRealizarSimulacion.simulacionAnterior.docCompletos}</p:column>
                                     <p:column style="font-weight: bold;">#{managedBeanRealizarSimulacion.simulacionActual.docCompletos}</p:column>
                                 </p:row>
                                 <p:row>
-                                    <p:column style="width:500px">Documentos incompletos</p:column>
+                                    <p:column>Documentos incompletos</p:column>
                                     <p:column rendered="#{managedBeanRealizarSimulacion.simulacionAnterior eq null}">-</p:column>
                                     <p:column rendered="#{not empty managedBeanRealizarSimulacion.simulacionAnterior}">#{managedBeanRealizarSimulacion.simulacionAnterior.docIncompletos}</p:column>
                                     <p:column style="font-weight: bold;">#{managedBeanRealizarSimulacion.simulacionActual.docIncompletos}</p:column>
                                 </p:row>
                                 <p:row>
-                                    <p:column style="width:500px">Documentos desactualizados</p:column>
+                                    <p:column>Documentos desactualizados</p:column>
                                     <p:column rendered="#{managedBeanRealizarSimulacion.simulacionAnterior eq null}">-</p:column>
                                     <p:column rendered="#{not empty managedBeanRealizarSimulacion.simulacionAnterior}">#{managedBeanRealizarSimulacion.simulacionAnterior.docDesactualizados}</p:column>
                                     <p:column style="font-weight: bold;">#{managedBeanRealizarSimulacion.simulacionActual.docDesactualizados}</p:column>
                                 </p:row>
                                 <p:row>
-                                    <p:column style="width:500px">Documentos sin información</p:column>
+                                    <p:column>Documentos sin información</p:column>
                                     <p:column rendered="#{managedBeanRealizarSimulacion.simulacionAnterior eq null}">-</p:column>
                                     <p:column rendered="#{not empty managedBeanRealizarSimulacion.simulacionAnterior}">#{managedBeanRealizarSimulacion.simulacionAnterior.docSinInformacion}</p:column>
                                     <p:column style="font-weight: bold;">#{managedBeanRealizarSimulacion.simulacionActual.docSinInformacion}</p:column>
                                 </p:row>
                                 <p:row>
-                                    <p:column style="font-weight: bold;width:500px">Porcentaje de aprobación de la simulación</p:column>
+                                    <p:column style="font-weight: bold;">Porcentaje de aprobación de la simulación</p:column>
                                     <p:column rendered="#{managedBeanRealizarSimulacion.simulacionAnterior eq null}">-</p:column>
                                     <p:column rendered="#{not empty managedBeanRealizarSimulacion.simulacionAnterior}">#{managedBeanRealizarSimulacion.simulacionAnterior.porcentajeAprobacion}%</p:column>
                                     <p:column style="font-weight: bold;"><h2>#{managedBeanRealizarSimulacion.simulacionActual.porcentajeAprobacion}%</h2></p:column>
                                 </p:row>
                                 <p:row>
-                                    <p:column style="font-weight: bold;width:500px">Nota obtenida en la simulación</p:column>
+                                    <p:column style="font-weight: bold;">Nota obtenida en la simulación</p:column>
                                     <p:column rendered="#{managedBeanRealizarSimulacion.simulacionAnterior eq null}">-</p:column>
                                     <p:column rendered="#{not empty managedBeanRealizarSimulacion.simulacionAnterior}">#{managedBeanRealizarSimulacion.simulacionAnterior.nota}</p:column>
                                     <p:column style="font-weight: bold;"><h2>#{managedBeanRealizarSimulacion.simulacionActual.nota}</h2></p:column>
@@ -114,7 +114,7 @@
                             </p:panelGrid>
                         </div>
                     </div>
-                </div>
+      
                   
                     </h:form>
                 

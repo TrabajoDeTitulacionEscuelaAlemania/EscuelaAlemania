@@ -100,8 +100,8 @@
                             <strong>¿Desea eliminar el documento seleccionado?</strong>
                             <br/>
                         </p:panelGrid>
-                        <p:commandButton  value="Si"  action="#{managedBeanBuscarDocumento.eliminarDocumento()}"  onclick="PF('elimDialog').hide();"
-                                         update=":formulario:growl :formulario:Documentos"icon="fa fa-check-circle-o"/>
+                        <p:commandButton  value="Si"  action="#{managedBeanBuscarDocumento.eliminarDocumento()}"  onclick="PF('elimDialog').hide();" 
+                                          update=":formulario:growl :formulario:Documentos" icon="fa fa-check-circle-o" />
                         <p:spacer width="3" />
                         <p:commandButton  value="No" onclick="PF('elimDialog').hide();" icon="fa fa-times-circle-o"/>
                     </p:outputPanel>
