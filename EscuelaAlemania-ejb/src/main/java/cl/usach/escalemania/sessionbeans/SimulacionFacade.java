@@ -8,15 +8,13 @@ package cl.usach.escalemania.sessionbeans;
 import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.Programa;
 import cl.usach.escalemania.entities.Simulacion;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+
 
 /**
  *
@@ -107,10 +105,26 @@ public class SimulacionFacade extends AbstractFacade<Simulacion> implements Simu
         simulacion.setPorcentajeAprobacion(porcentaje);
         simulacion.setPrograma(programa);
         List<Documento> documentos=programaFacade.DocumentosPorPrograma(nombrePrograma);
-        simulacion.setDocCompletos(documentoFacade.filtrarPorEstado(documentos, "Completo").size());
-        simulacion.setDocDesactualizados(documentoFacade.filtrarPorEstado(documentos, "Desactualizado").size());
-        simulacion.setDocIncompletos(documentoFacade.filtrarPorEstado(documentos, "Incompleto").size());
-        simulacion.setDocSinInformacion(documentoFacade.filtrarPorEstado(documentos, "Sin informacion").size());
+        List<Documento> documentosAux;
+        
+        documentosAux=documentoFacade.filtrarPorSeccion(documentos, "Vital");
+        simulacion.setDocCompletosVital(documentoFacade.filtrarPorEstado(documentosAux, "Completo").size());
+        simulacion.setDocIncompletosVital(documentoFacade.filtrarPorEstado(documentosAux, "Incompleto").size());
+        simulacion.setDocDesactualizadosVital(documentoFacade.filtrarPorEstado(documentosAux, "Desactualizado").size());
+        simulacion.setDocSinInformacionVital(documentoFacade.filtrarPorEstado(documentosAux, "Sin informacion").size());
+        
+        documentosAux=documentoFacade.filtrarPorSeccion(documentos, "Importante");
+        simulacion.setDocCompletosImportante(documentoFacade.filtrarPorEstado(documentosAux, "Completo").size());
+        simulacion.setDocIncompletosImportante(documentoFacade.filtrarPorEstado(documentosAux, "Incompleto").size());
+        simulacion.setDocDesactualizadosImportante(documentoFacade.filtrarPorEstado(documentosAux, "Desactualizado").size());
+        simulacion.setDocSinInformacionImportante(documentoFacade.filtrarPorEstado(documentosAux, "Sin informacion").size());
+        
+        documentosAux=documentoFacade.filtrarPorSeccion(documentos, "Normal");
+        simulacion.setDocCompletosNormal(documentoFacade.filtrarPorEstado(documentosAux, "Completo").size());
+        simulacion.setDocIncompletosNormal(documentoFacade.filtrarPorEstado(documentosAux, "Incompleto").size());
+        simulacion.setDocDesactualizadosNormal(documentoFacade.filtrarPorEstado(documentosAux, "Desactualizado").size());
+        simulacion.setDocSinInformacionNormal(documentoFacade.filtrarPorEstado(documentosAux, "Sin informacion").size());
+        
         create(simulacion);
         return simulacion;
     }

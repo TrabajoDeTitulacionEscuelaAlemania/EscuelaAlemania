@@ -43,47 +43,135 @@ public class Simulacion implements Serializable {
     private Programa programa;
     
     @Column(nullable = false)
-    private int docCompletos;
+    private int docCompletosVital;
     
     @Column(nullable = false)
-    private int docIncompletos;
+    private int docIncompletosVital;
     
     @Column(nullable = false)
-    private int docSinInformacion;
+    private int docSinInformacionVital;
     
     @Column(nullable = false)
-    private int docDesactualizados;
+    private int docDesactualizadosVital;
+    
+    @Column(nullable = false)
+    private int docCompletosImportante;
+    
+    @Column(nullable = false)
+    private int docIncompletosImportante;
+    
+    @Column(nullable = false)
+    private int docSinInformacionImportante;
+    
+    @Column(nullable = false)
+    private int docDesactualizadosImportante;
+    
+    @Column(nullable = false)
+    private int docCompletosNormal;
+    
+    @Column(nullable = false)
+    private int docIncompletosNormal;
+    
+    @Column(nullable = false)
+    private int docSinInformacionNormal;
+    
+    @Column(nullable = false)
+    private int docDesactualizadosNormal;
 
-    public int getDocCompletos() {
-        return docCompletos;
+    public int getDocCompletosVital() {
+        return docCompletosVital;
     }
 
-    public void setDocCompletos(int docCompletos) {
-        this.docCompletos = docCompletos;
+    public void setDocCompletosVital(int docCompletosVital) {
+        this.docCompletosVital = docCompletosVital;
     }
 
-    public int getDocIncompletos() {
-        return docIncompletos;
+    public int getDocIncompletosVital() {
+        return docIncompletosVital;
     }
 
-    public void setDocIncompletos(int docIncompletos) {
-        this.docIncompletos = docIncompletos;
+    public void setDocIncompletosVital(int docIncompletosVital) {
+        this.docIncompletosVital = docIncompletosVital;
     }
 
-    public int getDocSinInformacion() {
-        return docSinInformacion;
+    public int getDocSinInformacionVital() {
+        return docSinInformacionVital;
     }
 
-    public void setDocSinInformacion(int docSinInformacion) {
-        this.docSinInformacion = docSinInformacion;
+    public void setDocSinInformacionVital(int docSinInformacionVital) {
+        this.docSinInformacionVital = docSinInformacionVital;
     }
 
-    public int getDocDesactualizados() {
-        return docDesactualizados;
+    public int getDocDesactualizadosVital() {
+        return docDesactualizadosVital;
     }
 
-    public void setDocDesactualizados(int docDesactualizados) {
-        this.docDesactualizados = docDesactualizados;
+    public void setDocDesactualizadosVital(int docDesactualizadosVital) {
+        this.docDesactualizadosVital = docDesactualizadosVital;
+    }
+
+    public int getDocCompletosImportante() {
+        return docCompletosImportante;
+    }
+
+    public void setDocCompletosImportante(int docCompletosImportante) {
+        this.docCompletosImportante = docCompletosImportante;
+    }
+
+    public int getDocIncompletosImportante() {
+        return docIncompletosImportante;
+    }
+
+    public void setDocIncompletosImportante(int docIncompletosImportante) {
+        this.docIncompletosImportante = docIncompletosImportante;
+    }
+
+    public int getDocSinInformacionImportante() {
+        return docSinInformacionImportante;
+    }
+
+    public void setDocSinInformacionImportante(int docSinInformacionImportante) {
+        this.docSinInformacionImportante = docSinInformacionImportante;
+    }
+
+    public int getDocDesactualizadosImportante() {
+        return docDesactualizadosImportante;
+    }
+
+    public void setDocDesactualizadosImportante(int docDesactualizadosImportante) {
+        this.docDesactualizadosImportante = docDesactualizadosImportante;
+    }
+
+    public int getDocCompletosNormal() {
+        return docCompletosNormal;
+    }
+
+    public void setDocCompletosNormal(int docCompletosNormal) {
+        this.docCompletosNormal = docCompletosNormal;
+    }
+
+    public int getDocIncompletosNormal() {
+        return docIncompletosNormal;
+    }
+
+    public void setDocIncompletosNormal(int docIncompletosNormal) {
+        this.docIncompletosNormal = docIncompletosNormal;
+    }
+
+    public int getDocSinInformacionNormal() {
+        return docSinInformacionNormal;
+    }
+
+    public void setDocSinInformacionNormal(int docSinInformacionNormal) {
+        this.docSinInformacionNormal = docSinInformacionNormal;
+    }
+
+    public int getDocDesactualizadosNormal() {
+        return docDesactualizadosNormal;
+    }
+
+    public void setDocDesactualizadosNormal(int docDesactualizadosNormal) {
+        this.docDesactualizadosNormal = docDesactualizadosNormal;
     }
 
     public Programa getPrograma() {
