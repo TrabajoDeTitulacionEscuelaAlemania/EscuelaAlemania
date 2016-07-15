@@ -5,6 +5,7 @@
  */
 package cl.usach.escalemania.managedbeans;
 
+import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.EstadoDocumento;
 import cl.usach.escalemania.entities.Programa;
 import cl.usach.escalemania.entities.Seccion;
@@ -49,7 +50,65 @@ public class ManagedBeanCrearDocumento {
     private String estadoDocumento;
     private String seccion;
     private List<String> programa;
+    private int alertas;
 
+    public void init(){
+        System.out.println("INIT");
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
+        usuario=(String)sesisonMap.get("usuario");
+        rol=(String)sesisonMap.get("rol");
+        if(usuario==null)
+            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
+        else{
+            if (!FacesContext.getCurrentInstance().isPostback()){
+                List<Documento> documentos=documentoFacade.findAll();
+                alertas=documentoFacade.obtenerAlertas(documentos);
+                estadoDocumentos=estadoDocumentoFacade.findAll();
+                secciones=seccionFacade.findAll();
+                programas=programaFacade.findAll();
+                estadoDocumento="Sin informacion";
+                seccion="Vital";
+            }
+        }
+    }
+    
+    public void crearDocumento(){
+        String resultado=documentoFacade.crearDocumento(nombre,
+                ubicación, 
+                observacion, 
+                estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento), 
+                seccionFacade.obtenerPorNombre(seccion, secciones), 
+                programaFacade.obtenerListaDeProgramas(programa, programas));
+        if(resultado.compareTo("Documento creado existosamente")==0){
+            nombre="";
+            ubicación="";
+            observacion="";
+            estadoDocumento="";
+            seccion="";
+            programa=null;
+            estadoDocumento="Sin informacion";
+            seccion="Vital";
+            List<Documento> documentos=documentoFacade.findAll();
+            alertas=documentoFacade.obtenerAlertas(documentos);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
+        }else
+            if(resultado.compareTo("Error")==0)
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, 
+                        resultado, "Ocurrió un error al modificar el documento. Inténtelo nuevamente"));
+            else
+                FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Información", resultado));
+    }
+
+    public int getAlertas() {
+        return alertas;
+    }
+
+    public void setAlertas(int alertas) {
+        this.alertas = alertas;
+    }
     
     public ManagedBeanCrearDocumento() {
     }
@@ -126,49 +185,4 @@ public class ManagedBeanCrearDocumento {
         this.programa = programa;
     }
     
-    public void init(){
-        System.out.println("INIT");
-        FacesContext fc = FacesContext.getCurrentInstance();
-        Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
-        usuario=(String)sesisonMap.get("usuario");
-        rol=(String)sesisonMap.get("rol");
-        if(usuario==null)
-            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
-        else{
-            if (!FacesContext.getCurrentInstance().isPostback()){
-                estadoDocumentos=estadoDocumentoFacade.findAll();
-                secciones=seccionFacade.findAll();
-                programas=programaFacade.findAll();
-                estadoDocumento="Sin informacion";
-                seccion="Vital";
-            }
-        }
-    }
-    
-    public void crearDocumento(){
-        String resultado=documentoFacade.crearDocumento(nombre,
-                ubicación, 
-                observacion, 
-                estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento), 
-                seccionFacade.obtenerPorNombre(seccion, secciones), 
-                programaFacade.obtenerListaDeProgramas(programa, programas));
-        if(resultado.compareTo("Documento creado existosamente")==0){
-            nombre="";
-            ubicación="";
-            observacion="";
-            estadoDocumento="";
-            seccion="";
-            programa=null;
-            estadoDocumento="Sin informacion";
-            seccion="Vital";
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
-        }else
-            if(resultado.compareTo("Error")==0)
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, 
-                        resultado, "Ocurrió un error al modificar el documento. Inténtelo nuevamente"));
-            else
-                FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Información", resultado));
-    }
 }

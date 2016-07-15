@@ -21,7 +21,7 @@
         <ui:define name="init">
             
             <f:metadata>
-            <f:event type="preRenderView" listener="#{managedBeanGestionDocs.init}" />
+                <f:event type="preRenderView" listener="#{managedBeanGestionDocs.initEstado}" />
             </f:metadata>
             
         </ui:define>
@@ -75,6 +75,21 @@
                     </div>
                     <!--End Page Header -->
                 </div>
+
+                
+                    <h:form>
+                    <h:panelGrid columns="1" style="margin: 0 auto;" cellpadding="5" id="Estado">
+                         <h:panelGroup style="display:block; text-align:center">
+                        <h3><strong>Seleccione el/los estado(s)</strong></h3>
+                        <p:selectManyButton value="#{managedBeanGestionDocs.categoriaSeleccionada}">
+                            <p:ajax listener="#{managedBeanGestionDocs.filtrarPorEstado()}" update="@([id$=Documentos])" />
+                            <f:selectItems value="#{managedBeanGestionDocs.estadoDocumentos}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.estado}" />
+                        </p:selectManyButton>
+
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    </h:form>
+                    <br/><br/>
                 <h:form id="form">
                     <p:growl id="growl" showDetail="true" autoUpdate="false" />
                     <p:dataTable id="Documentos" var="doc" value="#{managedBeanGestionDocs.documentos}"  rows="5"
@@ -148,7 +163,7 @@
                             </p:panelGrid>
                             <p:commandButton value="Modificar"  action="#{managedBeanGestionDocs.editar()}" 
                                                  update=":form:growl :form:Documentos @([id$=alertas1]) @([id$=alertas2])"
-                                                 style="display:block; text-align:center;margin: 0 auto;"/>
+                                                  style="display:block; text-align:center;margin: 0 auto;"/>
                         </p:outputPanel>
                     </p:dialog>
 

@@ -51,4 +51,6 @@ public interface DocumentoFacadeLocal {
     String crearDocumento(String nombre, String ubicacion, String observacion, EstadoDocumento estadoDocumento, Seccion seccion, List<Programa> programas);
  
     String eliminarDocumento(Documento documento);
+
+    int obtenerAlertas(List<Documento> documentos);
 }

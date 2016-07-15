@@ -43,10 +43,8 @@ public class ManagedBeanGestionDocs {
     private SeccionFacadeLocal seccionFacade;
     
     
-    private FacesContext fc;
     private String rol;
     private String usuario;
-    private String tipoDoc;
     private List<String> categoriaSeleccionada;
     
    
@@ -80,48 +78,79 @@ public class ManagedBeanGestionDocs {
 
     public void init(){
         System.out.println("INIT");
-        fc=FacesContext.getCurrentInstance();
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, Object> sesisonMap = fc.getExternalContext().getSessionMap();
+        usuario = (String) sesisonMap.get("usuario");
+        rol = (String) sesisonMap.get("rol");
+        if (usuario==null) {
+            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
+        } else if (!FacesContext.getCurrentInstance().isPostback()) {
+            estadoDocumentos = estadoDocumentoFacade.findAll();
+            secciones = seccionFacade.findAll();
+            documentos = documentoFacade.findAll();
+            tipoNombre = "Todos";
+            alertas = documentoFacade.obtenerAlertas(documentos);
+        }
+    }
+    
+    public void initPrograma(){
+        System.out.println("INIT");
+        FacesContext fc = FacesContext.getCurrentInstance();
         Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
         usuario=(String)sesisonMap.get("usuario");
         rol=(String)sesisonMap.get("rol");
-        tipoDoc=(String)sesisonMap.get("tipoDoc");
-        if(tipoDoc==null)
+        if(usuario==null)
             fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
         else{
             if (!FacesContext.getCurrentInstance().isPostback()){
-                programas=programaFacade.findAll();
+            programas=programaFacade.findAll();
             estadoDocumentos=estadoDocumentoFacade.findAll();
             secciones=seccionFacade.findAll();
-            switch (Integer.parseInt(tipoDoc)){
-            case 0:
-                fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
-                break;
-            case 1:
-                documentos=documentoFacade.findAll();
-                tipoNombre="Todos";
-                break;
-            case 2:
                 tipoNombre="Por programa";
                 categoriaSeleccionada=null;
                 documentos=null;
                 documentosTotales=documentoFacade.findAll();
-                break;
-            case 3:
+                alertas = documentoFacade.obtenerAlertas(documentosTotales);
+                }
+        }
+    }
+    
+    public void initSeccion() {
+        System.out.println("INIT");
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, Object> sesisonMap = fc.getExternalContext().getSessionMap();
+        usuario = (String) sesisonMap.get("usuario");
+        rol = (String) sesisonMap.get("rol");
+        if (usuario==null) {
+            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
+        } else if (!FacesContext.getCurrentInstance().isPostback()) {
+            estadoDocumentos = estadoDocumentoFacade.findAll();
+            secciones = seccionFacade.findAll();
+            tipoNombre = "Por sección";
+            categoriaSeleccionada = null;
+            documentos = null;
+            documentosTotales = documentoFacade.findAll();
+            alertas = documentoFacade.obtenerAlertas(documentosTotales);
+        }
+    }
+    
+    public void initEstado(){
+        System.out.println("INIT");
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
+        usuario=(String)sesisonMap.get("usuario");
+        rol=(String)sesisonMap.get("rol");
+        if(usuario==null)
+            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
+        else{
+            if (!FacesContext.getCurrentInstance().isPostback()){
+            estadoDocumentos=estadoDocumentoFacade.findAll();
+            secciones=seccionFacade.findAll();
                 tipoNombre="Por estado";
                 categoriaSeleccionada=null;
                 documentos=null;
                 documentosTotales=documentoFacade.findAll();
-                break;
-            case 4:
-                tipoNombre="Por sección";
-                categoriaSeleccionada=null;
-                documentos=null;
-                documentosTotales=documentoFacade.findAll();
-                break;
-            default:
-                fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
-                break;
-        }
+                alertas = documentoFacade.obtenerAlertas(documentosTotales);
             }
         }
     }
@@ -170,7 +199,6 @@ public class ManagedBeanGestionDocs {
   
     public void editar(){
         System.out.println("Editar");
-        fc=FacesContext.getCurrentInstance();
         msg=documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, nombreEstadoDocumento), 
                 ubicacion, 
                 seccionFacade.obtenerPorNombre(nombreSeccion, secciones), 
@@ -178,29 +206,23 @@ public class ManagedBeanGestionDocs {
                 nombreDocumento,
                 documentoElegido);
         if(msg.compareToIgnoreCase("Cambios realizados correctamente")==0){
-            switch (Integer.parseInt(tipoDoc)){
-            case 0:
-                fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
-                break;
-            case 1:
-                documentos=documentoFacade.findAll();
-                break;
-            case 2:
+            
+            if(tipoNombre.compareTo("Todos")==0){
+                    documentos=documentoFacade.findAll();
+            }
+            if(tipoNombre.compareTo("Por programa")==0){
                 documentosTotales=documentoFacade.findAll();
                 filtrarPorPrograma();
-                break;
-            case 3:
+            }
+            if(tipoNombre.compareTo("Por estado")==0){
                 documentosTotales=documentoFacade.findAll();
                 filtrarPorEstado();
-                break;
-            case 4:
+            }
+            if(tipoNombre.compareTo("Por sección")==0){
                 documentosTotales=documentoFacade.findAll();
                 filtrarPorSeccion();
-                break;
-            default:
-                fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
-                break;
-        }
+            }
+            alertas = documentoFacade.obtenerAlertas(documentosTotales);
             RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", msg));
@@ -228,31 +250,26 @@ public class ManagedBeanGestionDocs {
     public void eliminarDocumento(){
         String resultado=documentoFacade.eliminarDocumento(documentoElegido);
         if(resultado.compareTo("Documento eliminado exitosamente")==0){
-            switch (Integer.parseInt(tipoDoc)){
-            case 0:
-                fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
-                break;
-            case 1:
-                documentos=documentoFacade.findAll();
-                break;
-            case 2:
+            if(tipoNombre.compareTo("Todos")==0){
+                    documentos=documentoFacade.findAll();
+            }
+            if(tipoNombre.compareTo("Por programa")==0){
                 documentosTotales=documentoFacade.findAll();
                 filtrarPorPrograma();
-                break;
-            case 3:
+            }
+            if(tipoNombre.compareTo("Por estado")==0){
                 documentosTotales=documentoFacade.findAll();
                 filtrarPorEstado();
-                break;
-            case 4:
+            }
+            if(tipoNombre.compareTo("Por sección")==0){
                 documentosTotales=documentoFacade.findAll();
                 filtrarPorSeccion();
-                break;
-            default:
-                fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
-                break;
             }
+            alertas = documentoFacade.obtenerAlertas(documentosTotales);
+            RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
+            
         }else
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", resultado));
@@ -368,14 +385,6 @@ public class ManagedBeanGestionDocs {
 
     public void setObservacion(String observacion) {
         this.observacion = observacion;
-    }
-
-    public String getTipoDoc() {
-        return tipoDoc;
-    }
-
-    public void setTipoDoc(String tipoDoc) {
-        this.tipoDoc = tipoDoc;
     }
 
     public int getCompletos() {

@@ -21,7 +21,7 @@
         <ui:define name="init">
             
             <f:metadata>
-            <f:event type="preRenderView" listener="#{managedBeanGestionDocs.init}" />
+                <f:event type="preRenderView" listener="#{managedBeanGestionDocs.initSeccion}" />
             </f:metadata>
             
         </ui:define>
@@ -75,6 +75,22 @@
                     </div>
                     <!--End Page Header -->
                 </div>
+
+               
+                
+                <h:form>
+                    <h:panelGrid columns="1" style="margin: 0 auto;" cellpadding="5" id="Seccion">
+                         <h:panelGroup style="display:block; text-align:center">
+                        <h3><strong>Seleccione el/las sección(es)</strong></h3>
+                        <p:selectManyButton value="#{managedBeanGestionDocs.categoriaSeleccionada}">
+                            <p:ajax listener="#{managedBeanGestionDocs.filtrarPorSeccion()}" update="@([id$=Documentos])" />
+                            <f:selectItems value="#{managedBeanGestionDocs.secciones}" var="seccion" itemLabel="#{seccion.seccion}" itemValue="#{seccion.seccion}" />
+                        </p:selectManyButton>
+
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    </h:form>
+                    <br/><br/>
                 <h:form id="form">
                     <p:growl id="growl" showDetail="true" autoUpdate="false" />
                     <p:dataTable id="Documentos" var="doc" value="#{managedBeanGestionDocs.documentos}"  rows="5"

@@ -31,8 +31,6 @@ public class ManagedBeanHome {
     
     private String rol;
     private String usuario;
-    private FacesContext fc;
-    private List<EstadoDocumento> estadoDocumentos;
     private int alertas;
     private int completos;
     private int incompletos;
@@ -40,6 +38,23 @@ public class ManagedBeanHome {
     private int sinInformacion;
     private int total;
 
+    public void init(){
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
+        usuario=(String)sesisonMap.get("usuario");
+        rol=(String)sesisonMap.get("rol");
+        if(usuario==null){
+            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/login.xhtml?faces-redirect=true");
+        }else{
+            completos=estadoDocumentoFacade.obtenerDocumentoPorId("1").size();
+            incompletos=estadoDocumentoFacade.obtenerDocumentoPorId("2").size();
+            desactualizados=estadoDocumentoFacade.obtenerDocumentoPorId("3").size();
+            sinInformacion=estadoDocumentoFacade.obtenerDocumentoPorId("4").size();
+            alertas=incompletos+desactualizados+sinInformacion;
+            total=incompletos+desactualizados+sinInformacion+completos;
+        }
+    }
+    
     public DocumentoFacadeLocal getDocumentoFacade() {
         return documentoFacade;
     }
@@ -62,14 +77,6 @@ public class ManagedBeanHome {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
-    }
-
-    public FacesContext getFc() {
-        return fc;
-    }
-
-    public void setFc(FacesContext fc) {
-        this.fc = fc;
     }
 
     public int getAlertas() {
@@ -123,22 +130,5 @@ public class ManagedBeanHome {
     
     public ManagedBeanHome() {
         
-    }
-    
-    
-    public void init(){
-        fc=FacesContext.getCurrentInstance();
-        Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
-        usuario=(String)sesisonMap.get("usuario");
-        rol=(String)sesisonMap.get("rol");
-        if(usuario==null){
-            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/login.xhtml?faces-redirect=true");
-        }else{
-            completos=estadoDocumentoFacade.obtenerDocumentoPorId("1").size();
-            incompletos=estadoDocumentoFacade.obtenerDocumentoPorId("2").size();
-            desactualizados=estadoDocumentoFacade.obtenerDocumentoPorId("3").size();
-            sinInformacion=estadoDocumentoFacade.obtenerDocumentoPorId("4").size();
-            total=incompletos+desactualizados+sinInformacion+completos;
-        }
     }
 }

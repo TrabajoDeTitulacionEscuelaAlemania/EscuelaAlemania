@@ -224,4 +224,17 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
             return "Error al eliminar el documento";
         }
     }
+
+    @Override
+    public int obtenerAlertas(List<Documento> documentos) {
+        int resultado=0;
+        Long idDoc;
+        for(Documento doc: documentos){
+            idDoc=doc.getEstadoDocumento().getId();
+            if(idDoc!=1)
+                resultado++;
+        }
+        return resultado;
+    }
+    
 }
