@@ -48,6 +48,7 @@ public class ManagedBeanVerAlertas {
     private List<EstadoDocumento> estadoDocumentos;
     private List<Seccion> secciones;
     private String nombreDocumento;
+    private int alertas;
 
     public void init(){
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -61,6 +62,7 @@ public class ManagedBeanVerAlertas {
                 documentosAlertas=estadoDocumentoFacade.obtenerDocumentoPorId("2");
                 documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("3"));
                 documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("4"));
+                alertas=documentosAlertas.size();
                 estadoDocumentos=estadoDocumentoFacade.findAll();
                 secciones=seccionFacade.findAll();
             }
@@ -90,6 +92,7 @@ public class ManagedBeanVerAlertas {
             documentosAlertas=estadoDocumentoFacade.obtenerDocumentoPorId("2");
             documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("3"));
             documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("4"));
+            alertas=documentosAlertas.size();
             RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", msg));
@@ -108,6 +111,7 @@ public class ManagedBeanVerAlertas {
             documentosAlertas=estadoDocumentoFacade.obtenerDocumentoPorId("2");
             documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("3"));
             documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("4"));
+            alertas=documentosAlertas.size();
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
         }else
@@ -117,6 +121,14 @@ public class ManagedBeanVerAlertas {
      
     public String getNombreDocumento() {
         return nombreDocumento;
+    }
+
+    public int getAlertas() {
+        return alertas;
+    }
+
+    public void setAlertas(int alertas) {
+        this.alertas = alertas;
     }
 
     public void setNombreDocumento(String nombreDocumento) {

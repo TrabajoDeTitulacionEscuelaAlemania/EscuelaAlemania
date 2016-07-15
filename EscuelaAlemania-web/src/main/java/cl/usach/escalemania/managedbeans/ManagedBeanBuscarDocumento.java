@@ -54,6 +54,7 @@ public class ManagedBeanBuscarDocumento {
     private List<Seccion> secciones;
     private String msg;
     private String nombreDocumento;
+    private int alertas;
 
 
     public void cargarDatos(){
@@ -67,6 +68,7 @@ public class ManagedBeanBuscarDocumento {
         else{
             if (!FacesContext.getCurrentInstance().isPostback()){
                 documentos=documentoFacade.findAll();
+                alertas=documentoFacade.obtenerAlertas(documentos);
                 estadoDocumentos=estadoDocumentoFacade.findAll();
                 secciones=seccionFacade.findAll();      
                 busqueda="";
@@ -97,6 +99,7 @@ public class ManagedBeanBuscarDocumento {
                 documentoElegido);
         if(msg.compareToIgnoreCase("Cambios realizados correctamente")==0){
             documentos=documentoFacade.findAll();
+            alertas=documentoFacade.obtenerAlertas(documentos);
             resultadoDocumentos=documentoFacade.buscarDocumento(busqueda, documentos);
             RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
@@ -119,12 +122,21 @@ public class ManagedBeanBuscarDocumento {
         String resultado=documentoFacade.eliminarDocumento(documentoElegido);
         if(resultado.compareTo("Documento eliminado exitosamente")==0){
             documentos=documentoFacade.findAll();
+            alertas=documentoFacade.obtenerAlertas(documentos);
             resultadoDocumentos=documentoFacade.buscarDocumento(busqueda, documentos);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
         }else
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", resultado));
+    }
+
+    public int getAlertas() {
+        return alertas;
+    }
+
+    public void setAlertas(int alertas) {
+        this.alertas = alertas;
     }
     
     public String getNombreDocumento() {

@@ -7,8 +7,10 @@ package cl.usach.escalemania.managedbeans;
 
 import cl.usach.escalemania.entities.Programa;
 import cl.usach.escalemania.entities.Simulacion;
+import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.ProgramaFacadeLocal;
 import cl.usach.escalemania.sessionbeans.SimulacionFacadeLocal;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -30,6 +32,8 @@ public class ManagedBeanRealizarSimulacion {
     private ProgramaFacadeLocal programaFacade;
     @EJB
     private SimulacionFacadeLocal simulacionFacade;
+    @EJB
+    private DocumentoFacadeLocal documentoFacade;
     
     private String usuario;
     private String rol;
@@ -37,6 +41,8 @@ public class ManagedBeanRealizarSimulacion {
     private String nombrePrograma;
     private Simulacion simulacionActual;
     private Simulacion simulacionAnterior;
+    private int alertas;
+    private String fechaSimulacion;
 
     public void init(){
         System.out.println("INIT");
@@ -52,19 +58,42 @@ public class ManagedBeanRealizarSimulacion {
                 nombrePrograma="";
                 simulacionActual=null;
                 simulacionAnterior=null;
+                alertas=documentoFacade.obtenerAlertas(documentoFacade.findAll());
             }
         }
+    }
+    
+    public void ultimaSimulacion(){
+        simulacionAnterior=simulacionFacade.ultimaSimulacion(nombrePrograma, programas);
+        fechaSimulacion=new SimpleDateFormat("dd-MM-yyyy 'a las' HH:mm:ss").format(simulacionAnterior.getFecha());
     }
     
     public void realizarSimulacion(){
         simulacionAnterior=simulacionFacade.ultimaSimulacion(nombrePrograma, programas);
         simulacionActual=simulacionFacade.crearSimulacion(nombrePrograma, programas);
+        alertas=documentoFacade.obtenerAlertas(documentoFacade.findAll());
     }
 
     public Simulacion getSimulacionActual() {
         return simulacionActual;
     }
 
+    public String getFechaSimulacion() {
+        return fechaSimulacion;
+    }
+
+    public void setFechaSimulacion(String fechaSimulacion) {
+        this.fechaSimulacion = fechaSimulacion;
+    }
+
+    public int getAlertas() {
+        return alertas;
+    }
+
+    public void setAlertas(int alertas) {
+        this.alertas = alertas;
+    }
+    
     public void setSimulacionActual(Simulacion simulacionActual) {
         this.simulacionActual = simulacionActual;
     }

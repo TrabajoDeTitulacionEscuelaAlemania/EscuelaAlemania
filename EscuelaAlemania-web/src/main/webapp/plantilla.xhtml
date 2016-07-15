@@ -9,9 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
         <title>Sistema de control de documentos-Gestion de documentos</title>
         
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{managedBeanPlantilla.init}" />
-        </f:metadata>
+       
         
         <ui:insert name="hojasestilo">Aqui van los css</ui:insert>
         <ui:insert name="init">Aquí van los init</ui:insert>
@@ -50,41 +48,11 @@ float: left;
                     </div>
                     <!-- end navbar-header -->
                     <!-- navbar-top-links -->
-                    <p:outputPanel style="display:block" id="alert" >
 
                     <ul class="nav navbar-top-links navbar-right">
                         <!-- main dropdown -->
+                        <ui:insert name="alerta">Va la parte de las alertas</ui:insert>
                         
-                        <li class="dropdown">
-                           
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <span class="top-label label label-danger">#{managedBeanPlantilla.alertas}</span>  <i class="fa fa-bell fa-3x"></i>
-                            </a>
-                            <!-- dropdown alerts-->
-                            <ul class="dropdown-menu dropdown-alerts">
-                                <li>
-                                    <a href="alertas.xhtml">
-                                        <div>
-                                            <i class="fa fa-comment fa-fw"></i>Alertas del sistema
-                                            <span class="pull-right text-muted small">#{managedBeanPlantilla.alertas}</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="comodin.xhtml">
-                                        <div>
-                                            <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
-                                            <span class="pull-right text-muted small">0</span>
-                                        </div>
-                                    </a>
-                                </li>
-
-
-                            </ul>
-                            <!-- end dropdown-alerts -->
-                            
-                        </li>
                            
 
                         <li class="dropdown">
@@ -103,7 +71,7 @@ float: left;
                         </li>
                         <!-- end main dropdown -->
                     </ul>
-                        </p:outputPanel>
+                        
                     <!-- end navbar-top-links -->
 
                 </nav>
@@ -130,16 +98,16 @@ float: left;
                                 <a href="#"><i class="fa fa-edit fa-fw"></i>Gestion documentos<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <p:commandLink value="Todos los documentos" action="#{managedBeanPlantilla.redirigir('1')}"  /> 
+                                        <a href="gestion_documentos.xhtml"><i></i>Todos</a>
                                     </li>
                                     <li>
-                                        <p:commandLink value="Documentos por programa" action="#{managedBeanPlantilla.redirigir('2')}"  /> 
+                                        <a href="gestion_documentos_programa.xhtml"><i></i>Por programa</a>
                                     </li>
                                     <li>
-                                        <p:commandLink value="Documentos por estado" action="#{managedBeanPlantilla.redirigir('3')}"  /> 
+                                        <a href="gestion_documentos_estado.xhtml"><i></i>Por estado</a>
                                     </li>
                                     <li>
-                                        <p:commandLink value="Documentos por seccion" action="#{managedBeanPlantilla.redirigir('4')}"  /> 
+                                        <a href="gestion_documentos_seccion.xhtml"><i></i>Por sección</a>
                                     </li>
 
                                 </ul>
@@ -161,10 +129,10 @@ float: left;
                                 <a href="#"><i class="fa fa-gears fa-fw"></i>Simulaciones<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#"><i class="fa fa-pie-chart fa-fw"></i>Ver resultados</a>
+                                        <a href="#">Ver resultados</a>
                                     </li>
                                     <li>
-                                        <a href="realizar_simulacion.xhtml"><i class="fa fa-wrench fa-fw"></i>Realizar simulación</a>
+                                        <a href="realizar_simulacion.xhtml">Realizar simulación</a>
 
                                     </li>
                                 </ul>

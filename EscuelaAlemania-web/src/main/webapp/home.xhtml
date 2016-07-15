@@ -23,6 +23,44 @@
             <f:event type="preRenderView" listener="#{managedBeanHome.init}" />
         </f:metadata>
         </ui:define>
+        
+        <ui:define name="alerta">
+
+            <h:form id="alert">
+                <li class="dropdown">
+
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanHome.alertas}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
+                    </a>
+                    <!-- dropdown alerts-->
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="alertas.xhtml">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i>Alertas del sistema
+                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanHome.alertas}" id="alertas2"/></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="comodin.xhtml">
+                                <div>
+                                    <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
+                                    <span class="pull-right text-muted small">0</span>
+                                </div>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                    <!-- end dropdown-alerts -->
+
+                </li>
+            </h:form>
+
+        </ui:define>
+        
         <ui:define name="contenido">
         <!-- end navbar side -->
             <!--  page-wrapper -->
