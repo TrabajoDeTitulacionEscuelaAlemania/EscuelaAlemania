@@ -82,14 +82,14 @@
                         
                         <h:panelGroup style="display:block; text-align:center">
 
-                            <h3><strong>Seleccione el programa que desea evaluar:</strong></h3>
+                            <h3><strong>Seleccione el programa que desea consultar:</strong></h3>
                             <p:spacer width="5"/>
                             <p:selectOneMenu value="#{managedBeanRealizarSimulacion.nombrePrograma}" effect="fold" >
                                 <f:selectItems value="#{managedBeanRealizarSimulacion.programas}" var="programa"
                                                itemLabel="#{programa.programa}" itemValue="#{programa.programa}" />
                             </p:selectOneMenu>
                             <br/>
-                            <p:commandButton  class="btn btn-primary" value="Iniciar evaluación" 
+                            <p:commandButton  class="btn btn-primary" value="Consultar evaluación" 
                                              update="porcentaje nota panelPrincipal @([id$=alertas1]) @([id$=alertas2])" action="#{managedBeanRealizarSimulacion.realizarSimulacion()}"/>
                         </h:panelGroup>
                     <br/>

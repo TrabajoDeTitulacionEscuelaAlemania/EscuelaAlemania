@@ -90,7 +90,7 @@
                                             <label>*Nombre del documento</label>
                                             <br/>
                                             <p:inputTextarea class="form-control" value="#{managedBeanCrearDocumento.nombre}" 
-                                                             maxlength="300" style="width: 700px" />
+                                                             maxlength="300"  />
                                         </div>
                                         <div class="form-group">
                                             <label>*Programa(s)</label>
@@ -120,13 +120,13 @@
                                             <label>*Ubicación</label>
                                             <br/>
                                             <p:inputText value="#{managedBeanCrearDocumento.ubicación}" maxlength="100"
-                                                         style="width: 700px"/>
+                                                         />
                                         </div>
                                         <div class="form-group">
                                             <label>Observaciones</label>
                                             <br/>
                                             <p:inputText value="#{managedBeanCrearDocumento.observacion}" maxlength="120" 
-                                                         style="width: 700px"/>
+                                                         />
                                         </div>
                             <br/>
                             <p:commandButton class="btn btn-primary" value="Crear documento" action="#{managedBeanCrearDocumento.crearDocumento()}"

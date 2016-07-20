@@ -209,6 +209,7 @@ public class ManagedBeanGestionDocs {
             
             if(tipoNombre.compareTo("Todos")==0){
                     documentos=documentoFacade.findAll();
+                    documentosTotales=documentos;
             }
             if(tipoNombre.compareTo("Por programa")==0){
                 documentosTotales=documentoFacade.findAll();
@@ -252,6 +253,7 @@ public class ManagedBeanGestionDocs {
         if(resultado.compareTo("Documento eliminado exitosamente")==0){
             if(tipoNombre.compareTo("Todos")==0){
                     documentos=documentoFacade.findAll();
+                    documentosTotales=documentos;
             }
             if(tipoNombre.compareTo("Por programa")==0){
                 documentosTotales=documentoFacade.findAll();

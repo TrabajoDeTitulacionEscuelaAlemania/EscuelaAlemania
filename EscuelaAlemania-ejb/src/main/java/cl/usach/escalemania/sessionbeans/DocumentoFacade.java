@@ -229,6 +229,8 @@ public class DocumentoFacade extends AbstractFacade<Documento> implements Docume
     public int obtenerAlertas(List<Documento> documentos) {
         int resultado=0;
         Long idDoc;
+        if(documentos.isEmpty())
+            return 0;
         for(Documento doc: documentos){
             idDoc=doc.getEstadoDocumento().getId();
             if(idDoc!=1)
