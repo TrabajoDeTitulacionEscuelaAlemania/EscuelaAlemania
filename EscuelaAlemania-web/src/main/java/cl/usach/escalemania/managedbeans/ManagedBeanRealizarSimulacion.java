@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -80,10 +81,19 @@ public class ManagedBeanRealizarSimulacion {
         }
     }
     
+    public void obtenerUltimaSimulacion(){
+        ultimaSimulacion();
+        if(simulacionAnterior==null)
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "No existe registro de simulacion para el programa seleccionado"));
+    }
+    
     public void ultimaSimulacion(){
         simulacionAnterior=simulacionFacade.ultimaSimulacion(nombrePrograma, programas);
         if(simulacionAnterior!=null)
             fechaSimulacion=new SimpleDateFormat("dd-MM-yyyy").format(simulacionAnterior.getFecha());
+        else
+            fechaSimulacion="";
     }
     
     public void realizarSimulacion(){

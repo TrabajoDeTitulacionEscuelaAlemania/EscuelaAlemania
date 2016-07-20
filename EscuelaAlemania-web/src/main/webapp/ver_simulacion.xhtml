@@ -78,8 +78,7 @@
                 </div>
 
                 <h:form>
-                    
-                        
+                    <p:growl id="growl" showDetail="true" />
                         <h:panelGroup style="display:block; text-align:center">
 
                             <h3><strong>Seleccione el programa que desea consultar:</strong></h3>
@@ -90,7 +89,7 @@
                             </p:selectOneMenu>
                             <br/>
                             <p:commandButton  class="btn btn-primary" value="Consultar evaluación" 
-                                             update="porcentaje nota panelPrincipal @([id$=alertas1]) @([id$=alertas2])" action="#{managedBeanRealizarSimulacion.realizarSimulacion()}"/>
+                                              update="porcentaje nota panelPrincipal @([id$=alertas1]) @([id$=alertas2]) growl" action="#{managedBeanRealizarSimulacion.obtenerUltimaSimulacion()}"/>
                         </h:panelGroup>
                     <br/>
                     <div class="row">
