@@ -8,6 +8,7 @@ package cl.usach.escalemania.sessionbeans;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 
+
 /**
  *
  * @author Desarrollo
@@ -16,5 +17,7 @@ import javax.ejb.Remote;
 public interface PlanificacionLocal {
 
     void setearEstadoDOcumentos();
+    
+    void realizarSimulacion();
     
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cl.usach.escalemania.validaciones;
+package cl.usach.escalemania.sessionbeans;
 
 import cl.usach.escalemania.entities.Usuario;
 import cl.usach.escalemania.sessionbeans.UsuarioFacadeLocal;

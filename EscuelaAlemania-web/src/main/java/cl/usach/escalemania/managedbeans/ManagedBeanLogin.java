@@ -5,7 +5,7 @@
  */
 package cl.usach.escalemania.managedbeans;
 
-import cl.usach.escalemania.validaciones.ValidacionLocal;
+import cl.usach.escalemania.sessionbeans.ValidacionLocal;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;

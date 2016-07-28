@@ -66,11 +66,7 @@
     <artifactId>all-themes</artifactId>  
     <version>1.0.8</version>  
 </dependency>    
-  <dependency>
-    <groupId>org.fitnesse</groupId>
-    <artifactId>fitnesse</artifactId>
-    <version>20160515</version>
-  </dependency>
+  
   
     </dependencies>
 
