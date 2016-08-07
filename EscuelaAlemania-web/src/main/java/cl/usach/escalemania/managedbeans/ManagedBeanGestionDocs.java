@@ -90,6 +90,7 @@ public class ManagedBeanGestionDocs {
             documentos = documentoFacade.findAll();
             tipoNombre = "Todos";
             alertas = documentoFacade.obtenerAlertas(documentos);
+            documentosFiltrados=null;
         }
     }
     
@@ -111,6 +112,7 @@ public class ManagedBeanGestionDocs {
                 documentos=null;
                 documentosTotales=documentoFacade.findAll();
                 alertas = documentoFacade.obtenerAlertas(documentosTotales);
+                 documentosFiltrados=null;
                 }
         }
     }
@@ -131,6 +133,7 @@ public class ManagedBeanGestionDocs {
             documentos = null;
             documentosTotales = documentoFacade.findAll();
             alertas = documentoFacade.obtenerAlertas(documentosTotales);
+             documentosFiltrados=null;
         }
     }
     
@@ -151,6 +154,7 @@ public class ManagedBeanGestionDocs {
                 documentos=null;
                 documentosTotales=documentoFacade.findAll();
                 alertas = documentoFacade.obtenerAlertas(documentosTotales);
+                 documentosFiltrados=null;
             }
         }
     }
@@ -167,6 +171,7 @@ public class ManagedBeanGestionDocs {
             System.out.println(documentosPrograma.size());
         }else
             documentos=null;
+         documentosFiltrados=null;
     }
     
     public void filtrarPorEstado() {
@@ -181,6 +186,7 @@ public class ManagedBeanGestionDocs {
             System.out.println(documentosEstado.size());
         }else
             documentos=null;
+         documentosFiltrados=null;
     }
 
     public void filtrarPorSeccion() {
@@ -195,6 +201,7 @@ public class ManagedBeanGestionDocs {
             System.out.println(documentosSeccion.size());
         }else
             documentos=null;
+         documentosFiltrados=null;
     }
   
     public void editar(){
@@ -275,6 +282,7 @@ public class ManagedBeanGestionDocs {
         }else
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", resultado));
+         documentosFiltrados=null;
     }
 
     public String getNombreDocumento() {

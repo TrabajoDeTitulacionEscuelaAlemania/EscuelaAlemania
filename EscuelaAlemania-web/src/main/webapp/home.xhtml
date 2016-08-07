@@ -7,16 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="plantilla.xhtml">
         
-        <ui:define name="hojasestilo">
-             
-            <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
-        <h:outputStylesheet name="font-awesome/css/font-awesome.css" />
-        <h:outputStylesheet name="plugins/pace/pace-theme-big-counter.css" />
-        <h:outputStylesheet name="css/style.css" />
-        <h:outputStylesheet name="css/main-style.css" />
-        <h:outputStylesheet name="plugins/morris/morris-0.4.3.min.css" />
-            
-        </ui:define>
+    
         
         <ui:define name="init">
              <f:metadata>
@@ -58,8 +49,14 @@
 
                 </li>
             </h:form>
-
+            
         </ui:define>
+        
+         <ui:define name="Inicio">
+                <li class="selected">
+                    <a href="home.xhtml"><i class="fa fa-dashboard fa-fw"></i>Inicio</a>
+                </li>
+            </ui:define>
         
         <ui:define name="contenido">
         <!-- end navbar side -->
@@ -123,18 +120,7 @@
 
     </ui:define>
         
-        <ui:define name="script">
-            <h:outputScript  name="plugins/jquery-1.10.2.js" />
-        <h:outputScript  name="plugins/bootstrap/bootstrap.min.js" />
-        <h:outputScript name="plugins/metisMenu/jquery.metisMenu.js" />
-        <h:outputScript  name="plugins/pace/pace.js" />
-        <h:outputScript  name="scripts/siminta.js" />
-        <h:outputScript name="plugins/morris/raphael-2.1.0.min.js" />
-        <h:outputScript  name="plugins/morris/morris.js" />
-        <h:outputScript  name="scripts/dashboard-demo.js" />
 
-            
-        </ui:define>
     </ui:composition>
    
 </html>

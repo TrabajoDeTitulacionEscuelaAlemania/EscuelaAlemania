@@ -7,16 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="plantilla.xhtml">
 
-        <ui:define name="hojasestilo">
 
-            <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
-            <h:outputStylesheet name="font-awesome/css/font-awesome.css" />
-            <h:outputStylesheet name="plugins/pace/pace-theme-big-counter.css" />
-            <h:outputStylesheet name="css/style.css" />
-            <h:outputStylesheet name="css/main-style.css" />
-            <h:outputStylesheet name="plugins/morris/morris-0.4.3.min.css" />
-
-        </ui:define>
 
         <ui:define name="init">
 
@@ -62,7 +53,11 @@
             </h:form>
 
         </ui:define>
-
+        <ui:define name="buscar_documento">
+            <li class="selected" style="display: block;">
+                <a href="buscar_documento.xhtml"><i class="fa fa-search fa-fw"></i>Buscar documento</a>
+            </li>
+        </ui:define>
 
         <ui:define name="contenido">
             <h:form id="formulario">
@@ -175,18 +170,7 @@
         </ui:define>
 
 
-        <ui:define name="script">
-
-            <h:outputScript  name="plugins/bootstrap/bootstrap.min.js" />
-            <h:outputScript name="plugins/metisMenu/jquery.metisMenu.js" />
-            <h:outputScript  name="plugins/pace/pace.js" />
-            <h:outputScript  name="scripts/siminta.js" />
-            <h:outputScript name="plugins/morris/raphael-2.1.0.min.js" />
-            <h:outputScript  name="plugins/morris/morris.js" />
-
-
-        </ui:define>
-
+      
     </ui:composition>
 </html>
 

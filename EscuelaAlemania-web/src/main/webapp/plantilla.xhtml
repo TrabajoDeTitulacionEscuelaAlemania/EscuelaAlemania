@@ -7,23 +7,27 @@
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
         <title>Sistema de control de documentos-Gestion de documentos</title>
-        
-       
-        
-        <ui:insert name="hojasestilo">Aqui van los css</ui:insert>
         <ui:insert name="init">Aquí van los init</ui:insert>
+        <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
+        <h:outputStylesheet name="plugins/pace/pace-theme-big-counter.css" />
+        <h:outputStylesheet name="css/style.css" />
+        <h:outputStylesheet name="css/main-style.css" />
 
-        <style type="text/css">
-         .ui-growl {
-             top:15%;
-             
-         }
-         .selection tr {
-float: left;
- width: 33%;
+        <style>
+
+            
+            .ui-growl {
+    top:15%;
+
+}
+.selection tr {
+    float: left;
+    width: 33%;
 }
         </style>
-
+        
+        <h:outputScript name="scripts/configuracion.js" />
+        <h:outputScript name="plugins/pace/pace.js" />
     </h:head>
 
     <h:body>
@@ -89,11 +93,13 @@ float: left;
                                 </div>
                                 <!--end user image section-->
                             </li>
-
+                            <ui:insert name="Inicio">
                             <li>
                                 <a href="home.xhtml"><i class="fa fa-dashboard fa-fw"></i>Inicio</a>
                             </li>
-                            <li>
+                            </ui:insert>
+                            <ui:insert name="gestion_documentos">
+                            <li class="multiple">
                                 <a href="#"><i class="fa fa-edit fa-fw"></i>Gestion documentos<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
@@ -108,38 +114,43 @@ float: left;
                                     <li>
                                         <a href="gestion_documentos_seccion.xhtml"><i></i>Por sección</a>
                                     </li>
-
                                 </ul>
-                                <!-- second-level-items -->
                             </li>
+                            </ui:insert>
+                            <ui:insert name="crear_documento">
                             <li>
                                 <a href="crear_documento.xhtml"><i class="fa fa-plus-circle fa-fw"></i>Agregar documento</a>
                             </li>
+                            </ui:insert>
+                            <ui:insert name="ultimos_cambios">
                             <li>
                                 <a href="#"><i class="fa fa-clock-o fa-fw"></i>Ver últimos cambios</a>
                             </li>
+                            </ui:insert>
+                            <ui:insert name="buscar_documento">
                             <li>
                                 <a href="buscar_documento.xhtml"><i class="fa fa-search fa-fw"></i>Buscar documento</a>
                             </li>
+                            </ui:insert>
+                            <ui:insert name="alertar_usuario">
                             <li>
-                                <a href="comodin.xhtml"><i class="fa fa-exclamation fa-fw"></i>Alertar documento</a>
+                                <a href="comodin.xhtml"><i class="fa fa-exclamation fa-fw"></i>Alertar usuario</a>
                             </li>
-                            <li>
+                            </ui:insert>
+                            <ui:insert name="simulacion">
+                            <li class="multiple">
                                 <a href="#"><i class="fa fa-gears fa-fw"></i>Simulaciones<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="ver_simulacion.xhtml">Ver resultados</a>
+                                        <a href="realizar_simulacion.xhtml">Realizar simulación</a>
                                     </li>
                                     <li>
-                                        <a href="realizar_simulacion.xhtml">Realizar simulación</a>
-
+                                        <a href="ver_simulacion.xhtml">Ver resultados</a>
                                     </li>
                                 </ul>
                                 <!-- second-level-items -->
                             </li>
-                            <li>
-                                <a href="#"><i class="fa fa-folder-open-o fa-fw"></i>Gestionar sección</a>
-                            </li>
+                            </ui:insert>
                         </ul>
                         <!-- end side-menu -->
                     </div>
@@ -161,7 +172,7 @@ float: left;
         
 
         <!-- jQuery -->
-        <ui:insert name="script">Aqui van los script</ui:insert>
+        
 
 
     </h:body>

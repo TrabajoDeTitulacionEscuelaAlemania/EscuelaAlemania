@@ -7,16 +7,6 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="plantilla.xhtml">
         
-        <ui:define name="hojasestilo">
-            
-            <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
-        <h:outputStylesheet name="font-awesome/css/font-awesome.css" />
-        <h:outputStylesheet name="plugins/pace/pace-theme-big-counter.css" />
-        <h:outputStylesheet name="css/style.css" />
-        <h:outputStylesheet name="css/main-style.css" />
-        <h:outputStylesheet name="plugins/morris/morris-0.4.3.min.css" />
-            
-        </ui:define>
         
         <ui:define name="init">
             
@@ -63,7 +53,21 @@
 
         </ui:define>
         
-        
+        <ui:define name="simulacion">
+            <li class="multiple">
+                <a href="#"><i class="fa fa-gears fa-fw"></i>Simulaciones<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level open" style="display: block;">
+                    <li>
+                        <a href="realizar_simulacion.xhtml">Realizar simulación</a>
+                    </li>
+                    <li class="selected">
+                        <a href="ver_simulacion.xhtml">Ver resultados</a>
+                    </li>
+                </ul>
+                <!-- second-level-items -->
+            </li>
+        </ui:define>
+
         <ui:define name="contenido">
             
             <div id="page-wrapper">
@@ -199,16 +203,6 @@
                 
 </ui:define>
         
-        <ui:define name="script">
-            
-        <h:outputScript  name="plugins/bootstrap/bootstrap.min.js" />
-        <h:outputScript name="plugins/metisMenu/jquery.metisMenu.js" />
-        <h:outputScript  name="plugins/pace/pace.js" />
-        <h:outputScript  name="scripts/siminta.js" />
-        <h:outputScript name="plugins/morris/raphael-2.1.0.min.js" />
-        <h:outputScript  name="plugins/morris/morris.js" />
-        
-        </ui:define>
         
     </ui:composition>
    

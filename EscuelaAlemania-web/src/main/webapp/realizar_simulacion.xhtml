@@ -7,16 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="plantilla.xhtml">
         
-        <ui:define name="hojasestilo">
-            
-            <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
-        <h:outputStylesheet name="font-awesome/css/font-awesome.css" />
-        <h:outputStylesheet name="plugins/pace/pace-theme-big-counter.css" />
-        <h:outputStylesheet name="css/style.css" />
-        <h:outputStylesheet name="css/main-style.css" />
-        <h:outputStylesheet name="plugins/morris/morris-0.4.3.min.css" />
-            
-        </ui:define>
+      
         
         <ui:define name="init">
             
@@ -63,6 +54,20 @@
 
         </ui:define>
         
+        <ui:define name="simulacion">
+            <li class="multiple">
+                <a href="#"><i class="fa fa-gears fa-fw"></i>Simulaciones<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level open">
+                    <li class="selected">
+                        <a href="realizar_simulacion.xhtml">Realizar simulación</a>
+                    </li>
+                    <li>
+                        <a href="ver_simulacion.xhtml">Ver resultados</a>
+                    </li>
+                </ul>
+                <!-- second-level-items -->
+            </li>
+        </ui:define>
         
         <ui:define name="contenido">
             
@@ -77,10 +82,10 @@
                     <!--End Page Header -->
                 </div>
 
-                <h:form>
-                    
+                <h:form id="form">
+                    <p:growl id="growl" showDetail="true" autoUpdate="false" />
                         
-                        <h:panelGroup style="display:block; text-align:center">
+                        <h:panelGroup id="selProg" style="display:block; text-align:center" >
 
                             <h3><strong>Seleccione el programa que desea evaluar:</strong></h3>
                             <p:spacer width="5"/>
@@ -93,7 +98,7 @@
                                              update="porcentaje nota resultados @([id$=alertas1]) @([id$=alertas2])" action="#{managedBeanRealizarSimulacion.realizarSimulacion()}"/>
                         </h:panelGroup>
                     <br/>
-                    <div class="row">
+                    <h:panelGroup layout="block" class="row" id="result">
                         <div class="col-lg-4">
                             <h:panelGroup layout="block" class="panel panel-info">
                     
@@ -114,28 +119,44 @@
                                     </p:row>
                                 </f:facet>
                                 <p:row>
-                                    <p:column>Documentos completos</p:column>
+                                    <p:column>
+                                        <p:commandLink update=":form:growl" action="#{managedBeanRealizarSimulacion.mostrarDocCompletos()}">
+                                            <h:outputText value="Documentos completos" />
+                                        </p:commandLink>
+                                    </p:column>
                                     <p:column>
                                         #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.docCompletosAnterior}
                                     </p:column>
                                     <p:column style="font-weight: bold;"><h2>#{managedBeanRealizarSimulacion.docCompletos}</h2></p:column>
                                 </p:row>
                                 <p:row>
-                                    <p:column>Documentos incompletos</p:column>
+                                    <p:column>
+                                        <p:commandLink update=":form:growl" action="#{managedBeanRealizarSimulacion.mostrarDocIncompletos()}">
+                                            <h:outputText value="Documentos incompletos" />
+                                        </p:commandLink>
+                                    </p:column>
                                     <p:column>
                                         #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.docIncompletosAnterior}
                                     </p:column>
                                     <p:column style="font-weight: bold;"><h2>#{managedBeanRealizarSimulacion.docIncompletos}</h2></p:column>
                                 </p:row>
                                 <p:row>
-                                    <p:column>Documentos desactualizados</p:column>
+                                    <p:column>
+                                        <p:commandLink update=":form:growl" action="#{managedBeanRealizarSimulacion.mostrarDocDesactualizados()}">
+                                            <h:outputText value="Documentos desactualizados" />
+                                        </p:commandLink>
+                                    </p:column>
                                     <p:column>
                                         #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.docDesactualizadosAnterior}
                                     </p:column>
                                     <p:column style="font-weight: bold;"><h2>#{managedBeanRealizarSimulacion.docDesactualizados}</h2></p:column>
                                 </p:row>
                                 <p:row>
-                                    <p:column>Documentos sin información</p:column>
+                                    <p:column>
+                                        <p:commandLink update=":form:growl" action="#{managedBeanRealizarSimulacion.mostrarDocSinInformacion()}">
+                                            <h:outputText value="Documentos sin información" />
+                                        </p:commandLink>
+                                    </p:column>
                                     <p:column>
                                         #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.docSinInformacionAnterior}
                                     </p:column>
@@ -176,24 +197,16 @@
                     
                                 </h:panelGroup>
                         </div>
-                  </div>
-                    </h:form>
+                  </h:panelGroup>
+
+                </h:form>
                 
             
             </div>
                 
 </ui:define>
         
-        <ui:define name="script">
-            
-        <h:outputScript  name="plugins/bootstrap/bootstrap.min.js" />
-        <h:outputScript name="plugins/metisMenu/jquery.metisMenu.js" />
-        <h:outputScript  name="plugins/pace/pace.js" />
-        <h:outputScript  name="scripts/siminta.js" />
-        <h:outputScript name="plugins/morris/raphael-2.1.0.min.js" />
-        <h:outputScript  name="plugins/morris/morris.js" />
-        
-        </ui:define>
+       
         
     </ui:composition>
    

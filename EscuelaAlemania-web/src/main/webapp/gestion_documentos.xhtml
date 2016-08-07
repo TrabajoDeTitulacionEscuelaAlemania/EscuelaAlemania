@@ -7,16 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="plantilla.xhtml">
         
-        <ui:define name="hojasestilo">
-            
-            <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
-        <h:outputStylesheet name="font-awesome/css/font-awesome.css" />
-        <h:outputStylesheet name="plugins/pace/pace-theme-big-counter.css" />
-        <h:outputStylesheet name="css/style.css" />
-        <h:outputStylesheet name="css/main-style.css" />
-        <h:outputStylesheet name="plugins/morris/morris-0.4.3.min.css" />
-            
-        </ui:define>
+       
         
         <ui:define name="init">
             
@@ -60,7 +51,26 @@
 
                 </li>
             </h:form>
-
+        </ui:define>
+        
+        <ui:define name="gestion_documentos">
+            <li class="multiple">
+                <a href="#"><i class="fa fa-edit fa-fw"></i>Gestion documentos<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level open" style="display: block;">
+                    <li class="selected">
+                        <a href="gestion_documentos.xhtml"><i></i>Todos</a>
+                    </li>
+                    <li>
+                        <a href="gestion_documentos_programa.xhtml"><i></i>Por programa</a>
+                    </li>
+                    <li>
+                        <a href="gestion_documentos_estado.xhtml"><i></i>Por estado</a>
+                    </li>
+                    <li>
+                        <a href="gestion_documentos_seccion.xhtml"><i></i>Por sección</a>
+                    </li>
+                </ul>
+            </li>
         </ui:define>
         
         <ui:define name="contenido">
@@ -161,16 +171,7 @@
             
 </ui:define>
         
-        <ui:define name="script">
-            
-        <h:outputScript  name="plugins/bootstrap/bootstrap.min.js" />
-        <h:outputScript name="plugins/metisMenu/jquery.metisMenu.js" />
-        <h:outputScript  name="plugins/pace/pace.js" />
-        <h:outputScript  name="scripts/siminta.js" />
-        <h:outputScript name="plugins/morris/raphael-2.1.0.min.js" />
-        <h:outputScript  name="plugins/morris/morris.js" />
-        
-        </ui:define>
+
         
     </ui:composition>
    

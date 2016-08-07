@@ -7,6 +7,7 @@ package cl.usach.escalemania.managedbeans;
 
 import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.EstadoDocumento;
+import cl.usach.escalemania.entities.Programa;
 import cl.usach.escalemania.entities.Seccion;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.EstadoDocumentoFacadeLocal;
@@ -81,7 +82,6 @@ public class ManagedBeanVerAlertas {
      
      public void editar(){
         System.out.println("Editar");
-        FacesContext fc = FacesContext.getCurrentInstance();
         String msg = documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, nombreEstadoDocumento), 
                 ubicacion,
                 seccionFacade.obtenerPorNombre(nombreSeccion, secciones),

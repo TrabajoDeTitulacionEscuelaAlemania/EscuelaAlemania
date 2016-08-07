@@ -5,10 +5,15 @@
  */
 package cl.usach.escalemania.managedbeans;
 
+import cl.usach.escalemania.entities.Documento;
+import cl.usach.escalemania.entities.EstadoDocumento;
 import cl.usach.escalemania.entities.Programa;
+import cl.usach.escalemania.entities.Seccion;
 import cl.usach.escalemania.entities.Simulacion;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
+import cl.usach.escalemania.sessionbeans.EstadoDocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.ProgramaFacadeLocal;
+import cl.usach.escalemania.sessionbeans.SeccionFacadeLocal;
 import cl.usach.escalemania.sessionbeans.SimulacionFacadeLocal;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -18,6 +23,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 
 
@@ -35,6 +41,10 @@ public class ManagedBeanRealizarSimulacion {
     private SimulacionFacadeLocal simulacionFacade;
     @EJB
     private DocumentoFacadeLocal documentoFacade;
+    @EJB
+    private EstadoDocumentoFacadeLocal estadoDocumentoFacade;
+    @EJB
+    private SeccionFacadeLocal seccionFacade;
     
     private String usuario;
     private String rol;
@@ -52,7 +62,59 @@ public class ManagedBeanRealizarSimulacion {
     private int docIncompletosAnterior;
     private int docSinInformacionAnterior;
     private int docDesactualizadosAnterior;
+    private List<Documento> documentos;
+    private List<Documento> documentosFiltrados;
+    private Documento documentoElegido;
+    private String nombreEstadoDocumento;
+    private String ubicacion;
+    private String nombreSeccion;
+    private String observacion;
+    private String nombreDocumento;
+    private List<EstadoDocumento> estadoDocumentos;
+    private List<Seccion> secciones;
+    private int tipoDocumentos;
 
+    public void initDocSim(){
+        System.out.println("Init 2");
+        if (!FacesContext.getCurrentInstance().isPostback()){
+            System.out.println("Me meti al primer IF");
+            FacesContext fc = FacesContext.getCurrentInstance();
+            Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
+            usuario=(String)sesisonMap.get("usuario");
+            if(usuario==null)
+                fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
+            else {
+                System.out.println("Me meti al segundo IF");
+                Map<String,String> params =fc.getExternalContext().getRequestParameterMap();
+                tipoDocumentos=Integer.parseInt(params.get("tipoDocumento"));
+                switch(tipoDocumentos){
+                    case 1:
+                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
+                            "Completo");
+                        break;
+                    case 2:
+                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), 
+                            nombrePrograma), 
+                            "Incompleto");
+                        break;
+                    case 3:
+                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
+                            "Desactualizado");
+                        break;
+                    case 4:
+                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
+                            "Sin informacion");
+                        break;
+                    default:
+                        break;
+                }
+                secciones = seccionFacade.findAll();
+                estadoDocumentos = estadoDocumentoFacade.findAll();
+                alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            }
+        }
+    }
+    
     public void init(){
         System.out.println("INIT");
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -112,6 +174,209 @@ public class ManagedBeanRealizarSimulacion {
         alertas=documentoFacade.obtenerAlertas(documentoFacade.findAll());
     }
 
+    public void mostrarDocCompletos(){
+        FacesContext fc=FacesContext.getCurrentInstance();
+        if(docCompletos==0)
+            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                        "Información", "No existen documentos completos para inspeccionar"));
+        else{
+            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/documentos_simulacion.xhtml?faces-redirect=true&includeViewParams=true&tipoDocumento=1");
+        }
+    }
+    
+    public void mostrarDocIncompletos(){
+        FacesContext fc=FacesContext.getCurrentInstance();
+        if(docIncompletos==0)
+            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                        "Información", "No existen documentos incompletos para inspeccionar"));
+        else{
+            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/documentos_simulacion.xhtml?faces-redirect=true&includeViewParams=true&tipoDocumento=2");
+        }
+    }
+    
+    public void mostrarDocDesactualizados(){
+        FacesContext fc=FacesContext.getCurrentInstance();
+        if(docDesactualizados==0)
+            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                        "Información", "No existen documentos desactualizados para inspeccionar"));
+        else{
+            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/documentos_simulacion.xhtml?faces-redirect=true&includeViewParams=true&tipoDocumento=3");
+        }
+    }
+    
+        public void mostrarDocSinInformacion(){
+            FacesContext fc=FacesContext.getCurrentInstance();
+        if(docSinInformacion==0)
+            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                        "Información", "No existen documentos sin información para inspeccionar"));
+        else{
+            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/documentos_simulacion.xhtml?faces-redirect=true&includeViewParams=true&tipoDocumento=4");
+        }
+    }
+
+    public void irAEditar(){
+        nombreDocumento=documentoElegido.getNombre();
+        nombreEstadoDocumento=documentoElegido.getEstadoDocumento().getEstado();
+        ubicacion=documentoElegido.getUbicacion();
+        nombreSeccion=documentoElegido.getSeccion().getSeccion();
+        observacion=documentoElegido.getObservacion();
+    }
+    
+    public void editar(){
+        System.out.println("Editar");
+        String msg = documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, nombreEstadoDocumento), 
+                ubicacion,
+                seccionFacade.obtenerPorNombre(nombreSeccion, secciones),
+                observacion, 
+                nombreDocumento,
+                documentoElegido);
+        if(msg.compareToIgnoreCase("Cambios realizados correctamente")==0){
+            switch(tipoDocumentos){
+                    case 1:
+                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
+                            "Completo");
+                        break;
+                    case 2:
+                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), 
+                            nombrePrograma), 
+                            "Incompleto");
+                        break;
+                    case 3:
+                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
+                            "Desactualizado");
+                        break;
+                    case 4:
+                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
+                            "Sin informacion");
+                        break;
+                    default:
+                        break;
+                }
+            alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", msg));
+        }else
+            if(msg.compareTo("Error al modificar")==0)
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, 
+                        msg, "Ocurrió un error al modificar el documento. Inténtelo nuevamente")); 
+            else
+                FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Información", msg));
+    }
+
+    public void eliminarDocumento(){
+        String resultado=documentoFacade.eliminarDocumento(documentoElegido);
+        if(resultado.compareTo("Documento eliminado exitosamente")==0){
+            switch(tipoDocumentos){
+                    case 1:
+                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
+                            "Completo");
+                        break;
+                    case 2:
+                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), 
+                            nombrePrograma), 
+                            "Incompleto");
+                        break;
+                    case 3:
+                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
+                            "Desactualizado");
+                        break;
+                    case 4:
+                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
+                            "Sin informacion");
+                        break;
+                    default:
+                        break;
+                }
+            alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
+        }else
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", resultado));
+    }
+
+    public List<Documento> getDocumentosFiltrados() {
+        return documentosFiltrados;
+    }
+
+    public void setDocumentosFiltrados(List<Documento> documentosFiltrados) {
+        this.documentosFiltrados = documentosFiltrados;
+    }
+
+    public List<EstadoDocumento> getEstadoDocumentos() {
+        return estadoDocumentos;
+    }
+
+    public void setEstadoDocumentos(List<EstadoDocumento> estadoDocumentos) {
+        this.estadoDocumentos = estadoDocumentos;
+    }
+
+    public List<Seccion> getSecciones() {
+        return secciones;
+    }
+
+    public void setSecciones(List<Seccion> secciones) {
+        this.secciones = secciones;
+    }
+    
+    public List<Documento> getDocumentos() {
+        return documentos;
+    }
+
+    public void setDocumentos(List<Documento> documentos) {
+        this.documentos = documentos;
+    }
+
+    public Documento getDocumentoElegido() {
+        return documentoElegido;
+    }
+
+    public void setDocumentoElegido(Documento documentoElegido) {
+        this.documentoElegido = documentoElegido;
+    }
+
+    public String getNombreEstadoDocumento() {
+        return nombreEstadoDocumento;
+    }
+
+    public void setNombreEstadoDocumento(String nombreEstadoDocumento) {
+        this.nombreEstadoDocumento = nombreEstadoDocumento;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public String getNombreSeccion() {
+        return nombreSeccion;
+    }
+
+    public void setNombreSeccion(String nombreSeccion) {
+        this.nombreSeccion = nombreSeccion;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+    public String getNombreDocumento() {
+        return nombreDocumento;
+    }
+
+    public void setNombreDocumento(String nombreDocumento) {
+        this.nombreDocumento = nombreDocumento;
+    }
+    
     public int getDocCompletosAnterior() {
         return docCompletosAnterior;
     }
