@@ -37,5 +37,11 @@ public interface ProgramaFacadeLocal {
     Programa obtenerProgramaPorNombre(List<Programa> programas, String nombrePrograma);
     
     List<Programa> obtenerListaDeProgramas(List<String> programa, List<Programa> programas);
+
+    String crearPrograma(String nombrePrograma);
+
+    String editarPrograma(String nombrePrograma, String nuevoNombrePrograma);
+
+    String eliminarPrograma(String nombrePrograma, boolean moverDocumentos, String programaDestino);
     
 }
