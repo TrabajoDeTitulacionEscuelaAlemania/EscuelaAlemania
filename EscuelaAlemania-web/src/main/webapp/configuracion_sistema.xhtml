@@ -56,7 +56,7 @@
 
 
         <ui:define name="contenido">
-            <h:form id="formulario">
+            <h:form id="form">
                 <p:growl id="growl" showDetail="true" />
                 <div id="page-wrapper">
 
@@ -68,17 +68,149 @@
                         <!--End Page Header -->
                     </div>
                         
-                    <p:tabView dynamic="true" cache="true">
-                        <p:tab title="Parámetros del sistema">
-                           asdasd
-                        </p:tab>
-                        <p:tab title="Cuentas de usuario">
-                             <div class="row">
-                            <p:commandButton class="col-lg-3" value="Cambiar contraseña" />
-                            <p:commandButton class="col-lg-3" value="Cambiar contraseña Visitante" />
-                             </div>
-                        </p:tab>
-                    </p:tabView>
+                    <h:panelGroup class="panel panel-default" layout="block">
+                        
+                        <div class="panel-body">
+                            
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#cuentas-usuario" data-toggle="tab">Cuentas de usuario</a>
+                                </li>
+                                <li><a href="#parametros-sistema" data-toggle="tab">Parametros del sistema</a>
+                                </li>
+                            </ul>
+                            
+                            <div class="tab-content">
+                                
+                                <div class="tab-pane fade in active" id="cuentas-usuario" >
+                                    <br/>
+                                    <p:commandButton value="Cambiar contraseña de usuario" class="btn btn-outline btn-success" 
+                                                     update=":form:cambiarPass" onclick="PF('cambiarPass').show()" action="#{managedBeanConfiguracionSistema.irCambiarContraseña()}" />
+                                    <p:commandButton value="Asociar un correo a esta cuenta" class="btn btn-outline btn-success" 
+                                                     update=":form:asociarMail" onclick="PF('asociarMail').show()" action="#{managedBeanConfiguracionSistema.irAsociarCorreo()}"/>
+                                    <p:commandButton value="Cambiar contraseña del usuario Visitante" class="btn btn-outline btn-success" 
+                                                     update=":form:cambiarPassV" onclick="PF('cambiarPassV').show()" action="#{managedBeanConfiguracionSistema.irCambiarVisitante()}"/>
+                                    <br/>
+                                    <br/>
+                                    <p:contextMenu for="Usuarios">
+                                        <p:menuitem value="Reestablecer contraseña" update="reestablecerPass" onclick="PF('reestablecerPass').show()" action="#{managedBeanConfiguracionSistema.irReestablecer()}"/>
+                                        <p:menuitem value="Eliminar usuario" update="eliminarUser" onclick="PF('eliminarUser').show()" action="#{managedBeanConfiguracionSistema.irEliminar()}"/>
+                                    </p:contextMenu>
+                                    <p:dataTable id="Usuarios" var="user" value="#{managedBeanConfiguracionSistema.usuarios}"  rows="5"
+                                                 paginator="true"  rowsPerPageTemplate="5,10,15" emptyMessage="No existen usuario"  rowKey="#{user.id}"
+                                    paginatorPosition="top" selection="#{managedBeanConfiguracionSistema.usuarioSeleccionado}" selectionMode="single">
+                                        <f:facet name="header">
+                                            Lista de usuarios del sistema
+                                        </f:facet>
+                                        <p:column headerText="Nombre de usuario" footerText="">
+                                            <h:outputText value="#{user.usuario}" />
+                                        </p:column>
+                                        <f:facet name="footer">
+                                            <p:commandButton update=":form:crearUser" icon="ui-icon-plusthick" title="Crear usuario" onclick="PF('crearUser').show();" 
+                                                             action="#{managedBeanConfiguracionSistema.irCrear()}"/>
+                                        </f:facet>
+                                    </p:dataTable>
+                                    
+                                    <p:dialog  header="Reestablecer contraseña" widgetVar="reestablecerPass" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="reestablecerPass" style="display:block; text-align:center;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="1" rendered="#{not empty managedBeanConfiguracionSistema.usuarioSeleccionado}"  >
+
+                                                <p:outputLabel value="Al reestablecer la contraseña de este usuario, esta será 
+                                                               el mismo valor que su nombre de usuario. Es decir, la contraseña será #{managedBeanConfiguracionSistema.nombreUsuarioReestablecer}" />
+                                                <br/>
+                                                <p:outputLabel value="¿Desea reestablecer la contraseña de este usuario?" />
+
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Si" action="#{managedBeanConfiguracionSistema.reestablecerContraseña()}"
+                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
+                                            <p:spacer width="3" />
+                                            <p:commandButton  value="No" onclick="PF('reestablecerPass').hide();" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
+                                    <p:dialog  header="Eliminar usuario" widgetVar="eliminarUser" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="eliminarUser" style="display:block; text-align:center;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="1" rendered="#{not empty managedBeanConfiguracionSistema.usuarioSeleccionado}"  >
+
+                                                <p:outputLabel value="¿Desea eliminar el usuario seleccionado?" />
+
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Si" action="#{managedBeanConfiguracionSistema.eliminarUsuario()}"
+                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
+                                            <p:spacer width="3" />
+                                            <p:commandButton  value="No" onclick="PF('eliminarUser').hide();" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
+                                    <p:dialog  header="Nuevo usuario" widgetVar="crearUser" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="crearUser" style="display:block; text-align:center;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="2">
+
+                                                <p:outputLabel value="Nuevo usuario: " />
+                                                <p:inputText value="#{managedBeanConfiguracionSistema.nombreUsuarioCrear}" maxlength="15"/>
+                                            </h:panelGrid>
+                                            <p:outputLabel value="La contraseña será el nombre de usuario" style="font-weight: bold; " />
+                                            <br/>
+                                            <br/>
+                                            <p:commandButton  value="Crear usuario" action="#{managedBeanConfiguracionSistema.crearUsuario()}"
+                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
+                                    <p:dialog  header="Cambiar contraseña" widgetVar="cambiarPass" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="cambiarPass" style="display:block; text-align:center;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="2">
+
+                                                <p:outputLabel value="Ingrese su nueva contraseña: " />
+                                                <p:password value="#{managedBeanConfiguracionSistema.contraseña1}" maxlength="100"/>
+                                                <p:outputLabel value="Vuelva a introducir su nueva contraseña: " />
+                                                <p:password value="#{managedBeanConfiguracionSistema.contraseña2}" maxlength="100"/>
+                                                <p:outputLabel value="Ingrese su contraseña actual: " />
+                                                <p:password value="#{managedBeanConfiguracionSistema.contraseñaActual}" maxlength="100"/>
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Cambiar contraseña" action="#{managedBeanConfiguracionSistema.cambiarContraseña()}"
+                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
+                                    <p:dialog  header="Asociar correo electrónico" widgetVar="asociarMail" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="asociarMail" style="display:block; text-align:center;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="2">
+
+                                                <p:outputLabel value="Ingrese el correo que desea asociar a su cuenta: " />
+                                                <p:inputText value="#{managedBeanConfiguracionSistema.correoUsuario}" maxlength="70"/>
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Cambiar contraseña" action="#{managedBeanConfiguracionSistema.asociarCorreo()}"
+                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
+                                    <p:dialog  header="Cambiar contraseña Visitante" widgetVar="cambiarPassV" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="cambiarPassV" style="display:block; text-align:center;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="2">
+
+                                                <p:outputLabel value="Ingrese la nueva contraseña para el Visitante: " />
+                                                <p:password value="#{managedBeanConfiguracionSistema.contraseñaVisitante1}" maxlength="100"/>
+                                                <p:outputLabel value="Reingrese la nueva contraseña para el Visitante: " />
+                                                <p:password value="#{managedBeanConfiguracionSistema.contraseñaVisitante2}" maxlength="100"/>
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Cambiar contraseña" action="#{managedBeanConfiguracionSistema.cambiarContraseñaVisitante()}"
+                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
+                                    
+                                </div>
+                                
+                                <div class="tab-pane fade" id="parametros-sistema" >
+                                    Coleao
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                    </h:panelGroup>
+
                     
 
                 </div>

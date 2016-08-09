@@ -81,6 +81,7 @@ public class ManagedBeanRealizarSimulacion {
             FacesContext fc = FacesContext.getCurrentInstance();
             Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
             usuario=(String)sesisonMap.get("usuario");
+            rol=(String)sesisonMap.get("rol");
             if(usuario==null)
                 fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
             else {

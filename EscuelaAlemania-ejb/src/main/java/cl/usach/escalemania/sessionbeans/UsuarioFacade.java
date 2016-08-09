@@ -55,6 +55,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         }
     }
     
+    @Override
     public Usuario obtenerUsuario(String nombreusuario){
         Query query=em.createNamedQuery("Usuario.findByName").setParameter("usuario", nombreusuario);
         if(query.getResultList().isEmpty())

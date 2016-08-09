@@ -43,4 +43,6 @@ public interface UsuarioFacadeLocal {
 
     String asociarCorreo(String nombreUsuario, String correoUsuario);
     
+    Usuario obtenerUsuario(String nombreusuario);
+    
 }
