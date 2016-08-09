@@ -26,8 +26,11 @@
 }
         </style>
         
-        <h:outputScript name="scripts/configuracion.js" />
+        <h:outputScript name="plugins/bootstrap/bootstrap.min.js" />
         <h:outputScript name="plugins/pace/pace.js" />
+        <h:outputScript name="plugins/jquery-1.10.2.js" />
+        <h:outputScript name="plugins/metisMenu/jquery.metisMenu.js" />
+        <h:outputScript name="scripts/siminta.js" />
     </h:head>
 
     <h:body>
@@ -99,7 +102,7 @@
                             </li>
                             </ui:insert>
                             <ui:insert name="gestion_documentos">
-                            <li class="multiple">
+                            <li>
                                 <a href="#"><i class="fa fa-edit fa-fw"></i>Gestion documentos<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
@@ -143,7 +146,7 @@
                             </li>
                             </ui:insert>
                             <ui:insert name="simulacion">
-                            <li class="multiple">
+                            <li>
                                 <a href="#"><i class="fa fa-gears fa-fw"></i>Simulaciones<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
