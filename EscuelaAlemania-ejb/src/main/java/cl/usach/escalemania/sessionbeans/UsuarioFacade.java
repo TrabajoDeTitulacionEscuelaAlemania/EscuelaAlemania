@@ -40,7 +40,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     public String crearUsuario(String nuevoUsuario) {
         if(nuevoUsuario.isEmpty())
             return "El nombre de usuario no puede estar vacio";
-        Usuario usuario=obtenerUdsuario(nuevoUsuario);
+        Usuario usuario=obtenerUsuario(nuevoUsuario);
         if(usuario!=null)
             return "El nombre de usuario ya existe";
         Usuario usuarioNuevo=new Usuario();
@@ -55,7 +55,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         }
     }
     
-    public Usuario obtenerUdsuario(String nombreusuario){
+    public Usuario obtenerUsuario(String nombreusuario){
         Query query=em.createNamedQuery("Usuario.findByName").setParameter("usuario", nombreusuario);
         if(query.getResultList().isEmpty())
             return null;
@@ -71,7 +71,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         String contraseña2=validacion.passwordHash(nuevaContraseña2);
         if(contraseña1.compareTo(contraseña2)!=0)
             return "Las contraseñas nuevas no coinciden";
-        Usuario usuario=obtenerUdsuario(nombreUsuario);
+        Usuario usuario=obtenerUsuario(nombreUsuario);
         if(usuario.getContraseña().compareTo(contraseña)!=0)
             return "La contraseña actual no coincide";
         usuario.setContraseña(contraseña1);
@@ -85,7 +85,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
 
     @Override
     public String reestablecerContraseña(String nombreUsuario) {
-        Usuario usuario=obtenerUdsuario(nombreUsuario);
+        Usuario usuario=obtenerUsuario(nombreUsuario);
         usuario.setContraseña(validacion.passwordHash(usuario.getUsuario()));
         try {
             edit(usuario);
@@ -97,7 +97,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
 
     @Override
     public String eliminarUsuario(String nombreUsuario) {
-        Usuario usuario=obtenerUdsuario(nombreUsuario);
+        Usuario usuario=obtenerUsuario(nombreUsuario);
         try {
             remove(usuario);
             return "Usuario eliminado correctamente";
@@ -114,7 +114,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         String contraseña2=validacion.passwordHash(nuevaContraseña2);
         if(contraseña1.compareTo(contraseña2)!=0)
             return "La nuevas contraseñas no coinciden";
-        Usuario visitante=obtenerUdsuario("visitante");
+        Usuario visitante=obtenerUsuario("visitante");
         visitante.setContraseña(contraseña1);
         try {
             edit(visitante);
@@ -123,6 +123,18 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
             return "Error inesperado al modificar la clave del usuario. Por favor, inténtelo mas tarde";
         }
         
+    }
+
+    @Override
+    public String asociarCorreo(String nombreUsuario, String correoUsuario) {
+        Usuario usuario=obtenerUsuario(nombreUsuario);
+        usuario.setCorreo(correoUsuario);
+        try {
+            edit(usuario);
+            return "Correo asociado exitosamente a su cuenta";
+        } catch (Exception e) {
+            return "Error inesperado al asociar correo al usuario. Por favor, inténtelo mas tarde";
+        }
     }
     
 }

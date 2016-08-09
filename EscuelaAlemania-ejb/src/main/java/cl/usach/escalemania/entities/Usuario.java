@@ -38,6 +38,16 @@ public class Usuario implements Serializable {
     @JoinColumn(nullable = false)
     @ManyToOne
     private Rol rol;
+    @Column(nullable = true, length = 70)
+    private String correo;
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 
     public String getUsuario() {
         return usuario;

@@ -40,5 +40,7 @@ public interface UsuarioFacadeLocal {
     String eliminarUsuario(String nombreUsuario);
 
     String cambiarContraseñaVisitante(String nuevaContraseña1, String nuevaContraseña2);
+
+    String asociarCorreo(String nombreUsuario, String correoUsuario);
     
 }
