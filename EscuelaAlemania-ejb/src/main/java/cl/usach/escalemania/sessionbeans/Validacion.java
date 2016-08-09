@@ -6,12 +6,10 @@
 package cl.usach.escalemania.sessionbeans;
 
 import cl.usach.escalemania.entities.Usuario;
-import cl.usach.escalemania.sessionbeans.UsuarioFacadeLocal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

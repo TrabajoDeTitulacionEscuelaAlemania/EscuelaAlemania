@@ -12,12 +12,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
  *
  * @author Desarrollo
  */
+@NamedQueries({
+    @NamedQuery(name="Rol.findByName",
+                query="SELECT c FROM Rol c WHERE c.rol = :rol"),
+}) 
 @Entity
 public class Rol implements Serializable {
 

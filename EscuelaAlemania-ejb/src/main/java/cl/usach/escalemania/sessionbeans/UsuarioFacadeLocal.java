@@ -8,12 +8,13 @@ package cl.usach.escalemania.sessionbeans;
 import cl.usach.escalemania.entities.Usuario;
 import java.util.List;
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
  * @author Desarrollo
  */
-@Local
+@Remote
 public interface UsuarioFacadeLocal {
 
     void create(Usuario usuario);
@@ -29,5 +30,15 @@ public interface UsuarioFacadeLocal {
     List<Usuario> findRange(int[] range);
 
     int count();
+
+    String crearUsuario(String nuevoUsuario);
+
+    String cambiarContraseña(String nombreUsuario, String contraseñaActual, String nuevaContraseña1, String nuevaContraseña2);
+
+    String reestablecerContraseña(String nombreUsuario);
+
+    String eliminarUsuario(String nombreUsuario);
+
+    String cambiarContraseñaVisitante(String nuevaContraseña1, String nuevaContraseña2);
     
 }

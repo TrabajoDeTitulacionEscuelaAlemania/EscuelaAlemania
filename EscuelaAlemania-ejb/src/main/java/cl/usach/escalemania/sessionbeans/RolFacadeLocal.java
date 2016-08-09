@@ -29,5 +29,7 @@ public interface RolFacadeLocal {
     List<Rol> findRange(int[] range);
 
     int count();
+
+    Rol obtenerRolPorNombre(String nombreRol);
     
 }
