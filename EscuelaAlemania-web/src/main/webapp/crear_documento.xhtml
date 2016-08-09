@@ -91,10 +91,10 @@
                                         <div class="form-group">
                                             <label>*Programa(s)</label>
                                             <br/>
-                                            <p:selectManyButton  value="#{managedBeanCrearDocumento.programa}">
+                                            <p:selectCheckboxMenu value="#{managedBeanCrearDocumento.programa}" label="Lista de programas disponibles">
                                                 <f:selectItems value="#{managedBeanCrearDocumento.programas}" var="programa"
                                                                itemLabel="#{programa.programa}" itemValue="#{programa.programa}" />
-                                            </p:selectManyButton>
+                                            </p:selectCheckboxMenu>
                                         </div>
                                         <div class="form-group">
                                             <label>*Sección</label>

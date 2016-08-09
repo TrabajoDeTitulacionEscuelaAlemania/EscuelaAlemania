@@ -80,7 +80,7 @@
                 <div class="row">
                     <!-- Page Header -->
                     <div class="col-lg-12">
-                        <p:outputLabel class="page-header" value="Gestion documentos-#{managedBeanGestionDocs.tipoNombre}" style="font-size: 33px "/>
+                        <p:outputLabel class="page-header" value="Gestion documentos" style="font-size: 33px "/>
                         
                     </div>
                     <!--End Page Header -->
@@ -123,12 +123,12 @@
                     
                     <p:dialog  header="Eliminar documento" widgetVar="elimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="elimDetalle" style="display:block; text-align:center;margin: 0 auto;">
-                        <p:panelGrid  columns="" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
+                        <h:panelGrid border="0"  columns="" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
 
                             <br></br>
                             <strong>¿Desea eliminar el documento seleccionado?</strong>
                             <br/>
-                        </p:panelGrid>
+                        </h:panelGrid>
                         <p:commandButton  value="Si"  action="#{managedBeanGestionDocs.eliminarDocumento()}"  onclick="PF('elimDialog').hide();"
                                          update=":form:growl :form:Documentos @([id$=alertas1]) @([id$=alertas2])" icon="fa fa-check-circle-o"/>
                         <p:spacer width="3" />
@@ -138,7 +138,7 @@
 
                     <p:dialog  header="Información documento" widgetVar="docDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:outputPanel id="docDetalle" style="text-align:left">
-                            <p:panelGrid  columns="2" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
+                            <h:panelGrid border="0"  columns="2" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
 
                                 <br></br>
                                 <strong>Nombre:</strong>
@@ -155,7 +155,7 @@
                                 <p:inputText value="#{managedBeanGestionDocs.ubicacion}" maxlength="100" />
                                 <strong>Observación:</strong>
                                 <p:inputText value="#{managedBeanGestionDocs.observacion}" maxlength="120" />
-                            </p:panelGrid>
+                            </h:panelGrid>
                             <p:commandButton value="Modificar"  action="#{managedBeanGestionDocs.editar()}" 
                                                  update=":form:growl :form:Documentos @([id$=alertas1]) @([id$=alertas2])"
                                                  style="display:block; text-align:center;margin: 0 auto;"/>

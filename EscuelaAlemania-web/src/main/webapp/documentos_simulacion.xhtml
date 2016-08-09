@@ -122,12 +122,12 @@
                     
                     <p:dialog  header="Eliminar documento" widgetVar="elimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="elimDetalle" style="display:block; text-align:center;margin: 0 auto;">
-                        <p:panelGrid  columns="" rendered="#{not empty managedBeanRealizarSimulacion.documentoElegido}"  >
+                        <h:panelGrid border="0"  columns="" rendered="#{not empty managedBeanRealizarSimulacion.documentoElegido}"  >
 
                             <br></br>
                             <strong>¿Desea eliminar el documento seleccionado?</strong>
                             <br/>
-                        </p:panelGrid>
+                        </h:panelGrid 
                         <p:commandButton  value="Si"  action="#{managedBeanRealizarSimulacion.eliminarDocumento()}"  onclick="PF('elimDialog').hide();"
                                          update="growl Documentos @([id$=alertas1]) @([id$=alertas2])" icon="fa fa-check-circle-o"/>
                         <p:spacer width="3" />
@@ -137,7 +137,7 @@
 
                     <p:dialog  header="Información documento" widgetVar="docDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:outputPanel id="docDetalle" style="text-align:left">
-                            <p:panelGrid  columns="2" rendered="#{not empty managedBeanRealizarSimulacion.documentoElegido}"  >
+                            <h:panelGrid border="0"  columns="2" rendered="#{not empty managedBeanRealizarSimulacion.documentoElegido}"  >
 
                                 <br></br>
                                 <strong>Nombre:</strong>
@@ -154,7 +154,7 @@
                                 <p:inputText value="#{managedBeanRealizarSimulacion.ubicacion}" maxlength="100" />
                                 <strong>Observación:</strong>
                                 <p:inputText value="#{managedBeanRealizarSimulacion.observacion}" maxlength="120" />
-                            </p:panelGrid>
+                            </h:panelGrid 
                             <p:commandButton value="Modificar"  action="#{managedBeanRealizarSimulacion.editar()}" 
                                                  update="growl Documentos @([id$=alertas1]) @([id$=alertas2])"
                                                  style="display:block; text-align:center;margin: 0 auto;"/>
