@@ -186,7 +186,7 @@
                                                 <p:outputLabel value="Ingrese el correo que desea asociar a su cuenta: " />
                                                 <p:inputText value="#{managedBeanConfiguracionSistema.correoUsuario}" maxlength="70"/>
                                             </h:panelGrid>
-                                            <p:commandButton  value="Cambiar contraseña" action="#{managedBeanConfiguracionSistema.asociarCorreo()}"
+                                            <p:commandButton  value="Asociar correo" action="#{managedBeanConfiguracionSistema.asociarCorreo()}"
                                                               update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
                                         </p:outputPanel>
                                     </p:dialog>
