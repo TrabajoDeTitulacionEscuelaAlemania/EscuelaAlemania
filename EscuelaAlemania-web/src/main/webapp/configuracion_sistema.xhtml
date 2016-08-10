@@ -67,8 +67,14 @@
                         </div>
                         <!--End Page Header -->
                     </div>
-                        
-                    <h:panelGroup class="panel panel-default" layout="block">
+                    
+                    <p:outputPanel deferred="true" rendered="#{managedBeanConfiguracionSistema.rol != 'Administrador'}">
+                        <h3>Información no disponible</h3>
+                        <p>Usted no posee los privilegios necesarios para utilizar esta funcionalidad</p>
+                    </p:outputPanel>
+
+                    
+                    <h:panelGroup class="panel panel-default" layout="block" rendered="#{managedBeanConfiguracionSistema.rol eq 'Administrador'}">
                         
                         <div class="panel-body">
                             
@@ -83,11 +89,12 @@
                                 
                                 <div class="tab-pane fade in active" id="cuentas-usuario" >
                                     <br/>
-                                    <p:commandButton value="Cambiar contraseña de usuario" class="btn btn-outline btn-success" 
+                                    <p:commandButton value="Cambiar contraseña de usuario" class="btn btn-outline btn-success"
                                                      update=":form:cambiarPass" onclick="PF('cambiarPass').show()" action="#{managedBeanConfiguracionSistema.irCambiarContraseña()}" />
                                     <p:commandButton value="Asociar un correo a esta cuenta" class="btn btn-outline btn-success" 
+                                                     disabled="#{managedBeanConfiguracionSistema.usuario eq 'admin'}"
                                                      update=":form:asociarMail" onclick="PF('asociarMail').show()" action="#{managedBeanConfiguracionSistema.irAsociarCorreo()}"/>
-                                    <p:commandButton value="Cambiar contraseña del usuario Visitante" class="btn btn-outline btn-success" 
+                                    <p:commandButton value="Cambiar contraseña del usuario Visitante" class="btn btn-outline btn-success" disabled="#{managedBeanConfiguracionSistema.usuario != 'admin'}"
                                                      update=":form:cambiarPassV" onclick="PF('cambiarPassV').show()" action="#{managedBeanConfiguracionSistema.irCambiarVisitante()}"/>
                                     <br/>
                                     <br/>
@@ -95,7 +102,7 @@
                                         <p:menuitem value="Reestablecer contraseña" update="reestablecerPass" onclick="PF('reestablecerPass').show()" action="#{managedBeanConfiguracionSistema.irReestablecer()}"/>
                                         <p:menuitem value="Eliminar usuario" update="eliminarUser" onclick="PF('eliminarUser').show()" action="#{managedBeanConfiguracionSistema.irEliminar()}"/>
                                     </p:contextMenu>
-                                    <p:dataTable id="Usuarios" var="user" value="#{managedBeanConfiguracionSistema.usuarios}"  rows="5"
+                                    <p:dataTable rendered="#{managedBeanConfiguracionSistema.usuario eq 'admin'}" id="Usuarios" var="user" value="#{managedBeanConfiguracionSistema.usuarios}"  rows="5"
                                                  paginator="true"  rowsPerPageTemplate="5,10,15" emptyMessage="No existen usuario"  rowKey="#{user.id}"
                                     paginatorPosition="top" selection="#{managedBeanConfiguracionSistema.usuarioSeleccionado}" selectionMode="single">
                                         <f:facet name="header">

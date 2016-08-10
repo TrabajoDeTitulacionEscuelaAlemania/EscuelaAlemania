@@ -113,11 +113,11 @@
                         <p:column style="width:110px; text-align: center" >
 
                             <p:commandButton update=":formulario:docDetalle" oncomplete="PF('docDialogo').show()" title="Editar" 
-                                             icon="ui-icon-pencil"  action="#{managedBeanBuscarDocumento.irAEditar()}">
+                                             icon="ui-icon-pencil"  action="#{managedBeanBuscarDocumento.irAEditar()}" disabled="#{managedBeanBuscarDocumento.rol eq 'Visitante'}">
                                 <f:setPropertyActionListener value="#{doc}" target="#{managedBeanBuscarDocumento.documentoElegido}" />
                             </p:commandButton> 
                             <p:spacer width="5" />
-                            <p:commandButton title="Eliminar" icon="fa fa-trash-o"   onclick="PF('elimDialog').show();">
+                            <p:commandButton title="Eliminar" icon="fa fa-trash-o"   onclick="PF('elimDialog').show();" disabled="#{managedBeanBuscarDocumento.rol eq 'Visitante'}">
                                 <f:setPropertyActionListener value="#{doc}" target="#{managedBeanBuscarDocumento.documentoElegido}" />
                             </p:commandButton> 
                         </p:column>

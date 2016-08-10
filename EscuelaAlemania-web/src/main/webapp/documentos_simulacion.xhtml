@@ -55,7 +55,7 @@
         </ui:define>
         
         <ui:define name="simulacion">
-            <li class="multiple">
+            <li class="active">
                 <a href="#"><i class="fa fa-gears fa-fw"></i>Simulaciones<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level open">
                     <li class="selected">
@@ -127,7 +127,7 @@
                             <br></br>
                             <strong>¿Desea eliminar el documento seleccionado?</strong>
                             <br/>
-                        </h:panelGrid 
+                        </h:panelGrid> 
                         <p:commandButton  value="Si"  action="#{managedBeanRealizarSimulacion.eliminarDocumento()}"  onclick="PF('elimDialog').hide();"
                                          update="growl Documentos @([id$=alertas1]) @([id$=alertas2])" icon="fa fa-check-circle-o"/>
                         <p:spacer width="3" />
@@ -154,7 +154,7 @@
                                 <p:inputText value="#{managedBeanRealizarSimulacion.ubicacion}" maxlength="100" />
                                 <strong>Observación:</strong>
                                 <p:inputText value="#{managedBeanRealizarSimulacion.observacion}" maxlength="120" />
-                            </h:panelGrid 
+                            </h:panelGrid> 
                             <p:commandButton value="Modificar"  action="#{managedBeanRealizarSimulacion.editar()}" 
                                                  update="growl Documentos @([id$=alertas1]) @([id$=alertas2])"
                                                  style="display:block; text-align:center;margin: 0 auto;"/>

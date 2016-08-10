@@ -127,12 +127,12 @@
                         
                         <p:column style="width:110px; text-align: center" >
                            
-                            <p:commandButton update=":form:docDetalle" oncomplete="PF('docDialogo').show()" title="Editar" 
+                            <p:commandButton update=":form:docDetalle" oncomplete="PF('docDialogo').show()" title="Editar" disabled="#{managedBeanGestionDocs.rol eq 'Visitante'}"
                                              icon="ui-icon-pencil" ajax="true" action="#{managedBeanGestionDocs.irAEditar()}">
                                 <f:setPropertyActionListener value="#{doc}" target="#{managedBeanGestionDocs.documentoElegido}" />
                             </p:commandButton> 
                             <p:spacer width="5" />
-                        <p:commandButton title="Eliminar" icon="fa fa-trash-o"   onclick="PF('elimDialog').show();">
+                        <p:commandButton title="Eliminar" icon="fa fa-trash-o"   onclick="PF('elimDialog').show();" disabled="#{managedBeanGestionDocs.rol eq 'Visitante'}">
                             <f:setPropertyActionListener value="#{doc}" target="#{managedBeanGestionDocs.documentoElegido}" />
                         </p:commandButton> 
                         </p:column>

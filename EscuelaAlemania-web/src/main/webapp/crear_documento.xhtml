@@ -72,10 +72,13 @@
                     <!--End Page Header -->
                 </div>
 
-               
+                <p:outputPanel deferred="true" rendered="#{managedBeanCrearDocumento.rol != 'Administrador'}">
+                    <h3>Información no disponible</h3>
+                    <p>Usted no posee los privilegios necesarios para utilizar esta funcionalidad</p>
+                </p:outputPanel>
                 
                 
-                <h:form id="formularioCrear">
+                <h:form id="formularioCrear" rendered="#{managedBeanCrearDocumento.rol eq 'Administrador'}">
                     <p:growl id="growl" showDetail="true" />
                     <div class="panel panel-primary" style="margin-left: 10%;margin-right: 10%">
                         <div class="panel-heading">

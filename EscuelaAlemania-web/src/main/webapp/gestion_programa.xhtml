@@ -73,7 +73,13 @@
                     <!--End Page Header -->
                 </div>
 
-                <h:form id="form">
+                <p:outputPanel deferred="true" rendered="#{managedBeanGestionPrograma.rol != 'Administrador'}">
+                    <h3>Información no disponible</h3>
+                    <p>Usted no posee los privilegios necesarios para utilizar esta funcionalidad</p>
+                </p:outputPanel>
+                
+                
+                <h:form id="form" rendered="#{managedBeanGestionPrograma.rol eq 'Administrador'}">
                     <p:growl id="growl" showDetail="true" autoUpdate="false" />
                     <p:dataTable id="Programa" var="prog" value="#{managedBeanGestionPrograma.programas}"  rows="5"
                                  paginator="true"  rowsPerPageTemplate="5,10,15" emptyMessage="No existen programas"  

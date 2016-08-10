@@ -91,11 +91,13 @@
                         <p:column style="width:110px; text-align: center" >
 
                             <p:commandButton update=":formulario:docDetalle" oncomplete="PF('docDialogo').show()" title="Editar" 
-                                             icon="fa fa-pencil"   action="#{managedBeanVerAlertas.irAEditar()}">
+                                             icon="fa fa-pencil" disabled="#{managedBeanVerAlertas.rol eq 'Visitante'}"
+                                             action="#{managedBeanVerAlertas.irAEditar()}">
                                 <f:setPropertyActionListener value="#{doc}" target="#{managedBeanVerAlertas.documentoElegido}" />
                             </p:commandButton> 
                             <p:spacer width="5" />
-                            <p:commandButton title="Eliminar" icon="fa fa-trash-o"   onclick="PF('elimDialog').show();">
+                            <p:commandButton title="Eliminar" icon="fa fa-trash-o"  
+                                             onclick="PF('elimDialog').show();" disabled="#{managedBeanVerAlertas.rol eq 'Visitante'}">
                                 <f:setPropertyActionListener value="#{doc}" target="#{managedBeanVerAlertas.documentoElegido}" />
                             </p:commandButton> 
                         </p:column>
@@ -110,10 +112,10 @@
                                 <strong>¿Desea eliminar el documento seleccionado?</strong>
                                 <br/>
                             </h:panelGrid>
-                            <p:commandButton  value="Si"  action="#{managedBeanVerAlertas.eliminarDocumento()}"  onclick="PF('elimDialog').hide();"
+                            <p:commandButton  value="Si"   action="#{managedBeanVerAlertas.eliminarDocumento()}"  onclick="PF('elimDialog').hide();"
                                               update=":formulario:growl :formulario:Documentos @([id$=alertas1]) @([id$=alertas2])" icon="fa fa-check-circle-o"/>
                             <p:spacer width="3" />
-                            <p:commandButton  value="No" onclick="PF('elimDialog').hide();" icon="fa fa-times-circle-o"/>
+                            <p:commandButton  value="No"  onclick="PF('elimDialog').hide();" icon="fa fa-times-circle-o"/>
                         </p:outputPanel>
                     </p:dialog>
 

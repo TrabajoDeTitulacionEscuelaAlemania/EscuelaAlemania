@@ -82,7 +82,13 @@
                     <!--End Page Header -->
                 </div>
 
-                <h:form id="form">
+                <p:outputPanel deferred="true" rendered="#{managedBeanRealizarSimulacion.rol != 'Administrador'}">
+                    <h3>Información no disponible</h3>
+                    <p>Usted no posee los privilegios necesarios para utilizar esta funcionalidad</p>
+                </p:outputPanel>
+                
+                
+                <h:form id="form" rendered="#{managedBeanRealizarSimulacion.rol eq 'Administrador'}">
                     <p:growl id="growl" showDetail="true" autoUpdate="false" />
                         
                         <h:panelGroup id="selProg" style="display:block; text-align:center" >
