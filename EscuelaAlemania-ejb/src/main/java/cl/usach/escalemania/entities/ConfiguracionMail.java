@@ -11,12 +11,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 
 /**
  *
  * @author Rodrigo Rivas
  */
+@NamedQueries({
+    @NamedQuery(name="ConfiguracionMail.findByName",
+                query="SELECT c FROM ConfiguracionMail c WHERE c.tipo = :tipo"),
+})
 @Entity
 public class ConfiguracionMail implements Serializable {
 

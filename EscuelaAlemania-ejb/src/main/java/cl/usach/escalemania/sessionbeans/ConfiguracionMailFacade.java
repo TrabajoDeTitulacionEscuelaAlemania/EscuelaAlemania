@@ -19,6 +19,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -34,6 +35,21 @@ public class ConfiguracionMailFacade extends AbstractFacade<ConfiguracionMail> i
     private ParametroSistemaFacadeLocal parametroSistemaFacade;
     @EJB
     private ConfiguracionMailFacadeLocal configuracionMailFacade;
+    
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public ConfiguracionMailFacade() {
+        super(ConfiguracionMail.class);
+    }
+
+    @Override
+    public ConfiguracionMail obtenerConfiguracionMailPorNombre(String nombreParametro) {
+        Query query=em.createNamedQuery("ConfiguracionMail.findByName").setParameter("tipo", nombreParametro);
+        return (ConfiguracionMail)query.getSingleResult();
+    }
     
     @Override
     public String enviarMail(List<String> destinos, String mensaje, String asunto){
@@ -72,14 +88,4 @@ public class ConfiguracionMailFacade extends AbstractFacade<ConfiguracionMail> i
         }
         
     }
-    
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    public ConfiguracionMailFacade() {
-        super(ConfiguracionMail.class);
-    }
-    
 }

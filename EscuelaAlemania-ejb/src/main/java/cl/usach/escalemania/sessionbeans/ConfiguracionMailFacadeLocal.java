@@ -31,5 +31,7 @@ public interface ConfiguracionMailFacadeLocal {
     int count();
     
     String enviarMail(List<String> destinos, String mensaje, String asunto);
+
+    ConfiguracionMail obtenerConfiguracionMailPorNombre(String nombreParametro);
     
 }

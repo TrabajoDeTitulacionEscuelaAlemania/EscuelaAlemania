@@ -8,12 +8,13 @@ package cl.usach.escalemania.sessionbeans;
 import cl.usach.escalemania.entities.ParametroSistema;
 import java.util.List;
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
  * @author Rodrigo Rivas
  */
-@Local
+@Remote
 public interface ParametroSistemaFacadeLocal {
 
     void create(ParametroSistema parametroSistema);
@@ -31,5 +32,9 @@ public interface ParametroSistemaFacadeLocal {
     int count();
     
     List<ParametroSistema> obtenerListaParametros(String tipoParametro);
+
+    String modificarparametro(String nombreParametro, String valorParametro);
+
+    ParametroSistema obtenerParametroPorNombre(String nombreParametro);
     
 }
