@@ -33,7 +33,7 @@ public interface ParametroSistemaFacadeLocal {
     
     List<ParametroSistema> obtenerListaParametros(String tipoParametro);
 
-    String modificarparametro(String nombreParametro, String valorParametro);
+    String modificarParametro(String nombreParametro, String valorParametro);
 
     ParametroSistema obtenerParametroPorNombre(String nombreParametro);
     

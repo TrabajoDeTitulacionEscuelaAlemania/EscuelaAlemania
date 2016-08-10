@@ -53,7 +53,7 @@ public class ParametroSistemaFacade extends AbstractFacade<ParametroSistema> imp
     }
 
     @Override
-    public String modificarparametro(String nombreParametro, String valorParametro) {
+    public String modificarParametro(String nombreParametro, String valorParametro) {
         ParametroSistema parametroSistema=obtenerParametroPorNombre(nombreParametro);
         if(parametroSistema!=null){
             if(parametroSistema.getTipoParametro().compareTo("Mail Simulacion")==0){

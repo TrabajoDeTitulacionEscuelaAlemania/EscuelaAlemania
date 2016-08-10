@@ -209,7 +209,94 @@
                                 </div>
                                 
                                 <div class="tab-pane fade" id="parametros-sistema" >
-                                    Coleao
+                                    
+                                    <p:outputPanel deferred="true" rendered="#{managedBeanConfiguracionSistema.usuario != 'admin'}">
+                                        <h3>Información no disponible</h3>
+                                        <p>Usted no posee los privilegios necesarios para utilizar esta funcionalidad</p>
+                                    </p:outputPanel>
+                                    
+                                    <p:dataTable id="PS" var="ps" value="#{managedBeanConfiguracionSistema.parametrosSistema}"  rows="5"
+                                    paginator="true"  rowsPerPageTemplate="5,10,15" emptyMessage="No existen parametros"  
+                                    paginatorPosition="top" rendered="#{managedBeanConfiguracionSistema.usuario eq 'admin'}">
+                                    
+                                        <f:facet name="header">
+                                            Lista de parametros del sistema
+                                        </f:facet>
+                                        
+                                        <p:column headerText="Nombre parametro" footerText="">
+                                            <h:outputText value="#{ps.tipoParametro}" />
+                                        </p:column>
+
+                                        <p:column headerText="Valor parametro" footerText="">
+                                            <h:outputText value="#{ps.valor}" />
+                                        </p:column>
+                                        
+                                        <p:column style="width:110px; text-align: center" >
+
+                                            <p:commandButton update="@([id$=editarPS])" oncomplete="PF('editarPS').show()" title="Editar" 
+                                                             icon="ui-icon-pencil" ajax="true" action="#{managedBeanConfiguracionSistema.irEditarParametro()}">
+                                                <f:setPropertyActionListener value="#{ps}" target="#{managedBeanConfiguracionSistema.parametroSistemaSeleccionado}" />
+                                            </p:commandButton> 
+                                        </p:column>
+                                    
+                                    </p:dataTable>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <p:dataTable id="CM" var="cm" value="#{managedBeanConfiguracionSistema.configuracionMails}"  rows="5"
+                                    paginator="true"  rowsPerPageTemplate="5,10,15" emptyMessage="No existen parametros"  
+                                    paginatorPosition="top" rendered="#{managedBeanConfiguracionSistema.usuario eq 'admin'}">
+                                    
+                                        <f:facet name="header">
+                                            Lista de parametros avanzados del sistema
+                                        </f:facet>
+                                        
+                                        <p:column headerText="Nombre parametro" footerText="">
+                                            <h:outputText value="#{cm.tipo}" />
+                                        </p:column>
+
+                                        <p:column headerText="Valor parametro" footerText="">
+                                            <h:outputText value="#{cm.valor}" />
+                                        </p:column>
+                                        
+                                        <p:column style="width:110px; text-align: center" >
+
+                                            <p:commandButton update="@([id$=editarCM])" oncomplete="PF('editarCM').show()" title="Editar" 
+                                                             icon="ui-icon-pencil" ajax="true" action="#{managedBeanConfiguracionSistema.irEditarConfiguracionMail()}">
+                                                <f:setPropertyActionListener value="#{cm}" target="#{managedBeanConfiguracionSistema.configuracionMailSeleccionado}" />
+                                            </p:commandButton> 
+                                        </p:column>
+                                    
+                                    </p:dataTable>
+                                    
+                                    <p:dialog  header="Modificar parametros del sistema" widgetVar="editarPS" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="editarPS" style="display:block; text-align:left;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="2" rendered="#{not empty managedBeanConfiguracionSistema.parametroSistemaSeleccionado}">
+
+                                                <p:outputLabel value="Nombre del parametro: " />
+                                                <p:inputText value="#{managedBeanConfiguracionSistema.nombreParametroSistema}" maxlength="50"/>
+                                                <p:outputLabel value="Valor: " />
+                                                <p:inputText value="#{managedBeanConfiguracionSistema.valorParametroSistema}" maxlength="50"/>
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Aceptar" action="#{managedBeanConfiguracionSistema.editarParametroSistema()}"
+                                                              update=":form:growl :form:PS @([id$=alertas1]) @([id$=alertas2])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
+                                    <p:dialog  header="Modificar parametros avanzados del sistema" widgetVar="editarCM" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="editarCM" style="display:block; text-align:left;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="2" rendered="#{not empty managedBeanConfiguracionSistema.configuracionMailSeleccionado}">
+
+                                                <p:outputLabel value="Nombre del parametro: " />
+                                                <p:inputText value="#{managedBeanConfiguracionSistema.nombreConfiguracionMail}" maxlength="50"/>
+                                                <p:outputLabel value="Valor: " />
+                                                <p:inputText value="#{managedBeanConfiguracionSistema.valorConfiguracionMail}" maxlength="50"/>
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Aceptar" action="#{managedBeanConfiguracionSistema.editarConfiguracionMail()}"
+                                                              update=":form:growl :form:CM @([id$=alertas1]) @([id$=alertas2])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
                                 </div>
                                 
                             </div>

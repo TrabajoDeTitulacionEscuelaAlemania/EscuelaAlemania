@@ -5,8 +5,12 @@
  */
 package cl.usach.escalemania.managedbeans;
 
+import cl.usach.escalemania.entities.ConfiguracionMail;
+import cl.usach.escalemania.entities.ParametroSistema;
 import cl.usach.escalemania.entities.Usuario;
+import cl.usach.escalemania.sessionbeans.ConfiguracionMailFacadeLocal;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
+import cl.usach.escalemania.sessionbeans.ParametroSistemaFacadeLocal;
 import cl.usach.escalemania.sessionbeans.UsuarioFacadeLocal;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +33,10 @@ public class ManagedBeanConfiguracionSistema {
     private DocumentoFacadeLocal documentoFacade;
     @EJB
     private UsuarioFacadeLocal usuarioFacade;
+    @EJB
+    private ParametroSistemaFacadeLocal parametroSistemaFacade;
+    @EJB
+    private ConfiguracionMailFacadeLocal configuracionMailFacade;
     
     private String usuario;
     private String rol;
@@ -44,7 +52,14 @@ public class ManagedBeanConfiguracionSistema {
     private String correoUsuario;
     private String contraseñaVisitante1;
     private String contraseñaVisitante2;
-    
+    private List<ConfiguracionMail> configuracionMails;
+    private List<ParametroSistema> parametrosSistema;
+    private ConfiguracionMail configuracionMailSeleccionado;
+    private ParametroSistema parametroSistemaSeleccionado;
+    private String nombreParametroSistema;
+    private String valorParametroSistema;
+    private String nombreConfiguracionMail;
+    private String valorConfiguracionMail;
     
     
     public void init(){
@@ -60,6 +75,8 @@ public class ManagedBeanConfiguracionSistema {
                 usuarios=usuarioFacade.findAll();
                 usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
                 usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
+                configuracionMails=configuracionMailFacade.findAll();
+                parametrosSistema=parametroSistemaFacade.findAll();
         }
     }
     
@@ -74,6 +91,8 @@ public class ManagedBeanConfiguracionSistema {
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
+            configuracionMails=configuracionMailFacade.findAll();
+            parametrosSistema=parametroSistemaFacade.findAll();
             RequestContext.getCurrentInstance().execute("PF('reestablecerPass').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
@@ -93,6 +112,8 @@ public class ManagedBeanConfiguracionSistema {
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
+            configuracionMails=configuracionMailFacade.findAll();
+            parametrosSistema=parametroSistemaFacade.findAll();
             RequestContext.getCurrentInstance().execute("PF('eliminarUser').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
@@ -112,6 +133,8 @@ public class ManagedBeanConfiguracionSistema {
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
+            configuracionMails=configuracionMailFacade.findAll();
+            parametrosSistema=parametroSistemaFacade.findAll();
             RequestContext.getCurrentInstance().execute("PF('crearUser').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
@@ -134,6 +157,8 @@ public class ManagedBeanConfiguracionSistema {
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
+            configuracionMails=configuracionMailFacade.findAll();
+            parametrosSistema=parametroSistemaFacade.findAll();
             RequestContext.getCurrentInstance().execute("PF('cambiarPass').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
@@ -154,6 +179,8 @@ public class ManagedBeanConfiguracionSistema {
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
+            configuracionMails=configuracionMailFacade.findAll();
+            parametrosSistema=parametroSistemaFacade.findAll();
             RequestContext.getCurrentInstance().execute("PF('asociarMail').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
@@ -174,6 +201,8 @@ public class ManagedBeanConfiguracionSistema {
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
+            configuracionMails=configuracionMailFacade.findAll();
+            parametrosSistema=parametroSistemaFacade.findAll();
             RequestContext.getCurrentInstance().execute("PF('cambiarPassV').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
@@ -182,6 +211,116 @@ public class ManagedBeanConfiguracionSistema {
                     new FacesMessage(FacesMessage.SEVERITY_WARN, "Información", resultado));
     }
 
+    public void irEditarParametro(){
+        nombreParametroSistema=parametroSistemaSeleccionado.getTipoParametro();
+        valorParametroSistema=parametroSistemaSeleccionado.getValor();
+        System.out.println(nombreParametroSistema);
+    }
+    
+    public void editarParametroSistema(){
+        String resultado=parametroSistemaFacade.modificarParametro(nombreParametroSistema, valorParametroSistema);
+        if(resultado.compareTo("Cambios realizados exitosamente")==0){
+            alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            usuarios=usuarioFacade.findAll();
+            usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
+            usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
+            configuracionMails=configuracionMailFacade.findAll();
+            parametrosSistema=parametroSistemaFacade.findAll();
+            RequestContext.getCurrentInstance().execute("PF('editarPS').hide();");
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
+        }else
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Información", resultado));
+    }
+    
+    public void irEditarConfiguracionMail(){
+        nombreConfiguracionMail=configuracionMailSeleccionado.getTipo();
+        valorConfiguracionMail=configuracionMailSeleccionado.getValor();
+        System.out.println(nombreConfiguracionMail);
+    }
+    
+    public void editarConfiguracionMail(){
+        String resultado=parametroSistemaFacade.modificarParametro(nombreConfiguracionMail, valorConfiguracionMail);
+        if(resultado.compareTo("Cambios realizados exitosamente")==0){
+            alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            usuarios=usuarioFacade.findAll();
+            usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
+            usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
+            configuracionMails=configuracionMailFacade.findAll();
+            parametrosSistema=parametroSistemaFacade.findAll();
+            RequestContext.getCurrentInstance().execute("PF('editarCM').hide();");
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
+        }else
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Información", resultado));
+    }
+
+    public List<ConfiguracionMail> getConfiguracionMails() {
+        return configuracionMails;
+    }
+
+    public void setConfiguracionMails(List<ConfiguracionMail> configuracionMails) {
+        this.configuracionMails = configuracionMails;
+    }
+
+    public List<ParametroSistema> getParametrosSistema() {
+        return parametrosSistema;
+    }
+
+    public void setParametrosSistema(List<ParametroSistema> parametrosSistema) {
+        this.parametrosSistema = parametrosSistema;
+    }
+
+    public ConfiguracionMail getConfiguracionMailSeleccionado() {
+        return configuracionMailSeleccionado;
+    }
+
+    public void setConfiguracionMailSeleccionado(ConfiguracionMail configuracionMailSeleccionado) {
+        this.configuracionMailSeleccionado = configuracionMailSeleccionado;
+    }
+
+    public ParametroSistema getParametroSistemaSeleccionado() {
+        return parametroSistemaSeleccionado;
+    }
+
+    public void setParametroSistemaSeleccionado(ParametroSistema parametroSistemaSeleccionado) {
+        this.parametroSistemaSeleccionado = parametroSistemaSeleccionado;
+    }
+
+    public String getNombreParametroSistema() {
+        return nombreParametroSistema;
+    }
+
+    public void setNombreParametroSistema(String nombreParametroSistema) {
+        this.nombreParametroSistema = nombreParametroSistema;
+    }
+
+    public String getValorParametroSistema() {
+        return valorParametroSistema;
+    }
+
+    public void setValorParametroSistema(String valorParametroSistema) {
+        this.valorParametroSistema = valorParametroSistema;
+    }
+
+    public String getNombreConfiguracionMail() {
+        return nombreConfiguracionMail;
+    }
+
+    public void setNombreConfiguracionMail(String nombreConfiguracionMail) {
+        this.nombreConfiguracionMail = nombreConfiguracionMail;
+    }
+
+    public String getValorConfiguracionMail() {
+        return valorConfiguracionMail;
+    }
+
+    public void setValorConfiguracionMail(String valorConfiguracionMail) {
+        this.valorConfiguracionMail = valorConfiguracionMail;
+    }
+    
     public String getUsuario() {
         return usuario;
     }
