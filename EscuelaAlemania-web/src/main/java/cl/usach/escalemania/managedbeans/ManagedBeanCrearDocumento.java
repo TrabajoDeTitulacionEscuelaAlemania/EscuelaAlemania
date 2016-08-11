@@ -9,6 +9,7 @@ import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.EstadoDocumento;
 import cl.usach.escalemania.entities.Programa;
 import cl.usach.escalemania.entities.Seccion;
+import cl.usach.escalemania.sessionbeans.AlertaFacadeLocal;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.EstadoDocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.ProgramaFacadeLocal;
@@ -38,6 +39,8 @@ public class ManagedBeanCrearDocumento {
     private ProgramaFacadeLocal programaFacade;
     @EJB
     private DocumentoFacadeLocal documentoFacade;
+    @EJB
+    private AlertaFacadeLocal alertaFacade;
     
     private String usuario;
     private String rol;
@@ -51,6 +54,8 @@ public class ManagedBeanCrearDocumento {
     private String seccion;
     private List<String> programa;
     private int alertas;
+    private int alertasUsuario;
+    private int alertasTotal;
 
     public void init(){
         System.out.println("INIT");
@@ -64,6 +69,8 @@ public class ManagedBeanCrearDocumento {
             if (!FacesContext.getCurrentInstance().isPostback()){
                 List<Documento> documentos=documentoFacade.findAll();
                 alertas=documentoFacade.obtenerAlertas(documentos);
+                alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+                alertasTotal=alertas+alertasUsuario;
                 estadoDocumentos=estadoDocumentoFacade.findAll();
                 secciones=seccionFacade.findAll();
                 programas=programaFacade.findAll();
@@ -91,6 +98,8 @@ public class ManagedBeanCrearDocumento {
             seccion="Vital";
             List<Documento> documentos=documentoFacade.findAll();
             alertas=documentoFacade.obtenerAlertas(documentos);
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
         }else
@@ -115,6 +124,22 @@ public class ManagedBeanCrearDocumento {
 
     public String getUsuario() {
         return usuario;
+    }
+
+    public int getAlertasUsuario() {
+        return alertasUsuario;
+    }
+
+    public void setAlertasUsuario(int alertasUsuario) {
+        this.alertasUsuario = alertasUsuario;
+    }
+
+    public int getAlertasTotal() {
+        return alertasTotal;
+    }
+
+    public void setAlertasTotal(int alertasTotal) {
+        this.alertasTotal = alertasTotal;
     }
 
     public void setUsuario(String usuario) {

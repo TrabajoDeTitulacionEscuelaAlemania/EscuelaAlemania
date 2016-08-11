@@ -23,7 +23,7 @@
                 <li class="dropdown">
 
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanBuscarDocumento.alertas}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
+                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanBuscarDocumento.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
                     </a>
                     <!-- dropdown @([id$=alert])s-->
                     <ul class="dropdown-menu dropdown-alerts">
@@ -37,10 +37,10 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="comodin.xhtml">
+                            <a href="alertas_usuario.xhtml">
                                 <div>
                                     <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
-                                    <span class="pull-right text-muted small">0</span>
+                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanBuscarDocumento.alertasUsuario}" id="alertas3"/></span>
                                 </div>
                             </a>
                         </li>
@@ -54,7 +54,7 @@
 
         </ui:define>
         <ui:define name="buscar_documento">
-            <li class="selected" style="display: block;">
+            <li class="selected">
                 <a href="buscar_documento.xhtml"><i class="fa fa-search fa-fw"></i>Buscar documento</a>
             </li>
         </ui:define>
@@ -133,7 +133,7 @@
                                 <br/>
                             </h:panelGrid>
                             <p:commandButton  value="Si"  action="#{managedBeanBuscarDocumento.eliminarDocumento()}"  onclick="PF('elimDialog').hide();" 
-                                              update=":formulario:growl :formulario:Documentos @([id$=alertas1]) @([id$=alertas2])" icon="fa fa-check-circle-o" />
+                                              update=":formulario:growl :formulario:Documentos @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" icon="fa fa-check-circle-o" />
                             <p:spacer width="3" />
                             <p:commandButton  value="No" onclick="PF('elimDialog').hide();" icon="fa fa-times-circle-o"/>
                         </p:outputPanel>
@@ -160,7 +160,7 @@
                                 <p:inputText value="#{managedBeanBuscarDocumento.observacion}" maxlength="120"/>
                             </h:panelGrid>
 <p:commandButton value="Modificar"  action="#{managedBeanBuscarDocumento.editar()}" 
-                                                 update=":formulario:growl :formulario:Documentos @([id$=alertas1]) @([id$=alertas2])"
+                                                 update=":formulario:growl :formulario:Documentos @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])"
                                                  style="display:block; text-align:center;margin: 0 auto;"/>
                         </p:outputPanel>
                     </p:dialog>

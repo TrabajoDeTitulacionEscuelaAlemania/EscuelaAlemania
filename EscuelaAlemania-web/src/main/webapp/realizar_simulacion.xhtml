@@ -24,7 +24,7 @@
                 <li class="dropdown">
 
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanRealizarSimulacion.alertas}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
+                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanRealizarSimulacion.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
                     </a>
                     <!-- dropdown alerts-->
                     <ul class="dropdown-menu dropdown-alerts">
@@ -38,10 +38,10 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="comodin.xhtml">
+                            <a href="alertas_usuario.xhtml">
                                 <div>
                                     <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
-                                    <span class="pull-right text-muted small">0</span>
+                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanRealizarSimulacion.alertasUsuario}" id="alertas3"/></span>
                                 </div>
                             </a>
                         </li>
@@ -101,7 +101,7 @@
                             </p:selectOneMenu>
                             <br/>
                             <p:commandButton  class="btn btn-primary" value="Iniciar evaluación" 
-                                             update="porcentaje nota resultados @([id$=alertas1]) @([id$=alertas2])" action="#{managedBeanRealizarSimulacion.realizarSimulacion()}"/>
+                                             update="porcentaje nota resultados @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" action="#{managedBeanRealizarSimulacion.realizarSimulacion()}"/>
                         </h:panelGroup>
                     <br/>
                     <h:panelGroup layout="block" class="row" id="result">

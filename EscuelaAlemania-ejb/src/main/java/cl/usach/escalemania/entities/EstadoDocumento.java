@@ -17,11 +17,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Desarrollo
  */
+@Table(name="estadodocumento")
 @NamedQueries({
     @NamedQuery(name="EstadoDocumento.findById",
                 query="SELECT c FROM EstadoDocumento c WHERE c.id = :id"),

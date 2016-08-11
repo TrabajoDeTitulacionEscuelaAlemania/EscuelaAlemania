@@ -18,11 +18,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
 
 /**
  *
  * @author Desarrollo
  */
+@Table(name = "programa")
 @NamedQueries({
     @NamedQuery(name="Programa.findByid",
                 query="SELECT c FROM Programa c WHERE c.id = :id"),

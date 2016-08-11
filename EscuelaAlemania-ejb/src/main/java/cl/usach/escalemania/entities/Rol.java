@@ -15,11 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Desarrollo
  */
+@Table(name = "rol")
 @NamedQueries({
     @NamedQuery(name="Rol.findByName",
                 query="SELECT c FROM Rol c WHERE c.rol = :rol"),

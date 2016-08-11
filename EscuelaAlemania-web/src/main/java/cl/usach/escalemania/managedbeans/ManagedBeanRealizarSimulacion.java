@@ -10,6 +10,7 @@ import cl.usach.escalemania.entities.EstadoDocumento;
 import cl.usach.escalemania.entities.Programa;
 import cl.usach.escalemania.entities.Seccion;
 import cl.usach.escalemania.entities.Simulacion;
+import cl.usach.escalemania.sessionbeans.AlertaFacadeLocal;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.EstadoDocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.ProgramaFacadeLocal;
@@ -45,6 +46,8 @@ public class ManagedBeanRealizarSimulacion {
     private EstadoDocumentoFacadeLocal estadoDocumentoFacade;
     @EJB
     private SeccionFacadeLocal seccionFacade;
+    @EJB
+    private AlertaFacadeLocal alertaFacade;
     
     private String usuario;
     private String rol;
@@ -73,6 +76,8 @@ public class ManagedBeanRealizarSimulacion {
     private List<EstadoDocumento> estadoDocumentos;
     private List<Seccion> secciones;
     private int tipoDocumentos;
+    private int alertasUsuario;
+    private int alertasTotal;
 
     public void initDocSim(){
         System.out.println("Init 2");
@@ -112,6 +117,8 @@ public class ManagedBeanRealizarSimulacion {
                 secciones = seccionFacade.findAll();
                 estadoDocumentos = estadoDocumentoFacade.findAll();
                 alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+                alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+                alertasTotal=alertas+alertasUsuario;
             }
         }
     }
@@ -131,6 +138,8 @@ public class ManagedBeanRealizarSimulacion {
                 simulacionActual=null;
                 simulacionAnterior=null;
                 alertas=documentoFacade.obtenerAlertas(documentoFacade.findAll());
+                alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+                alertasTotal=alertas+alertasUsuario;
                 fechaSimulacion=null;
                 docCompletos=0;
                 docIncompletos=0;
@@ -173,6 +182,8 @@ public class ManagedBeanRealizarSimulacion {
         docDesactualizados=simulacionActual.getDocDesactualizadosImportante()+simulacionActual.getDocDesactualizadosNormal()+simulacionActual.getDocDesactualizadosVital();
         docSinInformacion=simulacionActual.getDocSinInformacionImportante()+simulacionActual.getDocSinInformacionNormal()+simulacionActual.getDocSinInformacionVital();
         alertas=documentoFacade.obtenerAlertas(documentoFacade.findAll());
+        alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+        alertasTotal=alertas+alertasUsuario;
     }
 
     public void mostrarDocCompletos(){
@@ -254,6 +265,8 @@ public class ManagedBeanRealizarSimulacion {
                         break;
                 }
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", msg));
@@ -291,6 +304,8 @@ public class ManagedBeanRealizarSimulacion {
                         break;
                 }
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
         }else
@@ -312,6 +327,22 @@ public class ManagedBeanRealizarSimulacion {
 
     public void setEstadoDocumentos(List<EstadoDocumento> estadoDocumentos) {
         this.estadoDocumentos = estadoDocumentos;
+    }
+
+    public int getAlertasUsuario() {
+        return alertasUsuario;
+    }
+
+    public void setAlertasUsuario(int alertasUsuario) {
+        this.alertasUsuario = alertasUsuario;
+    }
+
+    public int getAlertasTotal() {
+        return alertasTotal;
+    }
+
+    public void setAlertasTotal(int alertasTotal) {
+        this.alertasTotal = alertasTotal;
     }
 
     public List<Seccion> getSecciones() {

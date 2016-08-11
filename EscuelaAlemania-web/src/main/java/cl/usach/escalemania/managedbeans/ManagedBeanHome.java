@@ -7,6 +7,7 @@ package cl.usach.escalemania.managedbeans;
 
 
 import cl.usach.escalemania.entities.EstadoDocumento;
+import cl.usach.escalemania.sessionbeans.AlertaFacadeLocal;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.EstadoDocumentoFacadeLocal;
 import java.util.List;
@@ -28,6 +29,8 @@ public class ManagedBeanHome {
     private DocumentoFacadeLocal documentoFacade;
     @EJB
     private EstadoDocumentoFacadeLocal estadoDocumentoFacade;
+    @EJB
+    private AlertaFacadeLocal alertaFacade;
     
     private String rol;
     private String usuario;
@@ -37,6 +40,8 @@ public class ManagedBeanHome {
     private int desactualizados;
     private int sinInformacion;
     private int total;
+    private int alertasTotal;
+    private int alertasUsuario;
 
     public void init(){
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -52,7 +57,25 @@ public class ManagedBeanHome {
             sinInformacion=estadoDocumentoFacade.obtenerDocumentoPorId("4").size();
             alertas=incompletos+desactualizados+sinInformacion;
             total=incompletos+desactualizados+sinInformacion+completos;
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
         }
+    }
+
+    public int getAlertasTotal() {
+        return alertasTotal;
+    }
+
+    public void setAlertasTotal(int alertasTotal) {
+        this.alertasTotal = alertasTotal;
+    }
+
+    public int getAlertasUsuario() {
+        return alertasUsuario;
+    }
+
+    public void setAlertasUsuario(int alertasUsuario) {
+        this.alertasUsuario = alertasUsuario;
     }
     
     public DocumentoFacadeLocal getDocumentoFacade() {

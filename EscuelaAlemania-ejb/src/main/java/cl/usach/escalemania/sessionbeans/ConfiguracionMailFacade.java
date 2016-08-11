@@ -85,7 +85,6 @@ public class ConfiguracionMailFacade extends AbstractFacade<ConfiguracionMail> i
             return "Mail enviado exitosamente";
         } catch (Exception e) {
             return "Error al enviar el correo electrónico";
-        }
-        
+        }        
     }
 }

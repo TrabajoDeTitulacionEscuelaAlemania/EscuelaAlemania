@@ -5,10 +5,12 @@
  */
 package cl.usach.escalemania.managedbeans;
 
+import cl.usach.escalemania.entities.Alerta;
 import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.EstadoDocumento;
 import cl.usach.escalemania.entities.Programa;
 import cl.usach.escalemania.entities.Seccion;
+import cl.usach.escalemania.sessionbeans.AlertaFacadeLocal;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.EstadoDocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.SeccionFacadeLocal;
@@ -37,7 +39,9 @@ public class ManagedBeanVerAlertas {
     private DocumentoFacadeLocal documentoFacade;
     @EJB
     private SeccionFacadeLocal seccionFacade;
-    
+    @EJB
+    private AlertaFacadeLocal alertaFacade;
+            
     private String usuario;
     private String rol;
     private List<Documento> documentosAlertas;
@@ -50,7 +54,28 @@ public class ManagedBeanVerAlertas {
     private List<Seccion> secciones;
     private String nombreDocumento;
     private int alertas;
+    private int alertasUsuario;
+    private int alertasTotal;
+    private List<Alerta> listaAlertasUsuario;
+    private Alerta alertaSeleccionada;
 
+    public void initAlertasUsuario(){
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
+        usuario=(String)sesisonMap.get("usuario");
+        rol=(String)sesisonMap.get("rol");
+        if(usuario==null){
+            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/login.xhtml?faces-redirect=true");
+        }else{
+            if (!FacesContext.getCurrentInstance().isPostback()){
+                alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+                listaAlertasUsuario=alertaFacade.obtenerAlertas(usuario);
+                alertasUsuario=listaAlertasUsuario.size();
+                alertasTotal=alertas+alertasUsuario;
+            }
+        }
+    }
+    
     public void init(){
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
@@ -64,6 +89,8 @@ public class ManagedBeanVerAlertas {
                 documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("3"));
                 documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("4"));
                 alertas=documentosAlertas.size();
+                alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+                alertasTotal=alertas+alertasUsuario;
                 estadoDocumentos=estadoDocumentoFacade.findAll();
                 secciones=seccionFacade.findAll();
             }
@@ -93,6 +120,8 @@ public class ManagedBeanVerAlertas {
             documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("3"));
             documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("4"));
             alertas=documentosAlertas.size();
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", msg));
@@ -112,6 +141,22 @@ public class ManagedBeanVerAlertas {
             documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("3"));
             documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("4"));
             alertas=documentosAlertas.size();
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
+        }else
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", resultado));
+    }
+    
+    public void marcarLeido(){
+        String resultado=alertaFacade.marcarLiedo(alertaSeleccionada);
+        if(resultado.compareTo("La alerta ha sido marcada como leida")==0){
+           alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            listaAlertasUsuario = alertaFacade.obtenerAlertas(usuario);
+            alertasUsuario = listaAlertasUsuario.size();
+            alertasTotal = alertas + alertasUsuario;
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
         }else
@@ -133,6 +178,38 @@ public class ManagedBeanVerAlertas {
 
     public void setNombreDocumento(String nombreDocumento) {
         this.nombreDocumento = nombreDocumento;
+    }
+
+    public int getAlertasUsuario() {
+        return alertasUsuario;
+    }
+
+    public void setAlertasUsuario(int alertasUsuario) {
+        this.alertasUsuario = alertasUsuario;
+    }
+
+    public int getAlertasTotal() {
+        return alertasTotal;
+    }
+
+    public Alerta getAlertaSeleccionada() {
+        return alertaSeleccionada;
+    }
+
+    public void setAlertaSeleccionada(Alerta alertaSeleccionada) {
+        this.alertaSeleccionada = alertaSeleccionada;
+    }
+
+    public List<Alerta> getListaAlertasUsuario() {
+        return listaAlertasUsuario;
+    }
+
+    public void setListaAlertasUsuario(List<Alerta> listaAlertasUsuario) {
+        this.listaAlertasUsuario = listaAlertasUsuario;
+    }
+
+    public void setAlertasTotal(int alertasTotal) {
+        this.alertasTotal = alertasTotal;
     }
      
     public String getUsuario() {

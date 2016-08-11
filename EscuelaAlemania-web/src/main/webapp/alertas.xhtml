@@ -24,7 +24,7 @@
             <li class="dropdown">
                            
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanVerAlertas.alertas}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
+                                <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanVerAlertas.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-alerts">
                                 <li>
@@ -37,10 +37,10 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="comodin.xhtml">
+                                    <a href="alertas_usuario.xhtml">
                                         <div>
                                             <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
-                                            <span class="pull-right text-muted small">0</span>
+                                            <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanVerAlertas.alertasUsuario}" id="alertas3"/></span>
                                         </div>
                                     </a>
                                 </li>
@@ -113,7 +113,7 @@
                                 <br/>
                             </h:panelGrid>
                             <p:commandButton  value="Si"   action="#{managedBeanVerAlertas.eliminarDocumento()}"  onclick="PF('elimDialog').hide();"
-                                              update=":formulario:growl :formulario:Documentos @([id$=alertas1]) @([id$=alertas2])" icon="fa fa-check-circle-o"/>
+                                              update=":formulario:growl :formulario:Documentos @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" icon="fa fa-check-circle-o"/>
                             <p:spacer width="3" />
                             <p:commandButton  value="No"  onclick="PF('elimDialog').hide();" icon="fa fa-times-circle-o"/>
                         </p:outputPanel>
@@ -141,7 +141,7 @@
                             </h:panelGrid>
                             <p:commandButton  value="Modificar"  action="#{managedBeanVerAlertas.editar()}" 
                                               style="display:block; text-align:center;margin: 0 auto;" 
-                                              update=":formulario:growl :formulario:Documentos @([id$=alertas1]) @([id$=alertas2])"/>
+                                              update=":formulario:growl :formulario:Documentos @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])"/>
                         </p:outputPanel>
                     </p:dialog>
 

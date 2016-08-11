@@ -22,9 +22,9 @@
                 <li class="dropdown">
 
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanCrearDocumento.alertas}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
+                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanCrearDocumento.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
                     </a>
-                    <!-- dropdown @([id$=alertas1]) @([id$=alertas2])s-->
+                    <!-- dropdown @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])s-->
                     <ul class="dropdown-menu dropdown-alerts">
                         <li>
                             <a href="alertas.xhtml">
@@ -36,10 +36,10 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="comodin.xhtml">
+                            <a href="alertas_usuario.xhtml">
                                 <div>
                                     <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
-                                    <span class="pull-right text-muted small">0</span>
+                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanCrearDocumento.alertasUsuario}" id="alertas3"/></span>
                                 </div>
                             </a>
                         </li>
@@ -54,7 +54,7 @@
         </ui:define>
         
         <ui:define name="crear_documento">
-            <li class="selected" style="display: block;">
+            <li class="selected">
                 <a href="crear_documento.xhtml"><i class="fa fa-plus-circle fa-fw"></i>Agregar documento</a>
             </li>
         </ui:define>
@@ -129,7 +129,7 @@
                                         </div>
                             <br/>
                             <p:commandButton class="btn btn-primary" value="Crear documento" action="#{managedBeanCrearDocumento.crearDocumento()}"
-                                             style="display:block; text-align:center; margin: 0 auto" update="growl formularioCrear @([id$=alertas1]) @([id$=alertas2])" />
+                                             style="display:block; text-align:center; margin: 0 auto" update="growl formularioCrear @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
                                         
                                    
                                 </div>

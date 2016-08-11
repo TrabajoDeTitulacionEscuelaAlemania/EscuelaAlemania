@@ -8,6 +8,7 @@ package cl.usach.escalemania.managedbeans;
 import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.EstadoDocumento;
 import cl.usach.escalemania.entities.Seccion;
+import cl.usach.escalemania.sessionbeans.AlertaFacadeLocal;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.EstadoDocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.SeccionFacadeLocal;
@@ -37,6 +38,8 @@ public class ManagedBeanBuscarDocumento {
     private EstadoDocumentoFacadeLocal estadoDocumentoFacade;
     @EJB
     private SeccionFacadeLocal seccionFacade;
+    @EJB
+    private AlertaFacadeLocal alertaFacade;
     
     private String usuario;
     private String rol;
@@ -55,6 +58,8 @@ public class ManagedBeanBuscarDocumento {
     private String msg;
     private String nombreDocumento;
     private int alertas;
+    private int alertasUsuario;
+    private int alertasTotal;
 
 
     public void cargarDatos(){
@@ -73,6 +78,8 @@ public class ManagedBeanBuscarDocumento {
                 secciones=seccionFacade.findAll();      
                 busqueda="";
                 resultadoDocumentos=null;
+                alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+                alertasTotal=alertas+alertasUsuario;
             }
         }
     }
@@ -100,6 +107,8 @@ public class ManagedBeanBuscarDocumento {
         if(msg.compareToIgnoreCase("Cambios realizados correctamente")==0){
             documentos=documentoFacade.findAll();
             alertas=documentoFacade.obtenerAlertas(documentos);
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             resultadoDocumentos=documentoFacade.buscarDocumento(busqueda, documentos);
             RequestContext.getCurrentInstance().execute("PF('docDialogo').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
@@ -123,12 +132,38 @@ public class ManagedBeanBuscarDocumento {
         if(resultado.compareTo("Documento eliminado exitosamente")==0){
             documentos=documentoFacade.findAll();
             alertas=documentoFacade.obtenerAlertas(documentos);
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             resultadoDocumentos=documentoFacade.buscarDocumento(busqueda, documentos);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", resultado));
         }else
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", resultado));
+    }
+
+    public List<Documento> getDocumentos() {
+        return documentos;
+    }
+
+    public void setDocumentos(List<Documento> documentos) {
+        this.documentos = documentos;
+    }
+
+    public int getAlertasUsuario() {
+        return alertasUsuario;
+    }
+
+    public void setAlertasUsuario(int alertasUsuario) {
+        this.alertasUsuario = alertasUsuario;
+    }
+
+    public int getAlertasTotal() {
+        return alertasTotal;
+    }
+
+    public void setAlertasTotal(int alertasTotal) {
+        this.alertasTotal = alertasTotal;
     }
 
     public int getAlertas() {

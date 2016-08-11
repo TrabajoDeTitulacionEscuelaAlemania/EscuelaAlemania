@@ -23,9 +23,9 @@
                 <li class="dropdown">
 
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanGestionDocs.alertas}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
+                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanGestionDocs.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
                     </a>
-                    <!-- dropdown @([id$=alertas1]) @([id$=alertas2])s-->
+                    <!-- dropdown @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])s-->
                     <ul class="dropdown-menu dropdown-alerts">
                         <li>
                             <a href="alertas.xhtml">
@@ -37,10 +37,10 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="comodin.xhtml">
+                            <a href="alertas_usuario.xhtml">
                                 <div>
                                     <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
-                                    <span class="pull-right text-muted small">0</span>
+                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanGestionDocs.alertasUsuario}" id="alertas3"/></span>
                                 </div>
                             </a>
                         </li>
@@ -130,7 +130,7 @@
                             <br/>
                         </h:panelGrid>
                         <p:commandButton  value="Si"  action="#{managedBeanGestionDocs.eliminarDocumento()}"  onclick="PF('elimDialog').hide();"
-                                         update=":form:growl :form:Documentos @([id$=alertas1]) @([id$=alertas2])" icon="fa fa-check-circle-o"/>
+                                         update=":form:growl :form:Documentos @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" icon="fa fa-check-circle-o"/>
                         <p:spacer width="3" />
                         <p:commandButton  value="No" onclick="PF('elimDialog').hide();"   icon="fa fa-times-circle-o"/>
                     </p:outputPanel>
@@ -157,7 +157,7 @@
                                 <p:inputText value="#{managedBeanGestionDocs.observacion}" maxlength="120" />
                             </h:panelGrid>
                             <p:commandButton value="Modificar"  action="#{managedBeanGestionDocs.editar()}" 
-                                                 update=":form:growl :form:Documentos @([id$=alertas1]) @([id$=alertas2])"
+                                                 update=":form:growl :form:Documentos @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])"
                                                  style="display:block; text-align:center;margin: 0 auto;"/>
                         </p:outputPanel>
                     </p:dialog>

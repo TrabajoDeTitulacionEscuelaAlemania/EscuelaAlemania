@@ -21,13 +21,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 /**
  *
  * @author Desarrollo
  */
-
+@Table(name = "documento")
 @NamedQueries({
     @NamedQuery(name="Documento.findByName",
                 query="SELECT c FROM Documento c WHERE c.nombre = :nombre"),
@@ -56,6 +57,7 @@ public class Documento implements Serializable {
     @JoinColumn(nullable = false)
     @ManyToOne
     private Seccion seccion;
+    @JoinTable(name = "documento_programa")
     @ManyToMany( fetch=FetchType.EAGER)
     private List<Programa> programas;
     

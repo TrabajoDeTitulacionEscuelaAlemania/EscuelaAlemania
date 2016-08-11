@@ -24,7 +24,7 @@
             <li class="dropdown">
                            
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanConfiguracionSistema.alertas}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
+                                <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanConfiguracionSistema.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-alerts">
                                 <li>
@@ -37,10 +37,10 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="comodin.xhtml">
+                                    <a href="alertas_usuario.xhtml">
                                         <div>
                                             <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
-                                            <span class="pull-right text-muted small">0</span>
+                                            <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanConfiguracionSistema.alertasUsuario}" id="alertas3"/></span>
                                         </div>
                                     </a>
                                 </li>
@@ -128,7 +128,7 @@
 
                                             </h:panelGrid>
                                             <p:commandButton  value="Si" action="#{managedBeanConfiguracionSistema.reestablecerContraseña()}"
-                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
+                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
                                             <p:spacer width="3" />
                                             <p:commandButton  value="No" onclick="PF('reestablecerPass').hide();" />
                                         </p:outputPanel>
@@ -142,7 +142,7 @@
 
                                             </h:panelGrid>
                                             <p:commandButton  value="Si" action="#{managedBeanConfiguracionSistema.eliminarUsuario()}"
-                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
+                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
                                             <p:spacer width="3" />
                                             <p:commandButton  value="No" onclick="PF('eliminarUser').hide();" />
                                         </p:outputPanel>
@@ -159,7 +159,7 @@
                                             <br/>
                                             <br/>
                                             <p:commandButton  value="Crear usuario" action="#{managedBeanConfiguracionSistema.crearUsuario()}"
-                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
+                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
                                         </p:outputPanel>
                                     </p:dialog>
                                     
@@ -175,7 +175,7 @@
                                                 <p:password value="#{managedBeanConfiguracionSistema.contraseñaActual}" maxlength="100"/>
                                             </h:panelGrid>
                                             <p:commandButton  value="Cambiar contraseña" action="#{managedBeanConfiguracionSistema.cambiarContraseña()}"
-                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
+                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
                                         </p:outputPanel>
                                     </p:dialog>
                                     
@@ -187,7 +187,7 @@
                                                 <p:inputText value="#{managedBeanConfiguracionSistema.correoUsuario}" maxlength="70"/>
                                             </h:panelGrid>
                                             <p:commandButton  value="Asociar correo" action="#{managedBeanConfiguracionSistema.asociarCorreo()}"
-                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
+                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
                                         </p:outputPanel>
                                     </p:dialog>
                                     
@@ -201,7 +201,7 @@
                                                 <p:password value="#{managedBeanConfiguracionSistema.contraseñaVisitante2}" maxlength="100"/>
                                             </h:panelGrid>
                                             <p:commandButton  value="Cambiar contraseña" action="#{managedBeanConfiguracionSistema.cambiarContraseñaVisitante()}"
-                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2])" />
+                                                              update=":form:growl :form:Usuarios @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
                                         </p:outputPanel>
                                     </p:dialog>
                                     
@@ -279,7 +279,7 @@
                                                 <p:inputText value="#{managedBeanConfiguracionSistema.valorParametroSistema}" maxlength="50"/>
                                             </h:panelGrid>
                                             <p:commandButton  value="Aceptar" action="#{managedBeanConfiguracionSistema.editarParametroSistema()}"
-                                                              update=":form:growl :form:PS @([id$=alertas1]) @([id$=alertas2])" />
+                                                              update=":form:growl :form:PS @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
                                         </p:outputPanel>
                                     </p:dialog>
                                     
@@ -293,7 +293,7 @@
                                                 <p:inputText value="#{managedBeanConfiguracionSistema.valorConfiguracionMail}" maxlength="50"/>
                                             </h:panelGrid>
                                             <p:commandButton  value="Aceptar" action="#{managedBeanConfiguracionSistema.editarConfiguracionMail()}"
-                                                              update=":form:growl :form:CM @([id$=alertas1]) @([id$=alertas2])" />
+                                                              update=":form:growl :form:CM @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
                                         </p:outputPanel>
                                     </p:dialog>
                                     

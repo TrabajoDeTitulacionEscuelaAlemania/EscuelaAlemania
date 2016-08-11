@@ -32,5 +32,9 @@ public interface AlertaFacadeLocal {
     int count();
 
     String enviarAlerta(String mensajeAlerta, List<String> destinosAlerta);
+
+    List<Alerta> obtenerAlertas(String nombreUsuario);
+
+    String marcarLiedo(Alerta alerta);
     
 }

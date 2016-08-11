@@ -8,6 +8,7 @@ package cl.usach.escalemania.managedbeans;
 import cl.usach.escalemania.entities.ConfiguracionMail;
 import cl.usach.escalemania.entities.ParametroSistema;
 import cl.usach.escalemania.entities.Usuario;
+import cl.usach.escalemania.sessionbeans.AlertaFacadeLocal;
 import cl.usach.escalemania.sessionbeans.ConfiguracionMailFacadeLocal;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.ParametroSistemaFacadeLocal;
@@ -37,6 +38,8 @@ public class ManagedBeanConfiguracionSistema {
     private ParametroSistemaFacadeLocal parametroSistemaFacade;
     @EJB
     private ConfiguracionMailFacadeLocal configuracionMailFacade;
+    @EJB
+    private AlertaFacadeLocal alertaFacade;
     
     private String usuario;
     private String rol;
@@ -60,6 +63,8 @@ public class ManagedBeanConfiguracionSistema {
     private String valorParametroSistema;
     private String nombreConfiguracionMail;
     private String valorConfiguracionMail;
+    private int alertasUsuario;
+    private int alertasTotal;
     
     
     public void init(){
@@ -73,6 +78,8 @@ public class ManagedBeanConfiguracionSistema {
             if (!fc.isPostback()){
                 alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
                 usuarios=usuarioFacade.findAll();
+                alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+                alertasTotal=alertas+alertasUsuario;
                 usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
                 usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
                 configuracionMails=configuracionMailFacade.findAll();
@@ -88,6 +95,8 @@ public class ManagedBeanConfiguracionSistema {
         String resultado=usuarioFacade.reestablecerContraseña(nombreUsuarioReestablecer);
         if(resultado.compareTo("Contraseña reestablecida correctamente")==0){
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
@@ -109,6 +118,8 @@ public class ManagedBeanConfiguracionSistema {
         String resultado=usuarioFacade.eliminarUsuario(nombreUsuarioEliminar);
         if(resultado.compareTo("Usuario eliminado correctamente")==0){
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
@@ -130,6 +141,8 @@ public class ManagedBeanConfiguracionSistema {
         String resultado=usuarioFacade.crearUsuario(nombreUsuarioCrear);
         if(resultado.compareTo("Usuario creado existosamente")==0){
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
@@ -154,6 +167,8 @@ public class ManagedBeanConfiguracionSistema {
         String resultado=usuarioFacade.cambiarContraseña(usuario, contraseñaActual, contraseña1, contraseña2);
         if(resultado.compareTo("Contraseña cambiada exitosamente")==0){
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
@@ -176,6 +191,8 @@ public class ManagedBeanConfiguracionSistema {
         String resultado=usuarioFacade.asociarCorreo(usuario, correoUsuario);
         if(resultado.compareTo("Correo asociado exitosamente a su cuenta")==0){
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
@@ -198,6 +215,8 @@ public class ManagedBeanConfiguracionSistema {
         String resultado=usuarioFacade.cambiarContraseñaVisitante(contraseñaVisitante1, contraseñaVisitante2);
         if(resultado.compareTo("La contraseña del usuario Visitante fue modificada correctamente")==0){
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
@@ -221,6 +240,8 @@ public class ManagedBeanConfiguracionSistema {
         String resultado=parametroSistemaFacade.modificarParametro(nombreParametroSistema, valorParametroSistema);
         if(resultado.compareTo("Cambios realizados exitosamente")==0){
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
@@ -244,6 +265,8 @@ public class ManagedBeanConfiguracionSistema {
         String resultado=parametroSistemaFacade.modificarParametro(nombreConfiguracionMail, valorConfiguracionMail);
         if(resultado.compareTo("Cambios realizados exitosamente")==0){
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             usuarios=usuarioFacade.findAll();
             usuarios.remove(usuarioFacade.obtenerUsuario("admin"));
             usuarios.remove(usuarioFacade.obtenerUsuario("Visitante"));
@@ -263,6 +286,22 @@ public class ManagedBeanConfiguracionSistema {
 
     public void setConfiguracionMails(List<ConfiguracionMail> configuracionMails) {
         this.configuracionMails = configuracionMails;
+    }
+
+    public int getAlertasUsuario() {
+        return alertasUsuario;
+    }
+
+    public void setAlertasUsuario(int alertasUsuario) {
+        this.alertasUsuario = alertasUsuario;
+    }
+
+    public int getAlertasTotal() {
+        return alertasTotal;
+    }
+
+    public void setAlertasTotal(int alertasTotal) {
+        this.alertasTotal = alertasTotal;
     }
 
     public List<ParametroSistema> getParametrosSistema() {

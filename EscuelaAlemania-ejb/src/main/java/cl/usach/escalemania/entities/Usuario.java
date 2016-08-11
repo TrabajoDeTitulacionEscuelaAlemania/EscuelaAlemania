@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,11 +18,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Desarrollo
  */
+@Table(name = "usuario")
 @NamedQueries({
     @NamedQuery(name="Usuario.findByName",
                 query="SELECT c FROM Usuario c WHERE c.usuario = :usuario"),
@@ -43,7 +46,7 @@ public class Usuario implements Serializable {
     @Column(nullable = true, length = 70)
     private String correo;
     @JoinColumn(nullable = true)
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario",fetch = FetchType.EAGER)
     private List<Alerta> alertas;
 
     public List<Alerta> getAlertas() {

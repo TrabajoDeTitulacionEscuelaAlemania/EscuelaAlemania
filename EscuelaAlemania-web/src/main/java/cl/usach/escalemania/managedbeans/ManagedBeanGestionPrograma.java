@@ -7,6 +7,7 @@ package cl.usach.escalemania.managedbeans;
 
 
 import cl.usach.escalemania.entities.Programa;
+import cl.usach.escalemania.sessionbeans.AlertaFacadeLocal;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
 import cl.usach.escalemania.sessionbeans.ProgramaFacadeLocal;
 import java.util.List;
@@ -30,6 +31,8 @@ public class ManagedBeanGestionPrograma {
     private DocumentoFacadeLocal documentoFacade;
     @EJB
     private ProgramaFacadeLocal programaFacade;
+    @EJB
+    private AlertaFacadeLocal alertaFacade;
     
     private String usuario;
     private String rol;
@@ -42,6 +45,8 @@ public class ManagedBeanGestionPrograma {
     private String programaDestino;
     private List<Programa> listaProgramas;
     private boolean guardarDocumentos;
+    private int alertasUsuario;
+    private int alertasTotal;
 
    
     public void init(){
@@ -54,6 +59,8 @@ public class ManagedBeanGestionPrograma {
         }else
             if (!fc.isPostback()){
                 alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+                alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+                alertasTotal=alertas+alertasUsuario;
                 programas=programaFacade.findAll();
         }
     }
@@ -66,6 +73,8 @@ public class ManagedBeanGestionPrograma {
         String resultado=programaFacade.editarPrograma(programaElegido.getPrograma(), nombreProgramaEditar);
         if(resultado.compareTo("Nombre del programa modificado existosamente")==0){
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             programas=programaFacade.findAll();
             RequestContext.getCurrentInstance().execute("PF('modificarProg').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
@@ -83,6 +92,8 @@ public class ManagedBeanGestionPrograma {
         String resultado=programaFacade.crearPrograma(nombreProgramaCrear);
         if(resultado.compareTo("Programa creado existosamente")==0){
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             programas=programaFacade.findAll();
             RequestContext.getCurrentInstance().execute("PF('crearProg').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
@@ -107,6 +118,8 @@ public class ManagedBeanGestionPrograma {
         String resultado=programaFacade.eliminarPrograma(nombreProgramaEliminar, guardarDocumentos, programaDestino);
         if(resultado.compareTo("Error inesperado al eliminar el programa. Por favor, intentelo nuevamente")!=0){
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
+            alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
+            alertasTotal=alertas+alertasUsuario;
             programas=programaFacade.findAll();
             RequestContext.getCurrentInstance().execute("PF('eliminarProg').hide();");
             FacesContext.getCurrentInstance().addMessage(null,
@@ -130,6 +143,22 @@ public class ManagedBeanGestionPrograma {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public int getAlertasUsuario() {
+        return alertasUsuario;
+    }
+
+    public void setAlertasUsuario(int alertasUsuario) {
+        this.alertasUsuario = alertasUsuario;
+    }
+
+    public int getAlertasTotal() {
+        return alertasTotal;
+    }
+
+    public void setAlertasTotal(int alertasTotal) {
+        this.alertasTotal = alertasTotal;
     }
 
     public String getNombreProgramaEditar() {

@@ -13,11 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  *
  * @author Rodrigo Rivas
  */
+@Table(name = "parametrosistema")
 @NamedQueries({
     @NamedQuery(name="ParametroSistema.findByTipoParametro",
                 query="SELECT c FROM ParametroSistema c WHERE c.tipoParametro = :tipoParametro"),

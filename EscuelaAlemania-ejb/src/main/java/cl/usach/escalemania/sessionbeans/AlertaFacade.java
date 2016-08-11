@@ -70,7 +70,32 @@ public class AlertaFacade extends AbstractFacade<Alerta> implements AlertaFacade
         }
         if(correosDestino.isEmpty())
             return "El/los usuarios fueron alertados correctamente";
-        configuracionMailFacade.enviarMail(correosDestino, "Se ha realizado una alerta a usted. Por favor, ingrese al sistema para obtener mas detalles de esta.\nSaludos.", "Alerta Sistema de Gestion de Documentos");
+        configuracionMailFacade.enviarMail(correosDestino, 
+                "Se ha realizado una alerta a usted. Por favor, ingrese al sistema para obtener mas detalles de esta.\nSaludos.", 
+                "Alerta Sistema de Gestion de Documentos");
         return "El/los usuarios fueron alertados correctamente";
+    }
+
+    @Override
+    public List<Alerta> obtenerAlertas(String nombreUsuario) {
+        Usuario usuario=usuarioFacade.obtenerUsuario(nombreUsuario);
+        List<Alerta> alertas=new ArrayList<>();
+        for(Alerta alerta:usuario.getAlertas())
+            if(!alerta.isLeido())
+                alertas.add(alerta);
+        return alertas;
+    }
+
+    @Override
+    public String marcarLiedo(Alerta alerta) {
+        if(alerta.isLeido())
+            return "La alerta ya estaba marcada como leida";
+        alerta.setLeido(true);
+        try {
+            edit(alerta);
+            return "La alerta ha sido marcada como leida";
+        } catch (Exception e) {
+            return "Error inesperado al marcar como leida la alerta. Por favro, inténtelo mas tarde";
+        }
     }
 }

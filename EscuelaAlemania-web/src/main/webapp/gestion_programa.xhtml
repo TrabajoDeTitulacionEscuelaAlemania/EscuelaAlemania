@@ -24,7 +24,7 @@
                 <li class="dropdown">
 
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanGestionPrograma.alertas}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
+                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanGestionPrograma.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
                     </a>
                     <!-- dropdown alerts-->
                     <ul class="dropdown-menu dropdown-alerts">
@@ -38,10 +38,10 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="comodin.xhtml">
+                            <a href="alertas_usuario.xhtml">
                                 <div>
                                     <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
-                                    <span class="pull-right text-muted small">0</span>
+                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanGestionPrograma.alertasUsuario}" id="alertas3"/></span>
                                 </div>
                             </a>
                         </li>
@@ -121,7 +121,7 @@
                             <p:inputText value="#{managedBeanGestionPrograma.nombreProgramaEditar}" maxlength="100" />
                             
                         </h:panelGrid>
-                        <p:commandButton  value="Cambiar nombre" update=":form:growl :form:Programa @([id$=alertas1]) @([id$=alertas2])"
+                        <p:commandButton  value="Cambiar nombre" update=":form:growl :form:Programa @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])"
                                           action="#{managedBeanGestionPrograma.editarPrograma()}"/>
                     </p:outputPanel>
                 </p:dialog>
@@ -147,7 +147,7 @@
                              </h:panelGrid>
                         </h:panelGrid>
                         <p:commandButton  value="Eliminar" action="#{managedBeanGestionPrograma.eliminarPrograma()}"
-                                         update=":form:growl :form:Programa @([id$=alertas1]) @([id$=alertas2])" />
+                                         update=":form:growl :form:Programa @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
                         <p:spacer width="3" />
                         <p:commandButton  value="Cancelar" onclick="PF('elimDialog').hide();" />
                     </p:outputPanel>
@@ -160,7 +160,7 @@
                             <p:outputLabel value="Nombre del nuevo programa" />
                             <p:inputText value="#{managedBeanGestionPrograma.nombreProgramaCrear}" maxlength="100" />
                         </h:panelGrid>
-                        <p:commandButton  value="Crear programa"  update=":form:growl :form:Programa @([id$=alertas1]) @([id$=alertas2])"
+                        <p:commandButton  value="Crear programa"  update=":form:growl :form:Programa @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])"
                                           action="#{managedBeanGestionPrograma.crearPrograma()}"/>
                     </p:outputPanel>
                 </p:dialog>
