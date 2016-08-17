@@ -101,7 +101,7 @@
                             </p:selectOneMenu>
                             <br/>
                             <p:commandButton  class="btn btn-primary" value="Iniciar evaluación" 
-                                             update="porcentaje nota resultados @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" action="#{managedBeanRealizarSimulacion.realizarSimulacion()}"/>
+                                             update="GestionDocs porcentaje nota resultados @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" action="#{managedBeanRealizarSimulacion.realizarSimulacion()}"/>
                         </h:panelGroup>
                     <br/>
                     <h:panelGroup layout="block" class="row" id="result">
@@ -126,7 +126,7 @@
                                 </f:facet>
                                 <p:row>
                                     <p:column>
-                                        <p:commandLink update=":form:growl" action="#{managedBeanRealizarSimulacion.mostrarDocCompletos()}">
+                                        <p:commandLink update=":form:growl GestionDocs" action="#{managedBeanRealizarSimulacion.mostrarDocCompletos()}">
                                             <h:outputText value="Documentos completos" />
                                         </p:commandLink>
                                     </p:column>
@@ -137,7 +137,7 @@
                                 </p:row>
                                 <p:row>
                                     <p:column>
-                                        <p:commandLink update=":form:growl" action="#{managedBeanRealizarSimulacion.mostrarDocIncompletos()}">
+                                        <p:commandLink update=":form:growl GestionDocs" action="#{managedBeanRealizarSimulacion.mostrarDocIncompletos()}">
                                             <h:outputText value="Documentos incompletos" />
                                         </p:commandLink>
                                     </p:column>
@@ -148,7 +148,7 @@
                                 </p:row>
                                 <p:row>
                                     <p:column>
-                                        <p:commandLink update=":form:growl" action="#{managedBeanRealizarSimulacion.mostrarDocDesactualizados()}">
+                                        <p:commandLink update=":form:growl GestionDocs" action="#{managedBeanRealizarSimulacion.mostrarDocDesactualizados()}">
                                             <h:outputText value="Documentos desactualizados" />
                                         </p:commandLink>
                                     </p:column>
@@ -159,7 +159,7 @@
                                 </p:row>
                                 <p:row>
                                     <p:column>
-                                        <p:commandLink update=":form:growl" action="#{managedBeanRealizarSimulacion.mostrarDocSinInformacion()}">
+                                        <p:commandLink update=":form:growl GestionDocs" action="#{managedBeanRealizarSimulacion.mostrarDocSinInformacion()}">
                                             <h:outputText value="Documentos sin información" />
                                         </p:commandLink>
                                     </p:column>
@@ -204,6 +204,84 @@
                                 </h:panelGroup>
                         </div>
                   </h:panelGroup>
+                    
+                    
+                    <h:panelGroup layout="block" id="GestionDocs">
+                    <p:dataTable id="Documentos" var="doc" value="#{managedBeanRealizarSimulacion.documentos}"  rows="5"
+                                 paginator="true"  rowsPerPageTemplate="5,10,15" emptyMessage="No se econtraron documentos para ese criterio" 
+                                 filteredValue="#{managedBeanRealizarSimulacion.documentosFiltrados}">
+
+                        <p:column filterBy="#{doc.nombre}" headerText="Nombre" footerText="" filterMatchMode="contains" >
+                            <h:outputText value="#{doc.nombre}" />
+                        </p:column>
+                        <p:column style="width:150px" headerText="Estado">
+                            <h:outputText value="#{doc.estadoDocumento.estado}" />
+                        </p:column>
+                        <p:column style="width:130px" headerText="Última modificación">
+                            <h:outputText value="#{doc.fechaModificacionFormateada}" />
+                        </p:column>
+                        <p:column headerText="Ubicación" filterBy="#{doc.ubicacion}"  footerText="" filterMatchMode="contains">
+                            <h:outputText value="#{doc.ubicacion}" />
+                        </p:column>
+                        <p:column headerText="Observación" filterBy="#{doc.observacion}"  footerText="" filterMatchMode="contains">
+                            <h:outputText value="#{doc.observacion}" />
+                        </p:column>
+                        
+                        <p:column style="width:110px; text-align: center" >
+                           
+                            <p:commandButton update=":form:docDetalle" oncomplete="PF('docDialogo').show()" title="Editar" 
+                                             icon="ui-icon-pencil" ajax="true" action="#{managedBeanRealizarSimulacion.irAEditar()}">
+                                <f:setPropertyActionListener value="#{doc}" target="#{managedBeanRealizarSimulacion.documentoElegido}" />
+                            </p:commandButton> 
+                            <p:spacer width="5" />
+                        <p:commandButton title="Eliminar" icon="fa fa-trash-o"   onclick="PF('elimDialog').show();">
+                            <f:setPropertyActionListener value="#{doc}" target="#{managedBeanRealizarSimulacion.documentoElegido}" />
+                        </p:commandButton> 
+                        </p:column>
+                           
+                    </p:dataTable>
+                    
+                    <p:dialog  header="Eliminar documento" widgetVar="elimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="elimDetalle" style="display:block; text-align:center;margin: 0 auto;">
+                        <h:panelGrid border="0"  columns="" rendered="#{not empty managedBeanRealizarSimulacion.documentoElegido}"  >
+
+                            <br></br>
+                            <strong>¿Desea eliminar el documento seleccionado?</strong>
+                            <br/>
+                        </h:panelGrid> 
+                        <p:commandButton  value="Si"  action="#{managedBeanRealizarSimulacion.eliminarDocumento()}"  onclick="PF('elimDialog').hide();"
+                                         update="growl Documentos @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" icon="fa fa-check-circle-o"/>
+                        <p:spacer width="3" />
+                        <p:commandButton  value="No" onclick="PF('elimDialog').hide();"   icon="fa fa-times-circle-o"/>
+                    </p:outputPanel>
+                </p:dialog>
+
+                    <p:dialog  header="Información documento" widgetVar="docDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="docDetalle" style="text-align:left">
+                            <h:panelGrid border="0"  columns="2" rendered="#{not empty managedBeanRealizarSimulacion.documentoElegido}"  >
+
+                                <br></br>
+                                <strong>Nombre:</strong>
+                                <p:inputTextarea maxlength="300" value="#{managedBeanRealizarSimulacion.nombreDocumento}" />
+                                <strong>Estado:</strong>
+                                <p:selectOneMenu  value="#{managedBeanRealizarSimulacion.nombreEstadoDocumento}" >
+                                    <f:selectItems value="#{managedBeanRealizarSimulacion.estadoDocumentos}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.estado}"/>
+                                </p:selectOneMenu>
+                                <strong>Sección:</strong>
+                                <p:selectOneMenu  value="#{managedBeanRealizarSimulacion.nombreSeccion}" >
+                                    <f:selectItems value="#{managedBeanRealizarSimulacion.secciones}" var="seccion" itemLabel="#{seccion.seccion}" itemValue="#{seccion.seccion}"/>
+                                </p:selectOneMenu>
+                                <strong>Ubicación:</strong>
+                                <p:inputText value="#{managedBeanRealizarSimulacion.ubicacion}" maxlength="100" />
+                                <strong>Observación:</strong>
+                                <p:inputText value="#{managedBeanRealizarSimulacion.observacion}" maxlength="120" />
+                            </h:panelGrid> 
+                            <p:commandButton value="Modificar"  action="#{managedBeanRealizarSimulacion.editar()}" 
+                                                 update="growl Documentos @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])"
+                                                 style="display:block; text-align:center;margin: 0 auto;"/>
+                        </p:outputPanel>
+                    </p:dialog>
+                        </h:panelGroup>
 
                 </h:form>
                 

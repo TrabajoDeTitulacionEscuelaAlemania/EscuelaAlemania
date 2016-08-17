@@ -6,6 +6,7 @@
 package cl.usach.escalemania.sessionbeans;
 
 import cl.usach.escalemania.entities.Alerta;
+import cl.usach.escalemania.entities.Usuario;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Remote;
@@ -36,5 +37,7 @@ public interface AlertaFacadeLocal {
     List<Alerta> obtenerAlertas(String nombreUsuario);
 
     String marcarLiedo(Alerta alerta);
+
+    void eliminarAlertasUsuario(Usuario usuario);
     
 }

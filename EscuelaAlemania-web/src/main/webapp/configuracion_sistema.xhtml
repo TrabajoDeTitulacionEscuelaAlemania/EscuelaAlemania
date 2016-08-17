@@ -92,7 +92,6 @@
                                     <p:commandButton value="Cambiar contraseña de usuario" class="btn btn-outline btn-success"
                                                      update=":form:cambiarPass" onclick="PF('cambiarPass').show()" action="#{managedBeanConfiguracionSistema.irCambiarContraseña()}" />
                                     <p:commandButton value="Asociar un correo a esta cuenta" class="btn btn-outline btn-success" 
-                                                     disabled="#{managedBeanConfiguracionSistema.usuario eq 'admin'}"
                                                      update=":form:asociarMail" onclick="PF('asociarMail').show()" action="#{managedBeanConfiguracionSistema.irAsociarCorreo()}"/>
                                     <p:commandButton value="Cambiar contraseña del usuario Visitante" class="btn btn-outline btn-success" disabled="#{managedBeanConfiguracionSistema.usuario != 'admin'}"
                                                      update=":form:cambiarPassV" onclick="PF('cambiarPassV').show()" action="#{managedBeanConfiguracionSistema.irCambiarVisitante()}"/>
@@ -154,6 +153,8 @@
 
                                                 <p:outputLabel value="Nuevo usuario: " />
                                                 <p:inputText value="#{managedBeanConfiguracionSistema.nombreUsuarioCrear}" maxlength="15"/>
+                                                <p:outputLabel value="Correo asociado: " />
+                                                <p:inputText value="#{managedBeanConfiguracionSistema.correoAsociado}" maxlength="70"/>
                                             </h:panelGrid>
                                             <p:outputLabel value="La contraseña será el nombre de usuario" style="font-weight: bold; " />
                                             <br/>

@@ -26,6 +26,8 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     private ValidacionLocal validacion;
     @EJB
     private RolFacadeLocal rolFacade;
+    @EJB
+    private AlertaFacadeLocal alertaFacade;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -37,7 +39,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     }
 
     @Override
-    public String crearUsuario(String nuevoUsuario) {
+    public String crearUsuario(String nuevoUsuario, String correoAsociado) {
         if(nuevoUsuario.isEmpty())
             return "El nombre de usuario no puede estar vacio";
         Usuario usuario=obtenerUsuario(nuevoUsuario);
@@ -47,6 +49,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         usuarioNuevo.setUsuario(nuevoUsuario);
         usuarioNuevo.setRol(rolFacade.obtenerRolPorNombre("Administrador"));
         usuarioNuevo.setContraseña(validacion.passwordHash(nuevoUsuario));
+        usuarioNuevo.setCorreo(correoAsociado);
         try {
             create(usuarioNuevo);
             return "Usuario creado existosamente";
@@ -100,6 +103,11 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     public String eliminarUsuario(String nombreUsuario) {
         Usuario usuario=obtenerUsuario(nombreUsuario);
         try {
+            if(!usuario.getAlertas().isEmpty()){
+                alertaFacade.eliminarAlertasUsuario(usuario);
+                usuario.setAlertas(null);
+                edit(usuario);
+            }
             remove(usuario);
             return "Usuario eliminado correctamente";
         } catch (Exception e) {

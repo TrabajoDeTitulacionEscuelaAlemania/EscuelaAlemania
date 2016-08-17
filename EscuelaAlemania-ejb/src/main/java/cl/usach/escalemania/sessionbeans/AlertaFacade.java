@@ -98,4 +98,12 @@ public class AlertaFacade extends AbstractFacade<Alerta> implements AlertaFacade
             return "Error inesperado al marcar como leida la alerta. Por favro, inténtelo mas tarde";
         }
     }
+
+    @Override
+    public void eliminarAlertasUsuario(Usuario usuario) {
+        for(Alerta alerta:usuario.getAlertas())
+            remove(alerta);
+    }
+    
+    
 }

@@ -31,7 +31,7 @@ public interface UsuarioFacadeLocal {
 
     int count();
 
-    String crearUsuario(String nuevoUsuario);
+    String crearUsuario(String nuevoUsuario, String correoAsociado);
 
     String cambiarContraseña(String nombreUsuario, String contraseñaActual, String nuevaContraseña1, String nuevaContraseña2);
 

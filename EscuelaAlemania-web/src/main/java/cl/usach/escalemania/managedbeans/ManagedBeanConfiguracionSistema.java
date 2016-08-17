@@ -65,6 +65,7 @@ public class ManagedBeanConfiguracionSistema {
     private String valorConfiguracionMail;
     private int alertasUsuario;
     private int alertasTotal;
+    private String correoAsociado;
     
     
     public void init(){
@@ -135,10 +136,11 @@ public class ManagedBeanConfiguracionSistema {
     
     public void irCrear(){
         nombreUsuarioCrear="";
+        correoAsociado="";
     }
     
     public void crearUsuario(){
-        String resultado=usuarioFacade.crearUsuario(nombreUsuarioCrear);
+        String resultado=usuarioFacade.crearUsuario(nombreUsuarioCrear,correoAsociado);
         if(resultado.compareTo("Usuario creado existosamente")==0){
             alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
             alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
@@ -286,6 +288,14 @@ public class ManagedBeanConfiguracionSistema {
 
     public void setConfiguracionMails(List<ConfiguracionMail> configuracionMails) {
         this.configuracionMails = configuracionMails;
+    }
+
+    public String getCorreoAsociado() {
+        return correoAsociado;
+    }
+
+    public void setCorreoAsociado(String correoAsociado) {
+        this.correoAsociado = correoAsociado;
     }
 
     public int getAlertasUsuario() {

@@ -78,50 +78,6 @@ public class ManagedBeanRealizarSimulacion {
     private int tipoDocumentos;
     private int alertasUsuario;
     private int alertasTotal;
-
-    public void initDocSim(){
-        System.out.println("Init 2");
-        if (!FacesContext.getCurrentInstance().isPostback()){
-            System.out.println("Me meti al primer IF");
-            FacesContext fc = FacesContext.getCurrentInstance();
-            Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
-            usuario=(String)sesisonMap.get("usuario");
-            rol=(String)sesisonMap.get("rol");
-            if(usuario==null)
-                fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
-            else {
-                System.out.println("Me meti al segundo IF");
-                Map<String,String> params =fc.getExternalContext().getRequestParameterMap();
-                tipoDocumentos=Integer.parseInt(params.get("tipoDocumento"));
-                switch(tipoDocumentos){
-                    case 1:
-                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
-                            "Completo");
-                        break;
-                    case 2:
-                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), 
-                            nombrePrograma), 
-                            "Incompleto");
-                        break;
-                    case 3:
-                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
-                            "Desactualizado");
-                        break;
-                    case 4:
-                        documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
-                            "Sin informacion");
-                        break;
-                    default:
-                        break;
-                }
-                secciones = seccionFacade.findAll();
-                estadoDocumentos = estadoDocumentoFacade.findAll();
-                alertas = documentoFacade.obtenerAlertas(documentoFacade.findAll());
-                alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
-                alertasTotal=alertas+alertasUsuario;
-            }
-        }
-    }
     
     public void init(){
         System.out.println("INIT");
@@ -133,6 +89,8 @@ public class ManagedBeanRealizarSimulacion {
             fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
         else{
             if (!FacesContext.getCurrentInstance().isPostback()){
+                secciones = seccionFacade.findAll();
+                estadoDocumentos = estadoDocumentoFacade.findAll();
                 programas=programaFacade.findAll();
                 nombrePrograma="";
                 simulacionActual=null;
@@ -149,6 +107,8 @@ public class ManagedBeanRealizarSimulacion {
                 docIncompletosAnterior=0;
                 docSinInformacionAnterior=0;
                 docDesactualizadosAnterior=0;
+                documentos=null;
+                documentosFiltrados=null;
             }
         }
     }
@@ -184,45 +144,53 @@ public class ManagedBeanRealizarSimulacion {
         alertas=documentoFacade.obtenerAlertas(documentoFacade.findAll());
         alertasUsuario=alertaFacade.obtenerAlertas(usuario).size();
         alertasTotal=alertas+alertasUsuario;
+        documentos=null;
+        documentosFiltrados=null;
     }
 
     public void mostrarDocCompletos(){
-        FacesContext fc=FacesContext.getCurrentInstance();
         if(docCompletos==0)
-            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                        "Información", "No existen documentos completos para inspeccionar"));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "No existen documentos completos para inspeccionar"));
         else{
-            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/documentos_simulacion.xhtml?faces-redirect=true&includeViewParams=true&tipoDocumento=1");
+            tipoDocumentos=1;
+            documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
+                            "Completo");
         }
+        
     }
     
     public void mostrarDocIncompletos(){
-        FacesContext fc=FacesContext.getCurrentInstance();
         if(docIncompletos==0)
-            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                        "Información", "No existen documentos incompletos para inspeccionar"));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "No existen documentos incompletos para inspeccionar"));
         else{
-            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/documentos_simulacion.xhtml?faces-redirect=true&includeViewParams=true&tipoDocumento=2");
+            tipoDocumentos=2;
+            documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), 
+                            nombrePrograma), 
+                            "Incompleto");
         }
     }
     
     public void mostrarDocDesactualizados(){
-        FacesContext fc=FacesContext.getCurrentInstance();
         if(docDesactualizados==0)
-            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                        "Información", "No existen documentos desactualizados para inspeccionar"));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "No existen documentos desactualizados para inspeccionar"));
         else{
-            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/documentos_simulacion.xhtml?faces-redirect=true&includeViewParams=true&tipoDocumento=3");
+            tipoDocumentos=3;
+            documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma),  
+                            "Desactualizado");
         }
     }
     
-        public void mostrarDocSinInformacion(){
-            FacesContext fc=FacesContext.getCurrentInstance();
+    public void mostrarDocSinInformacion(){
         if(docSinInformacion==0)
-            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                        "Información", "No existen documentos sin información para inspeccionar"));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "No existen documentos sin información para inspeccionar"));
         else{
-            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/documentos_simulacion.xhtml?faces-redirect=true&includeViewParams=true&tipoDocumento=4");
+            tipoDocumentos=4;
+            documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
+                            "Sin informacion");
         }
     }
 
