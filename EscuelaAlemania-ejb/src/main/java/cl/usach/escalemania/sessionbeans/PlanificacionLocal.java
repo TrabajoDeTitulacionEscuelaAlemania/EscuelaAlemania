@@ -19,5 +19,9 @@ public interface PlanificacionLocal {
     void setearEstadoDOcumentos();
     
     void realizarSimulacion();
+
+    String revisionEstadoDocumentos();
+
+    void notificarEstadoDocumenos();
     
 }
