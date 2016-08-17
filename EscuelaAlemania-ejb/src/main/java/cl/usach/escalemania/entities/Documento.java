@@ -60,12 +60,22 @@ public class Documento implements Serializable {
     @JoinTable(name = "documento_programa")
     @ManyToMany( fetch=FetchType.EAGER)
     private List<Programa> programas;
+    @Column(nullable = true, length = 15)
+    private String ultimoUsuario;
     
     private String fechaModificacionFormateada;
 
     public String getFechaModificacionFormateada() {
         fechaModificacionFormateada=new SimpleDateFormat("yyyy-MM-dd").format(fechaModificacion);
         return fechaModificacionFormateada;
+    }
+
+    public String getUltimoUsuario() {
+        return ultimoUsuario;
+    }
+
+    public void setUltimoUsuario(String ultimoUsuario) {
+        this.ultimoUsuario = ultimoUsuario;
     }
 
     public void setFechaModificacionFormateada(String fechaModificacionFormateada) {
