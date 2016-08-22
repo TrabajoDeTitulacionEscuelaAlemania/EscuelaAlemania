@@ -210,78 +210,118 @@
                                 </div>
                                 
                                 <div class="tab-pane fade" id="parametros-sistema" >
-                                    <br/>
-                                    <div class="row">
+                                    
+                                    <p:outputPanel deferred="true" rendered="#{managedBeanConfiguracionSistema.usuario != 'admin'}">
+                    <h3>Información no disponible</h3>
+                    <p>Usted no posee los privilegios necesarios para utilizar esta funcionalidad</p>
+                </p:outputPanel>
+                                    
+                                    <h:panelGroup class="row" layout="block" rendered="#{managedBeanConfiguracionSistema.usuario eq 'admin'}">
                                         <div class="col-lg-12">
                                             <div class="panel panel-primary">
                                                 <div class="panel-heading">
-                                                    Parámetros del sistema
+                                                    <center>Parámetros del sistema</center>
                                                 </div>
                                             </div>
-                                            <div class="panel-body">
-                                          <p:outputPanel deferred="true" rendered="#{managedBeanConfiguracionSistema.usuario != 'admin'}">
-                                        <h3>Información no disponible</h3>
-                                        <p>Usted no posee los privilegios necesarios para utilizar esta funcionalidad</p>
-                                    </p:outputPanel>
-                                    
-                                    <h:panelGrid  columns="6"> 
-                                    
-                                        <p:outputLabel value="Fecha para setear el estado de todos los documentos a desactualizados: " style="text-decoration: underline;"/>
-                                        <p:spacer width="10" /> 
+                                            
+                                            <h:panelGroup class="panel-body" layout="block">
+                                          
+                                                <div class="table-responsive">
+                                                    
+                                                    <table class="table table-striped">
+                                                        
+                                                        <thead>
+                                                            <tr>
+                                                                <th><center>Descripción del parámetro</center></th>
+                                                                <th><center>Valor del parámetro</center></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                                  <tr>
+                                                  <td>
+                                        Fecha para setear el estado de todos los documentos a desactualizados
+                                        </td>
+                                                  <td>
                                         <p:outputLabel id="PSE" value="#{managedBeanConfiguracionSistema.setearEstado.valor}" style="color: blue"/>
-                                        <p:spacer width="20" />
+                                        </td><td>
                                         <p:commandButton value="Editar" onclick="PF('PSSE').show();" update=":form:PSSE"/>
-                                        <p:spacer height="15"/>
-                                        
-                                        <p:outputLabel value="Día del mes para realizar la simulación a todos los programas: " style="text-decoration: underline;"/>
-                                        <p:spacer width="10" /> 
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                       Día del mes para realizar la simulación a todos los programas
+                                        </td>
+                                            <td>
                                         <p:outputLabel id="PSM" value="#{managedBeanConfiguracionSistema.simulacionMenusal.valor}" style="color: blue"/>
-                                        <p:spacer width="20" />
+                                        </td>
+                                            <td>
                                         <p:commandButton value="Editar" onclick="PF('PSSM').show();" update=":form:PSSM"/>
-                                        <p:spacer height="15"/>
-                                        
-                                        <p:outputLabel value="Mail al que se avisará cuando se realize la simulacion mensual: " style="text-decoration: underline;"/>
-                                        <p:spacer width="10" /> 
+                                        </td>
+                                        </tr>
+                                              <tr>
+                                                  <td>
+                                        Mail al que se avisará cuando se realize la simulacion mensual
+                                        </td>
+                                                  <td>
                                         <p:outputLabel id="PMS" value="#{managedBeanConfiguracionSistema.mailSimulacion.valor}" style="color: blue"/>
-                                        <p:spacer width="20" />
+                                        </td>
+                                                  <td>
                                         <p:commandButton value="Editar" onclick="PF('PSMS').show();" update=":form:PSMS"/>
-                                        <p:spacer height="15"/>
-                                        
-                                        <p:outputLabel value="Mail que se asocia al sistema (debe ser Gmail): " style="text-decoration: underline;"/>
-                                        <p:spacer width="10" /> 
+                                        </td>
+                                        </tr>
+                                              <tr>
+                                                  <td>
+                                        Mail que se asocia al sistema (debe ser Gmail)
+                                        </td>
+                                                  <td>
                                         <p:outputLabel id="PMI" value="#{managedBeanConfiguracionSistema.mailInstitución.valor}" style="color: blue"/>
-                                        <p:spacer width="20" />
+                                        </td>
+                                                  <td>
                                         <p:commandButton value="Editar" onclick="PF('PSMI').show();" update=":form:PSMI" action="#{managedBeanConfiguracionSistema.irModificarMailInstitucion()}"/>
-                                        <p:spacer height="15"/>
-                                        
-                                        <p:outputLabel value="Contraseña del mail que se asocia al sistema: " style="text-decoration: underline;"/>
-                                        <p:spacer width="10" /> 
+                                        </td>
+                                        </tr>
+                                              <tr>
+                                                  <td>
+                                        Contraseña del mail que se asocia al sistema
+                                        </td>
+                                                  <td>
                                         <p:outputLabel id="PPI" value="#{managedBeanConfiguracionSistema.contraseñaInstitucion.valor}" style="color: blue"/>
-                                        <p:spacer width="20" />
+                                        </td>
+                                                  <td>
                                         <p:commandButton value="Editar" onclick="PF('PSPI').show();" update=":form:PSPI" action="#{managedBeanConfiguracionSistema.irModificarPassInstitucion()}"/>
-                                        <p:spacer height="15"/>
-                                        
-                                        <p:outputLabel value="Frecuancia con la que se realiza la revisión de documentos: " style="text-decoration: underline;"/>
-                                        <p:spacer width="10" /> 
+                                        </td>
+                                        </tr>
+                                              <tr>
+                                                  <td>
+                                        Frecuancia con la que se realiza la revisión de documentos
+                                        </td>
+                                                  <td>
                                         <p:outputLabel id="PFRD" style="color: blue"
                                         value="#{managedBeanConfiguracionSistema.frecuanciaRevisionDocumentos.valor eq '1' ? 'Diaria':
                                                  (managedBeanConfiguracionSistema.frecuanciaRevisionDocumentos.valor) eq '2' ? 'Semanal': 'Mensual'}"/>
-                                        <p:spacer width="20" />
+                                        </td>
+                                                  <td>
                                         <p:commandButton value="Editar" onclick="PF('PSFRD').show();" update=":form:PSFRD"/>
-                                        <p:spacer height="15"/>
-                                        
-                                        <p:outputLabel value="Mail al que se notifica la revisión de documentos: " style="text-decoration: underline;"/>
-                                        <p:spacer width="10" /> 
+                                        </td>
+                                        </tr>
+                                              <tr>
+                                                  <td>
+                                        Mail al que se notifica la revisión de documentos
+                                        </td>
+                                                  <td>
                                         <p:outputLabel id="PMN" value="#{managedBeanConfiguracionSistema.mailNotificacion.valor}" style="color: blue"/>
-                                        <p:spacer width="20" />
+                                        </td>
+                                                  <td>
                                         <p:commandButton value="Editar" onclick="PF('PSMN').show();" update=":form:PSMN" action="#{managedBeanConfiguracionSistema.irModificarMailNotificaicon()}"/>
-                                        <p:spacer height="15"/>
-                                    </h:panelGrid>
-                                                <div class="panel-footer">  
-                                                </div>
-                                            </div>
+                                        </td>
+                                        </tr>  
+                                                        </tbody>
+                                                    </table>
+                                                    
+                                                </div>                            
+                                            </h:panelGroup>
                                         </div>
-                                    </div>
+                                    </h:panelGroup>
                                   
                                     <p:dialog  header="Modificar parametros del sistema" widgetVar="PSMN" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                         <p:outputPanel id="PSMN" style="display:block; text-align:left;margin: 0 auto;">
@@ -402,14 +442,19 @@
                                     
                                     <br/>
                                     <br/>
-                                    <br/>
-                                    <p:dataTable id="CM" var="cm" value="#{managedBeanConfiguracionSistema.configuracionMails}"  rows="5"
+                                    <h:panelGroup class="row" layout="block" rendered="#{managedBeanConfiguracionSistema.usuario eq 'admin'}">
+                                        <div class="col-lg-12">
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading">
+                                                    <center>Parámetros avanzados del sistema</center>
+                                                </div>
+                                            </div>
+                                           
+                                            <h:panelGroup class="panel-body">
+                                          
+                                                <p:dataTable id="CM" var="cm" value="#{managedBeanConfiguracionSistema.configuracionMails}"  rows="5"
                                     paginator="true"  rowsPerPageTemplate="5,10,15" emptyMessage="No existen parametros"  
                                     paginatorPosition="top" rendered="#{managedBeanConfiguracionSistema.usuario eq 'admin'}">
-                                    
-                                        <f:facet name="header">
-                                            Lista de parametros avanzados del sistema
-                                        </f:facet>
                                         
                                         <p:column headerText="Nombre parametro" footerText="" >
                                             <h:outputText value="#{cm.tipo}" rendered="#{cm.tipo != 'Revision realizada'}"/>
@@ -428,6 +473,13 @@
                                         </p:column>
                                     
                                     </p:dataTable>
+                                                 </h:panelGroup>
+                                                    
+                                                </div>                            
+                                           
+                                        
+                                    </h:panelGroup>
+                                    
                                     
                                     <p:dialog  header="Modificar parametros avanzados del sistema" widgetVar="editarCM" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                         <p:outputPanel id="editarCM" style="display:block; text-align:left;margin: 0 auto;">
