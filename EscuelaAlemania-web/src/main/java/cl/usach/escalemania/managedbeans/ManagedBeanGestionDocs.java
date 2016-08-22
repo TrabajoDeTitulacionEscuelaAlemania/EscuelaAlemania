@@ -224,7 +224,8 @@ public class ManagedBeanGestionDocs {
                 seccionFacade.obtenerPorNombre(nombreSeccion, secciones), 
                 observacion, 
                 nombreDocumento,
-                documentoElegido);
+                documentoElegido,
+                usuario);
         if(msg.compareToIgnoreCase("Cambios realizados correctamente")==0){
             
             if(tipoNombre.compareTo("Todos")==0){

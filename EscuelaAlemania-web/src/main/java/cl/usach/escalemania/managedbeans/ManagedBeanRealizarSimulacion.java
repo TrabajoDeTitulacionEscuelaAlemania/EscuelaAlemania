@@ -209,7 +209,8 @@ public class ManagedBeanRealizarSimulacion {
                 seccionFacade.obtenerPorNombre(nombreSeccion, secciones),
                 observacion, 
                 nombreDocumento,
-                documentoElegido);
+                documentoElegido,
+                usuario);
         if(msg.compareToIgnoreCase("Cambios realizados correctamente")==0){
             switch(tipoDocumentos){
                     case 1:

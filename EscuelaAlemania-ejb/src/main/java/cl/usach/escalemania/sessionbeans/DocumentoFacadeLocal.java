@@ -34,7 +34,7 @@ public interface DocumentoFacadeLocal {
 
     int count();
 
-    String editarDocumento(EstadoDocumento estadoDocumento, String ubicacion, Seccion seccion, String observacion, String nombreDocumento, Documento documento);
+    String editarDocumento(EstadoDocumento estadoDocumento, String ubicacion, Seccion seccion, String observacion, String nombreDocumento, Documento documento, String nombreUsuario);
 
     List<Documento> buscarDocumento(String frase, List<Documento> documentos);
 

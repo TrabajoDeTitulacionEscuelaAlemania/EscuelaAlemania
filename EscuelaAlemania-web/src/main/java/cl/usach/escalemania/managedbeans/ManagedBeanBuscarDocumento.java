@@ -103,7 +103,8 @@ public class ManagedBeanBuscarDocumento {
                 seccionFacade.obtenerPorNombre(nombreSeccion, secciones), 
                 observacion, 
                 nombreDocumento,
-                documentoElegido);
+                documentoElegido,
+                usuario);
         if(msg.compareToIgnoreCase("Cambios realizados correctamente")==0){
             documentos=documentoFacade.findAll();
             alertas=documentoFacade.obtenerAlertas(documentos);

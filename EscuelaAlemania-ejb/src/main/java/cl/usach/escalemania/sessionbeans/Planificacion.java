@@ -69,10 +69,8 @@ public class Planificacion implements PlanificacionLocal {
         if (fechas != null) {
             if (fechaActual.compareTo(fechas.get(0).getValor()) == 0) {
                 List<Programa> programas = programaFacade.findAll();
-                simulacionFacade.crearSimulacion("Programa de Integracion Escolar", programas);
-                simulacionFacade.crearSimulacion("Subvencion Escolar Preferencial", programas);
-                simulacionFacade.crearSimulacion("Revision integral", programas);
-                simulacionFacade.crearSimulacion("Procedimiento de traspaso de establecimientos educacionales a nuevos directores", programas);
+                for(Programa prog:programas)
+                    simulacionFacade.crearSimulacion(prog.getPrograma(), programas);
                 List<ParametroSistema> mailsSimulacion = parametroSistemaFacade.obtenerListaParametros("Mail Simulacion");
                 if (mailsSimulacion != null) {
                     List<String> mails = new ArrayList<>();

@@ -114,7 +114,8 @@ public class ManagedBeanVerAlertas {
                 seccionFacade.obtenerPorNombre(nombreSeccion, secciones),
                 observacion, 
                 nombreDocumento,
-                documentoElegido);
+                documentoElegido,
+                usuario);
         if(msg.compareToIgnoreCase("Cambios realizados correctamente")==0){
             documentosAlertas=estadoDocumentoFacade.obtenerDocumentoPorId("2");
             documentosAlertas.addAll(estadoDocumentoFacade.obtenerDocumentoPorId("3"));

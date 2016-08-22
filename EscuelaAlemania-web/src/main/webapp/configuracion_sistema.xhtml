@@ -210,37 +210,196 @@
                                 </div>
                                 
                                 <div class="tab-pane fade" id="parametros-sistema" >
-                                    
-                                    <p:outputPanel deferred="true" rendered="#{managedBeanConfiguracionSistema.usuario != 'admin'}">
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading">
+                                                    Parámetros del sistema
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+                                          <p:outputPanel deferred="true" rendered="#{managedBeanConfiguracionSistema.usuario != 'admin'}">
                                         <h3>Información no disponible</h3>
                                         <p>Usted no posee los privilegios necesarios para utilizar esta funcionalidad</p>
                                     </p:outputPanel>
                                     
-                                    <p:dataTable id="PS" var="ps" value="#{managedBeanConfiguracionSistema.parametrosSistema}"  rows="5"
-                                    paginator="true"  rowsPerPageTemplate="5,10,15" emptyMessage="No existen parametros"  
-                                    paginatorPosition="top" rendered="#{managedBeanConfiguracionSistema.usuario eq 'admin'}">
+                                    <h:panelGrid  columns="6"> 
                                     
-                                        <f:facet name="header">
-                                            Lista de parametros del sistema
-                                        </f:facet>
+                                        <p:outputLabel value="Fecha para setear el estado de todos los documentos a desactualizados: " style="text-decoration: underline;"/>
+                                        <p:spacer width="10" /> 
+                                        <p:outputLabel id="PSE" value="#{managedBeanConfiguracionSistema.setearEstado.valor}" style="color: blue"/>
+                                        <p:spacer width="20" />
+                                        <p:commandButton value="Editar" onclick="PF('PSSE').show();" update=":form:PSSE"/>
+                                        <p:spacer height="15"/>
                                         
-                                        <p:column headerText="Nombre parametro" footerText="">
-                                            <h:outputText value="#{ps.tipoParametro}" />
-                                        </p:column>
-
-                                        <p:column headerText="Valor parametro" footerText="">
-                                            <h:outputText value="#{ps.valor}" />
-                                        </p:column>
+                                        <p:outputLabel value="Día del mes para realizar la simulación a todos los programas: " style="text-decoration: underline;"/>
+                                        <p:spacer width="10" /> 
+                                        <p:outputLabel id="PSM" value="#{managedBeanConfiguracionSistema.simulacionMenusal.valor}" style="color: blue"/>
+                                        <p:spacer width="20" />
+                                        <p:commandButton value="Editar" onclick="PF('PSSM').show();" update=":form:PSSM"/>
+                                        <p:spacer height="15"/>
                                         
-                                        <p:column style="width:110px; text-align: center" >
+                                        <p:outputLabel value="Mail al que se avisará cuando se realize la simulacion mensual: " style="text-decoration: underline;"/>
+                                        <p:spacer width="10" /> 
+                                        <p:outputLabel id="PMS" value="#{managedBeanConfiguracionSistema.mailSimulacion.valor}" style="color: blue"/>
+                                        <p:spacer width="20" />
+                                        <p:commandButton value="Editar" onclick="PF('PSMS').show();" update=":form:PSMS"/>
+                                        <p:spacer height="15"/>
+                                        
+                                        <p:outputLabel value="Mail que se asocia al sistema (debe ser Gmail): " style="text-decoration: underline;"/>
+                                        <p:spacer width="10" /> 
+                                        <p:outputLabel id="PMI" value="#{managedBeanConfiguracionSistema.mailInstitución.valor}" style="color: blue"/>
+                                        <p:spacer width="20" />
+                                        <p:commandButton value="Editar" onclick="PF('PSMI').show();" update=":form:PSMI" action="#{managedBeanConfiguracionSistema.irModificarMailInstitucion()}"/>
+                                        <p:spacer height="15"/>
+                                        
+                                        <p:outputLabel value="Contraseña del mail que se asocia al sistema: " style="text-decoration: underline;"/>
+                                        <p:spacer width="10" /> 
+                                        <p:outputLabel id="PPI" value="#{managedBeanConfiguracionSistema.contraseñaInstitucion.valor}" style="color: blue"/>
+                                        <p:spacer width="20" />
+                                        <p:commandButton value="Editar" onclick="PF('PSPI').show();" update=":form:PSPI" action="#{managedBeanConfiguracionSistema.irModificarPassInstitucion()}"/>
+                                        <p:spacer height="15"/>
+                                        
+                                        <p:outputLabel value="Frecuancia con la que se realiza la revisión de documentos: " style="text-decoration: underline;"/>
+                                        <p:spacer width="10" /> 
+                                        <p:outputLabel id="PFRD" style="color: blue"
+                                        value="#{managedBeanConfiguracionSistema.frecuanciaRevisionDocumentos.valor eq '1' ? 'Diaria':
+                                                 (managedBeanConfiguracionSistema.frecuanciaRevisionDocumentos.valor) eq '2' ? 'Semanal': 'Mensual'}"/>
+                                        <p:spacer width="20" />
+                                        <p:commandButton value="Editar" onclick="PF('PSFRD').show();" update=":form:PSFRD"/>
+                                        <p:spacer height="15"/>
+                                        
+                                        <p:outputLabel value="Mail al que se notifica la revisión de documentos: " style="text-decoration: underline;"/>
+                                        <p:spacer width="10" /> 
+                                        <p:outputLabel id="PMN" value="#{managedBeanConfiguracionSistema.mailNotificacion.valor}" style="color: blue"/>
+                                        <p:spacer width="20" />
+                                        <p:commandButton value="Editar" onclick="PF('PSMN').show();" update=":form:PSMN" action="#{managedBeanConfiguracionSistema.irModificarMailNotificaicon()}"/>
+                                        <p:spacer height="15"/>
+                                    </h:panelGrid>
+                                                <div class="panel-footer">  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                    <p:dialog  header="Modificar parametros del sistema" widgetVar="PSMN" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="PSMN" style="display:block; text-align:left;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="3">
 
-                                            <p:commandButton update="@([id$=editarPS])" oncomplete="PF('editarPS').show()" title="Editar" 
-                                                             icon="ui-icon-pencil" ajax="true" action="#{managedBeanConfiguracionSistema.irEditarParametro()}">
-                                                <f:setPropertyActionListener value="#{ps}" target="#{managedBeanConfiguracionSistema.parametroSistemaSeleccionado}" />
-                                            </p:commandButton> 
-                                        </p:column>
+                                                <p:outputLabel value="#{managedBeanConfiguracionSistema.mailNotificacion.tipoParametro}: " />
+                                                <p:spacer width="10" /> 
+                                                <p:inputText value="#{managedBeanConfiguracionSistema.nuevoMailNotificaion}" maxlength="100" />
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Aceptar" action="#{managedBeanConfiguracionSistema.editarParametroMailNotificacion()}"
+                                                              update=":form:growl :form:CM :form:PMN @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
                                     
-                                    </p:dataTable>
+                                    <p:dialog  header="Modificar parametros del sistema" widgetVar="PSFRD" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="PSFRD" style="display:block; text-align:left;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="3">
+
+                                                <p:outputLabel value="#{managedBeanConfiguracionSistema.frecuanciaRevisionDocumentos.tipoParametro}: " />
+                                                <p:spacer width="10" /> 
+                                                <p:selectOneMenu value="#{managedBeanConfiguracionSistema.frecuanciaRevisionDocumentos.valor}" >
+                                                    <f:selectItem itemLabel="Diaria" itemValue="1"/>
+                                                    <f:selectItem itemLabel="Semanal" itemValue="2"/>
+                                                    <f:selectItem itemLabel="Mensual" itemValue="3"/>
+                                                </p:selectOneMenu>
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Aceptar" action="#{managedBeanConfiguracionSistema.editarParametroFrecuanciaRevision()}"
+                                                              update=":form:growl :form:CM :form:PFRD @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
+                                    <p:dialog  header="Modificar parametros del sistema" widgetVar="PSPI" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="PSPI" style="display:block; text-align:left;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="3">
+
+                                                <p:outputLabel value="#{managedBeanConfiguracionSistema.contraseñaInstitucion.tipoParametro}: " />
+                                                <p:spacer width="10" /> 
+                                                <p:inputText value="#{managedBeanConfiguracionSistema.nuevoPassIntitucion}" maxlength="100" />
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Aceptar" action="#{managedBeanConfiguracionSistema.editarParametroPassInstitucion()}"
+                                                              update=":form:growl :form:CM :form:PPI @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
+                                    <p:dialog  header="Modificar parametros del sistema" widgetVar="PSMI" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="PSMI" style="display:block; text-align:left;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="3">
+
+                                                <p:outputLabel value="#{managedBeanConfiguracionSistema.mailInstitución.tipoParametro}: " />
+                                                <p:spacer width="10" /> 
+                                                <p:inputText value="#{managedBeanConfiguracionSistema.nuevoMailInstitucion}" maxlength="100" />
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Aceptar" action="#{managedBeanConfiguracionSistema.editarParametroMailInstitucion()}"
+                                                              update=":form:growl :form:CM :form:PMI @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
+                                    <p:dialog  header="Modificar parametros del sistema" widgetVar="PSMS" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="PSMS" style="display:block; text-align:left;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="3">
+
+                                                <p:outputLabel value="#{managedBeanConfiguracionSistema.mailSimulacion.tipoParametro}: " />
+                                                <p:spacer width="10" /> 
+                                                <p:inputText value="#{managedBeanConfiguracionSistema.mailSimulacion.valor}" maxlength="100" />
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Aceptar" action="#{managedBeanConfiguracionSistema.editarParametroMailSimulacion()}"
+                                                              update=":form:growl :form:CM :form:PMS @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
+                                    <p:dialog  header="Modificar parametros del sistema" widgetVar="PSSE" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="PSSE" style="display:block; text-align:left;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="3">
+
+                                                <p:outputLabel value="#{managedBeanConfiguracionSistema.setearEstado.tipoParametro}: " />
+                                                <p:spacer width="10" /> 
+                                                <h:panelGrid columns="2">
+                                                    <p:selectOneMenu value="#{managedBeanConfiguracionSistema.mes}" >
+                                                        <p:ajax listener="#{managedBeanConfiguracionSistema.cargarDias}" update="@([id$=dias])" />
+                                                        <f:selectItem itemLabel="Enero" itemValue="01" />
+                                                        <f:selectItem itemLabel="Febrero" itemValue="02" />
+                                                        <f:selectItem itemLabel="Marzo" itemValue="03" />
+                                                        <f:selectItem itemLabel="Abril" itemValue="04" />
+                                                        <f:selectItem itemLabel="Mayo" itemValue="05" />
+                                                        <f:selectItem itemLabel="Junio" itemValue="06" />
+                                                        <f:selectItem itemLabel="Julio" itemValue="07" />
+                                                        <f:selectItem itemLabel="Agosto" itemValue="08" />
+                                                        <f:selectItem itemLabel="Septiembre" itemValue="09" />
+                                                        <f:selectItem itemLabel="Octubre" itemValue="10" />
+                                                        <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                                                        <f:selectItem itemLabel="Diciembre" itemValue="12" />
+                                                    </p:selectOneMenu>
+                                                    <p:selectOneMenu id="dias" value="#{managedBeanConfiguracionSistema.dia}" >
+                                                        <f:selectItems value="#{managedBeanConfiguracionSistema.dias}" var="dia" itemLabel="#{dia}" itemValue="#{dia}" />
+                                                    </p:selectOneMenu>
+                                                </h:panelGrid>
+                                            </h:panelGrid>
+                                            <p:commandButton  value="Aceptar" action="#{managedBeanConfiguracionSistema.editarParametroSetearEstado()}"
+                                                              update=":form:growl :form:CM :form:PSE @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
+                                    <p:dialog  header="Modificar parametros del sistema" widgetVar="PSSM" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="PSSM" style="display:block; text-align:left;margin: 0 auto;">
+                                            <h:panelGrid  border="0" columns="3">
+
+                                                <p:outputLabel value="#{managedBeanConfiguracionSistema.simulacionMenusal.tipoParametro}: " />
+                                                <p:spacer width="10" /> 
+                                                
+                                                <p:selectOneMenu value="#{managedBeanConfiguracionSistema.simulacionMenusal.valor}" >
+                                                    <f:selectItems value="#{managedBeanConfiguracionSistema.diasSimulacion}" var="ds" itemLabel="#{ds}" itemValue="#{ds}" />
+                                                </p:selectOneMenu>
+                                                </h:panelGrid>
+                                            <p:commandButton  value="Aceptar" action="#{managedBeanConfiguracionSistema.editarParametroSimulacionMensual()}"
+                                                              update=":form:growl :form:CM :form:PSM @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                    
                                     <br/>
                                     <br/>
                                     <br/>
@@ -252,37 +411,23 @@
                                             Lista de parametros avanzados del sistema
                                         </f:facet>
                                         
-                                        <p:column headerText="Nombre parametro" footerText="">
-                                            <h:outputText value="#{cm.tipo}" />
+                                        <p:column headerText="Nombre parametro" footerText="" >
+                                            <h:outputText value="#{cm.tipo}" rendered="#{cm.tipo != 'Revision realizada'}"/>
                                         </p:column>
 
-                                        <p:column headerText="Valor parametro" footerText="">
-                                            <h:outputText value="#{cm.valor}" />
+                                        <p:column headerText="Valor parametro" footerText="" >
+                                            <h:outputText value="#{cm.valor}" rendered="#{cm.tipo != 'Revision realizada'}"/>
                                         </p:column>
                                         
                                         <p:column style="width:110px; text-align: center" >
 
-                                            <p:commandButton update="@([id$=editarCM])" oncomplete="PF('editarCM').show()" title="Editar" 
+                                            <p:commandButton update="@([id$=editarCM])" oncomplete="PF('editarCM').show()" title="Editar" rendered="#{cm.tipo != 'Revision realizada'}"
                                                              icon="ui-icon-pencil" ajax="true" action="#{managedBeanConfiguracionSistema.irEditarConfiguracionMail()}">
                                                 <f:setPropertyActionListener value="#{cm}" target="#{managedBeanConfiguracionSistema.configuracionMailSeleccionado}" />
                                             </p:commandButton> 
                                         </p:column>
                                     
                                     </p:dataTable>
-                                    
-                                    <p:dialog  header="Modificar parametros del sistema" widgetVar="editarPS" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                        <p:outputPanel id="editarPS" style="display:block; text-align:left;margin: 0 auto;">
-                                            <h:panelGrid  border="0" columns="2" rendered="#{not empty managedBeanConfiguracionSistema.parametroSistemaSeleccionado}">
-
-                                                <p:outputLabel value="Nombre del parametro: " />
-                                                <p:inputText value="#{managedBeanConfiguracionSistema.nombreParametroSistema}" maxlength="50"/>
-                                                <p:outputLabel value="Valor: " />
-                                                <p:inputText value="#{managedBeanConfiguracionSistema.valorParametroSistema}" maxlength="50"/>
-                                            </h:panelGrid>
-                                            <p:commandButton  value="Aceptar" action="#{managedBeanConfiguracionSistema.editarParametroSistema()}"
-                                                              update=":form:growl :form:PS @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
-                                        </p:outputPanel>
-                                    </p:dialog>
                                     
                                     <p:dialog  header="Modificar parametros avanzados del sistema" widgetVar="editarCM" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                         <p:outputPanel id="editarCM" style="display:block; text-align:left;margin: 0 auto;">
