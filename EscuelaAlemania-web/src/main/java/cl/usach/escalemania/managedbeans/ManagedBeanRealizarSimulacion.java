@@ -153,6 +153,7 @@ public class ManagedBeanRealizarSimulacion {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "No existen documentos completos para inspeccionar"));
         else{
+            documentosFiltrados=null;
             tipoDocumentos=1;
             documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
                             "Completo");
@@ -165,6 +166,7 @@ public class ManagedBeanRealizarSimulacion {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "No existen documentos incompletos para inspeccionar"));
         else{
+            documentosFiltrados=null;
             tipoDocumentos=2;
             documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), 
                             nombrePrograma), 
@@ -177,6 +179,7 @@ public class ManagedBeanRealizarSimulacion {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "No existen documentos desactualizados para inspeccionar"));
         else{
+            documentosFiltrados=null;
             tipoDocumentos=3;
             documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma),  
                             "Desactualizado");
@@ -188,6 +191,7 @@ public class ManagedBeanRealizarSimulacion {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "No existen documentos sin información para inspeccionar"));
         else{
+            documentosFiltrados=null;
             tipoDocumentos=4;
             documentos=documentoFacade.filtrarPorEstado(documentoFacade.filtrarPorPrograma(documentoFacade.findAll(), nombrePrograma), 
                             "Sin informacion");
