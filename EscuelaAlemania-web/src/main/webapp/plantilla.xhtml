@@ -6,26 +6,22 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-        <title>Sistema de control de documentos-Gestion de documentos</title>
+
+        <title>Sistema de control de documentos-Gestión de documentos</title>
+
         <ui:insert name="init">Aquí van los init</ui:insert>
-        <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
-        <h:outputStylesheet name="plugins/pace/pace-theme-big-counter.css" />
-        <h:outputStylesheet name="css/style.css" />
-        <h:outputStylesheet name="css/main-style.css" />
 
         <style>
-
-            
             .ui-growl {
-    top:15%;
+                top:15%;
 
-}
-.selection tr {
-    float: left;
-    width: 33%;
-}
+            }
+            .selection tr {
+                float: left;
+                width: 33%;
+            }
         </style>
-        
+
         <h:outputScript  name="plugins/bootstrap/bootstrap.min.js" />
         <h:outputScript name="plugins/metisMenu/jquery.metisMenu.js" />
         <h:outputScript  name="plugins/pace/pace.js" />
@@ -36,37 +32,25 @@
 
     <h:body>
 
-
+        <h:outputStylesheet name="plugins/bootstrap/bootstrap.css" />
+        <h:outputStylesheet name="plugins/pace/pace-theme-big-counter.css" />
+        <h:outputStylesheet name="css/style.css" />
+        <h:outputStylesheet name="css/main-style.css" />
         <div id="wrapper">
-            <!-- navbar top -->
+
             <h:form id="plantilla">
                 <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
-                    <!-- navbar-header -->
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="home.xhtml">
+                        <a class="navbar-brand" href="inicio.xhtml">
                             <img src="resources/img/insignia.png" alt="" />
                         </a>
                     </div>
-                    <!-- end navbar-header -->
-                    <!-- navbar-top-links -->
-
                     <ul class="nav navbar-top-links navbar-right">
-                        <!-- main dropdown -->
                         <ui:insert name="alerta">Va la parte de las alertas</ui:insert>
-                        
-                           
-
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="fa fa-user fa-3x"></i>
                             </a>
-                            <!-- dropdown user-->
                             <ul class="dropdown-menu dropdown-user">
                                 <li><a href="configuracion_sistema.xhtml"><i class="fa fa-gear fa-fw"></i>Configuración del sistema</a>
                                 </li>
@@ -74,110 +58,85 @@
                                 <li><a href="login.xhtml"><i class="fa fa-sign-out fa-fw"></i>Desconectarse</a>
                                 </li>
                             </ul>
-                            <!-- end dropdown-user -->
                         </li>
-                        <!-- end main dropdown -->
                     </ul>
-                        
-                    <!-- end navbar-top-links -->
-
                 </nav>
-                <!-- end navbar top -->
-
-                <!-- navbar side -->
                 <nav class="navbar-default navbar-static-side" role="navigation">
-                    <!-- sidebar-collapse -->
                     <div class="sidebar-collapse">
-                        <!-- side-menu -->
                         <ul class="nav" id="side-menu">
                             <li>
-                                <!-- user image section-->
                                 <div class="user-section">
-
                                 </div>
-                                <!--end user image section-->
                             </li>
-                             <ui:insert name="buscar_documento">
-                            <li>
-                                <a href="buscar_documento.xhtml"><i class="fa fa-search fa-fw"></i>Buscar documento</a>
-                            </li>
+                            <ui:insert name="buscar_documento">
+                                <li>
+                                    <a href="buscar_documento.xhtml"><i class="fa fa-search fa-fw"></i>Buscar documento</a>
+                                </li>
                             </ui:insert>
                             <ui:insert name="gestion_documentos">
-                            <li>
-                                <a href="#"><i class="fa fa-edit fa-fw"></i>Gestion documentos<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="gestion_documentos.xhtml"><i></i>Todos</a>
-                                    </li>
-                                    <li>
-                                        <a href="gestion_documentos_programa.xhtml"><i></i>Por programa</a>
-                                    </li>
-                                    <li>
-                                        <a href="gestion_documentos_estado.xhtml"><i></i>Por estado</a>
-                                    </li>
-                                    <li>
-                                        <a href="gestion_documentos_seccion.xhtml"><i></i>Por sección</a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-edit fa-fw"></i>Gestión documentos<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="gestion_documentos.xhtml"><i></i>Todos</a>
+                                        </li>
+                                        <li>
+                                            <a href="gestion_documentos_programa.xhtml"><i></i>Por programa</a>
+                                        </li>
+                                        <li>
+                                            <a href="gestion_documentos_estado.xhtml"><i></i>Por estado</a>
+                                        </li>
+                                        <li>
+                                            <a href="gestion_documentos_seccion.xhtml"><i></i>Por sección</a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ui:insert>
                             <ui:insert name="crear_documento">
-                            <li>
-                                <a href="crear_documento.xhtml"><i class="fa fa-plus-circle fa-fw"></i>Agregar documento</a>
-                            </li>
+                                <li>
+                                    <a href="crear_documento.xhtml"><i class="fa fa-plus-circle fa-fw"></i>Agregar documento</a>
+                                </li>
                             </ui:insert>
                             <ui:insert name="ultimos_cambios">
-                            <li>
-                                <a href="ultimos_cambios.xhtml"><i class="fa fa-clock-o fa-fw"></i>Ver últimos cambios</a>
-                            </li>
+                                <li>
+                                    <a href="ultimos_cambios.xhtml"><i class="fa fa-clock-o fa-fw"></i>Ver últimos cambios</a>
+                                </li>
                             </ui:insert>
                             <ui:insert name="gestion_programa">
                                 <li>
-                                    <a href="gestion_programa.xhtml"><i class="fa fa-book fa-fw"></i>Gestion programas</a>
+                                    <a href="gestion_programa.xhtml"><i class="fa fa-book fa-fw"></i>Gestión programas</a>
                                 </li>
                             </ui:insert>
                             <ui:insert name="alertar_usuario">
-                            <li>
-                                <a href="enviar_alerta.xhtml"><i class="fa fa-exclamation fa-fw"></i>Alertar usuario</a>
-                            </li>
+                                <li>
+                                    <a href="enviar_alerta.xhtml"><i class="fa fa-exclamation fa-fw"></i>Alertar usuario</a>
+                                </li>
                             </ui:insert>
                             <ui:insert name="simulacion">
-                            <li>
-                                <a href="#"><i class="fa fa-gears fa-fw"></i>Simulaciones<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="realizar_simulacion.xhtml">Realizar simulación</a>
-                                    </li>
-                                    <li>
-                                        <a href="ver_simulacion.xhtml">Ver resultados</a>
-                                    </li>
-                                </ul>
-                                <!-- second-level-items -->
-                            </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-gears fa-fw"></i>Simulaciones<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="realizar_simulacion.xhtml">Realizar simulación</a>
+                                        </li>
+                                        <li>
+                                            <a href="ver_simulacion.xhtml">Ver resultados</a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ui:insert>
                         </ul>
-                        <!-- end side-menu -->
                     </div>
-                    <!-- end sidebar-collapse -->
                 </nav>
             </h:form>
-                
-                
-                <ui:insert name="contenido">El contenido</ui:insert>
-            <!-- end page-wrapper -->
-            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
+            <ui:insert name="contenido">El contenido</ui:insert>
+
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
             <p:dialog width="270" height="39" widgetVar="statusDialog" modal="true" draggable="false" closable="false" showHeader="false" resizable="false">
                 <img src="resources\img\cargando.gif"/>
-              </p:dialog>
+            </p:dialog>
         </div>
-        <!-- end wrapper -->
-        
-        
-
-        <!-- jQuery -->
-        
-
 
     </h:body>
 </html>

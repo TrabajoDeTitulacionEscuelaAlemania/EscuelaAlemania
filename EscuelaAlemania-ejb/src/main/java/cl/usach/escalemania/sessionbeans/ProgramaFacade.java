@@ -68,6 +68,8 @@ public class ProgramaFacade extends AbstractFacade<Programa> implements Programa
 
     @Override
     public String crearPrograma(String nombrePrograma) {
+        if(nombrePrograma.isEmpty())
+            return "El nombre del programa no puede ser vacìo";
         Programa programa = obtenerProgramaPorNombre(findAll(), nombrePrograma);
         if (programa != null) {
             return "El programa que intenta crear ya existe";
@@ -84,6 +86,8 @@ public class ProgramaFacade extends AbstractFacade<Programa> implements Programa
 
     @Override
     public String editarPrograma(String nombrePrograma, String nuevoNombrePrograma) {
+        if(nuevoNombrePrograma.isEmpty())
+            return "El nombre del programa no puede ser vacìo";
         Programa programa = obtenerProgramaPorNombre(findAll(), nuevoNombrePrograma);
         if (programa != null) {
             return "El nombre del programa ya está en uso";

@@ -5,96 +5,77 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
     <ui:composition template="plantilla.xhtml">
-        
-      
-        
+
         <ui:define name="init">
-            
+
             <f:metadata>
                 <f:event type="preRenderView" listener="#{managedBeanGestionPrograma.init}" />
             </f:metadata>
+
+        </ui:define>
+
+        <ui:define name="alerta">
             
-        </ui:define>
-        
-        
-         <ui:define name="alerta">
-
-           
-                <li class="dropdown">
-
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanGestionPrograma.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
-                    </a>
-                    <!-- dropdown alerts-->
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="alertas.xhtml">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i>Alertas del sistema
-                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanGestionPrograma.alertas}" id="alertas2"/></span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="alertas_usuario.xhtml">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
-                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanGestionPrograma.alertasUsuario}" id="alertas3"/></span>
-                                </div>
-                            </a>
-                        </li>
-
-
-                    </ul>
-                    <!-- end dropdown-alerts -->
-
-                </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanGestionPrograma.alertasTotal}" id="alertas1"/></span> 
+                    <i class="fa fa-bell fa-3x"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-alerts">
+                    <li>
+                        <a href="alertas.xhtml">
+                            <div>
+                                <i class="fa fa-comment fa-fw"></i>Alertas del sistema
+                                <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanGestionPrograma.alertas}" id="alertas2"/></span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="alertas_usuario.xhtml">
+                            <div>
+                                <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
+                                <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanGestionPrograma.alertasUsuario}" id="alertas3"/></span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
         </ui:define>
-        
+
         <ui:define name="gestion_programa">
             <li class="selected">
-                <a href="gestion_programa.xhtml"><i class="fa fa-book fa-fw"></i>Gestion programas</a>
+                <a href="gestion_programa.xhtml"><i class="fa fa-book fa-fw"></i>Gestión programas</a>
             </li>
         </ui:define>
-        
-        <ui:define name="contenido">
-            
-            <div id="page-wrapper">
 
+        <ui:define name="contenido">
+
+            <div id="page-wrapper">
                 <div class="row">
-                    <!-- Page Header -->
                     <div class="col-lg-12">
                         <p:outputLabel class="page-header" value="Gestionar programas" style="font-size: 33px "/>
-                        
                     </div>
-                    <!--End Page Header -->
                 </div>
-
                 <p:outputPanel deferred="true" rendered="#{managedBeanGestionPrograma.rol != 'Administrador'}">
                     <h3>Información no disponible</h3>
                     <p>Usted no posee los privilegios necesarios para utilizar esta funcionalidad</p>
                 </p:outputPanel>
-                
-                
                 <h:form id="form" rendered="#{managedBeanGestionPrograma.rol eq 'Administrador'}">
                     <p:growl id="growl" showDetail="true" autoUpdate="false" />
                     <p:dataTable id="Programa" var="prog" value="#{managedBeanGestionPrograma.programas}"  rows="5"
                                  paginator="true"  rowsPerPageTemplate="5,10,15" emptyMessage="No existen programas"  
                                  paginatorPosition="top">
-                        
                         <p:column headerText="Nombre" footerText="">
                             <h:outputText value="#{prog.programa}" />
                         </p:column>
-
                         <p:column style="width:150px; text-align: center" headerText="Documentos">
                             <h:outputText value="#{prog.documentos.size()}" />
                         </p:column>
-                        
                         <p:column style="width:110px; text-align: center" >
-                           
                             <p:commandButton update=":form:modificarProg" oncomplete="PF('modificarProg').show()" title="Editar" 
                                              icon="ui-icon-pencil" ajax="true" action="#{managedBeanGestionPrograma.irEditar()}">
                                 <f:setPropertyActionListener value="#{prog}" target="#{managedBeanGestionPrograma.programaElegido}" />
@@ -103,81 +84,74 @@
                             <p:commandButton title="Eliminar" icon="fa fa-trash-o" onclick="PF('eliminarProg').show();" update=":form:eliminarProg"
                                              action="#{managedBeanGestionPrograma.irEliminar()}" ajax="true">
                                 <f:setPropertyActionListener value="#{prog}" target="#{managedBeanGestionPrograma.programaElegido}" />
-                        </p:commandButton> 
+                            </p:commandButton> 
                         </p:column>
-                        
                         <f:facet name="footer">
                             <p:commandButton update=":form:crearProg" icon="ui-icon-plusthick" title="Crear" onclick="PF('crearProg').show();" 
                                              action="#{managedBeanGestionPrograma.irCrear()}"/>
                         </f:facet>
-                        
                     </p:dataTable>
-                    
+
                     <p:dialog  header="Modificar Programa" widgetVar="modificarProg" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                    <p:outputPanel id="modificarProg" style="display:block; text-align:center;margin: 0 auto;">
-                        <h:panelGrid  border="0" columns="1" rendered="#{not empty managedBeanGestionPrograma.programaElegido}"  >
+                        <p:outputPanel id="modificarProg" style="display:block; text-align:center;margin: 0 auto;">
+                            <h:panelGrid  border="0" columns="1" rendered="#{not empty managedBeanGestionPrograma.programaElegido}"  >
+                                <p:outputLabel value="Nombre del programa" />
+                                <p:inputText value="#{managedBeanGestionPrograma.nombreProgramaEditar}" maxlength="100" />
+                            </h:panelGrid>
+                        </p:outputPanel>
+                        <br/>
+                        <p:commandButton  value="Cambiar nombre" update=":form:growl :form:Programa @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" class="btn btn-success"
+                                          action="#{managedBeanGestionPrograma.editarPrograma()}" style="display:block; text-align:center;margin: 0 auto;"/>
+                    </p:dialog>
 
-                            <p:outputLabel value="Nombre del programa" />
-                            <p:inputText value="#{managedBeanGestionPrograma.nombreProgramaEditar}" maxlength="100" />
-                            
-                        </h:panelGrid>
-                        <p:commandButton  value="Cambiar nombre" update=":form:growl :form:Programa @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])"
-                                          action="#{managedBeanGestionPrograma.editarPrograma()}"/>
-                    </p:outputPanel>
-                </p:dialog>
-                    
                     <p:dialog  header="Eliminar Programa" widgetVar="eliminarProg" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                    <p:outputPanel id="eliminarProg" style="display:block; text-align:center;margin: 0 auto;">
-                        <h:panelGrid  border="0" columns="1" rendered="#{not empty managedBeanGestionPrograma.programaElegido}"  >
+                        <p:outputPanel id="eliminarProg" style="display:block; text-align:center;margin: 0 auto;">
+                            <h:panelGrid  border="0" columns="1" rendered="#{not empty managedBeanGestionPrograma.programaElegido}"  >
+                                <p:outputLabel value="¿Desea eliminar el programa seleccionado del sistema?"
+                                               rendered="#{managedBeanGestionPrograma.programaElegido.documentos.size() == 0}"/>
+                                <p:outputLabel value="Antes de eliminar el programa, ¿Desea guardar los documentos en otro programa?"
+                                               rendered="#{managedBeanGestionPrograma.programaElegido.documentos.size() != 0}"/>
+                                <p:selectBooleanButton value="#{managedBeanGestionPrograma.guardarDocumentos}" onLabel="Si" 
+                                                       offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" 
+                                                       rendered="#{managedBeanGestionPrograma.programaElegido.documentos.size() != 0}">
+                                    <p:ajax update="opciones" listener="#{managedBeanGestionPrograma.cargarProgramas}" />
+                                </p:selectBooleanButton>
+                                <h:panelGrid border="0" id="opciones" columns="1">
+                                    <p:outputLabel value="Seleccione el programa donde desea guardar los documentos: " 
+                                                   rendered="#{managedBeanGestionPrograma.guardarDocumentos}"/>
+                                    <p:selectOneMenu value="#{managedBeanGestionPrograma.programaDestino}" rendered="#{managedBeanGestionPrograma.guardarDocumentos}">
+                                        <f:selectItems value="#{managedBeanGestionPrograma.listaProgramas}" var="programa" itemLabel="#{programa.programa}" 
+                                                       itemValue="#{programa.programa}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <br/>
+                            <p:commandButton  value="Eliminar" action="#{managedBeanGestionPrograma.eliminarPrograma()}" class="btn btn-primary"
+                                              update=":form:growl :form:Programa @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
+                            <p:spacer width="3" />
+                            <p:commandButton  value="Cancelar" onclick="PF('elimDialog').hide();" class="btn btn-danger"/>
+                        </p:outputPanel>
+                    </p:dialog>
 
-                            <p:outputLabel value="¿Desea eliminar el programa seleccionado del sistema?"
-                                            rendered="#{managedBeanGestionPrograma.programaElegido.documentos.size() == 0}"/>
-                             <p:outputLabel value="Antes de eliminar el programa, ¿Desea guardar los documentos en otro programa?"
-                                            rendered="#{managedBeanGestionPrograma.programaElegido.documentos.size() != 0}"/>
-                             <p:selectBooleanButton value="#{managedBeanGestionPrograma.guardarDocumentos}" onLabel="Si" 
-                                                    offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" 
-                                                    rendered="#{managedBeanGestionPrograma.programaElegido.documentos.size() != 0}">
-                                 <p:ajax update="opciones" listener="#{managedBeanGestionPrograma.cargarProgramas}" />
-                             </p:selectBooleanButton>
-                             <h:panelGrid border="0" id="opciones" columns="1">
-                                 <p:outputLabel value="Seleccione el programa donde desea guardar los documentos: " rendered="#{managedBeanGestionPrograma.guardarDocumentos}"/>
-                                 <p:selectOneMenu value="#{managedBeanGestionPrograma.programaDestino}" rendered="#{managedBeanGestionPrograma.guardarDocumentos}">
-                                     <f:selectItems value="#{managedBeanGestionPrograma.listaProgramas}" var="programa" itemLabel="#{programa.programa}" itemValue="#{programa.programa}"/>
-                                 </p:selectOneMenu>
-                             </h:panelGrid>
-                        </h:panelGrid>
-                        <p:commandButton  value="Eliminar" action="#{managedBeanGestionPrograma.eliminarPrograma()}"
-                                         update=":form:growl :form:Programa @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
-                        <p:spacer width="3" />
-                        <p:commandButton  value="Cancelar" onclick="PF('elimDialog').hide();" />
-                    </p:outputPanel>
-                </p:dialog>
-                    
                     <p:dialog  header="Nuevo programa" widgetVar="crearProg" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                    <p:outputPanel id="crearProg" style="display:block; text-align:center;margin: 0 auto;">
-                        <h:panelGrid border="0" columns="1" >
+                        <p:outputPanel id="crearProg" style="display:block; text-align:center;margin: 0 auto;">
+                            <h:panelGrid border="0" columns="1" >
+                                <p:outputLabel value="Nombre del nuevo programa" />
+                                <p:inputText value="#{managedBeanGestionPrograma.nombreProgramaCrear}" maxlength="100" />
+                            </h:panelGrid>
+                            <br/>
+                            <p:commandButton  value="Crear programa"  update=":form:growl :form:Programa @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])"
+                                              action="#{managedBeanGestionPrograma.crearPrograma()}" class="btn btn-success"/>
+                        </p:outputPanel>
+                    </p:dialog>
 
-                            <p:outputLabel value="Nombre del nuevo programa" />
-                            <p:inputText value="#{managedBeanGestionPrograma.nombreProgramaCrear}" maxlength="100" />
-                        </h:panelGrid>
-                        <p:commandButton  value="Crear programa"  update=":form:growl :form:Programa @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])"
-                                          action="#{managedBeanGestionPrograma.crearPrograma()}"/>
-                    </p:outputPanel>
-                </p:dialog>
-                    
                 </h:form>    
-                    
-                    
-            
             </div>
-                
-</ui:define>
-        
-       
-        
+
+        </ui:define>
+
     </ui:composition>
-   
-    
+
 </html>
 
 

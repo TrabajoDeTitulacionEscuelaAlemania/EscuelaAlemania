@@ -23,7 +23,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class ManagedBeanHome {
+public class ManagedBeanInicio {
 
     @EJB
     private DocumentoFacadeLocal documentoFacade;
@@ -151,7 +151,7 @@ public class ManagedBeanHome {
     }
     
     
-    public ManagedBeanHome() {
+    public ManagedBeanInicio() {
         
     }
 }

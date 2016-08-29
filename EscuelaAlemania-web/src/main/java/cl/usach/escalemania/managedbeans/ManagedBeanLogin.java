@@ -82,7 +82,7 @@ public class ManagedBeanLogin{
             
             fc.getExternalContext().getSessionMap().put("rol", mensaje);
             fc.getExternalContext().getSessionMap().put("usuario", usuario);
-            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "home.xhtml?faces-redirect=true");
+            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "inicio.xhtml?faces-redirect=true");
         }
     }
     

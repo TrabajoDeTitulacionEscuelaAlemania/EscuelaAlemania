@@ -5,27 +5,25 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
     <ui:composition template="plantilla.xhtml">
-        
-       
-        
-        <ui:define name="init">
-            
-            <f:metadata>
-            <f:event type="preRenderView" listener="#{managedBeanGestionDocs.init}" />
-            </f:metadata>
-            
-        </ui:define>
-        
-        <ui:define name="alerta">
 
+        <ui:define name="init">
+
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{managedBeanGestionDocs.init}" />
+            </f:metadata>
+
+        </ui:define>
+
+        <ui:define name="alerta">
+            
             <h:form id="alert">
                 <li class="dropdown">
-
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanGestionDocs.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
+                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanGestionDocs.alertasTotal}" id="alertas1"/></span>
+                        <i class="fa fa-bell fa-3x"></i>
                     </a>
-                    <!-- dropdown @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])s-->
                     <ul class="dropdown-menu dropdown-alerts">
                         <li>
                             <a href="alertas.xhtml">
@@ -44,18 +42,14 @@
                                 </div>
                             </a>
                         </li>
-
-
                     </ul>
-                    <!-- end dropdown-alerts -->
-
                 </li>
             </h:form>
         </ui:define>
-        
+
         <ui:define name="gestion_documentos">
             <li class="active">
-                <a href="#"><i class="fa fa-edit fa-fw"></i>Gestion documentos<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-edit fa-fw"></i>Gestión documentos<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li class="selected">
                         <a href="gestion_documentos.xhtml"><i></i>Todos</a>
@@ -72,25 +66,20 @@
                 </ul>
             </li>
         </ui:define>
-        
-        <ui:define name="contenido">
-            
-            <div id="page-wrapper">
 
+        <ui:define name="contenido">
+
+            <div id="page-wrapper">
                 <div class="row">
-                    <!-- Page Header -->
                     <div class="col-lg-12">
-                        <p:outputLabel class="page-header" value="Gestion documentos" style="font-size: 33px "/>
-                        
+                        <p:outputLabel class="page-header" value="Gestión documentos" style="font-size: 33px "/>
                     </div>
-                    <!--End Page Header -->
                 </div>
                 <h:form id="form">
                     <p:growl id="growl" showDetail="true" autoUpdate="false" />
                     <p:dataTable id="Documentos" var="doc" value="#{managedBeanGestionDocs.documentos}"  rows="5"
                                  paginator="true"  rowsPerPageTemplate="5,10,15" 
                                  emptyMessage="No se econtraron documentos para ese criterio" filteredValue="#{managedBeanGestionDocs.documentosFiltrados}">
-
                         <p:column filterBy="#{doc.nombre}" headerText="Nombre" footerText="" filterMatchMode="contains" >
                             <h:outputText value="#{doc.nombre}" />
                         </p:column>
@@ -106,75 +95,68 @@
                         <p:column headerText="Observación" filterBy="#{doc.observacion}"  footerText="" filterMatchMode="contains">
                             <h:outputText value="#{doc.observacion}" />
                         </p:column>
-                        
                         <p:column style="width:110px; text-align: center" >
-                           
-                            <p:commandButton update=":form:docDetalle" oncomplete="PF('docDialogo').show()" title="Editar" disabled="#{managedBeanGestionDocs.rol eq 'Visitante'}"
+                            <p:commandButton update=":form:docDetalle" oncomplete="PF('docDialogo').show()" title="Editar" 
+                                             disabled="#{managedBeanGestionDocs.rol eq 'Visitante'}"
                                              icon="ui-icon-pencil" ajax="true" action="#{managedBeanGestionDocs.irAEditar()}">
                                 <f:setPropertyActionListener value="#{doc}" target="#{managedBeanGestionDocs.documentoElegido}" />
                             </p:commandButton> 
                             <p:spacer width="5" />
-                        <p:commandButton title="Eliminar" icon="fa fa-trash-o"   onclick="PF('elimDialog').show();" disabled="#{managedBeanGestionDocs.rol eq 'Visitante'}">
-                            <f:setPropertyActionListener value="#{doc}" target="#{managedBeanGestionDocs.documentoElegido}" />
-                        </p:commandButton> 
+                            <p:commandButton title="Eliminar" icon="fa fa-trash-o"   onclick="PF('elimDialog').show();" update=":form:elimDetalle"
+                                             disabled="#{managedBeanGestionDocs.rol eq 'Visitante'}">
+                                <f:setPropertyActionListener value="#{doc}" target="#{managedBeanGestionDocs.documentoElegido}" />
+                            </p:commandButton> 
                         </p:column>
-                           
                     </p:dataTable>
-                    
-                    <p:dialog  header="Eliminar documento" widgetVar="elimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                    <p:outputPanel id="elimDetalle" style="display:block; text-align:center;margin: 0 auto;">
-                        <h:panelGrid border="0"  columns="" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
 
+                    <p:dialog  header="Eliminar documento" widgetVar="elimDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="elimDetalle" style="display:block; text-align:center;margin: 0 auto;">
+                            <h:panelGrid border="0"  columns="" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
+                                <br></br>
+                                <strong>¿Desea eliminar el documento seleccionado?</strong>
+                                <br/>
+                            </h:panelGrid>
                             <br></br>
-                            <strong>¿Desea eliminar el documento seleccionado?</strong>
-                            <br/>
-                        </h:panelGrid>
-                        <p:commandButton  value="Si"  action="#{managedBeanGestionDocs.eliminarDocumento()}"  onclick="PF('elimDialog').hide();"
-                                         update=":form:growl :form:Documentos @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" icon="fa fa-check-circle-o"/>
-                        <p:spacer width="3" />
-                        <p:commandButton  value="No" onclick="PF('elimDialog').hide();"   icon="fa fa-times-circle-o"/>
-                    </p:outputPanel>
-                </p:dialog>
+                            <p:commandButton  value="Si"  action="#{managedBeanGestionDocs.eliminarDocumento()}"  onclick="PF('elimDialog').hide();" class="btn btn-primary"
+                                              update=":form:growl :form:Documentos @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" icon="fa fa-check-circle-o"/>
+                            <p:spacer width="3" />
+                            <p:commandButton  value="No" onclick="PF('elimDialog').hide();"   icon="fa fa-times-circle-o" class="btn btn-danger"/>
+                        </p:outputPanel>
+                    </p:dialog>
 
                     <p:dialog  header="Información documento" widgetVar="docDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:outputPanel id="docDetalle" style="text-align:left">
                             <h:panelGrid border="0"  columns="2" rendered="#{not empty managedBeanGestionDocs.documentoElegido}"  >
-
                                 <br></br>
                                 <strong>Nombre:</strong>
                                 <p:inputTextarea maxlength="300" value="#{managedBeanGestionDocs.nombreDocumento}" />
                                 <strong>Estado:</strong>
                                 <p:selectOneMenu  value="#{managedBeanGestionDocs.nombreEstadoDocumento}" >
-                                    <f:selectItems value="#{managedBeanGestionDocs.estadoDocumentos}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.estado}"/>
+                                    <f:selectItems value="#{managedBeanGestionDocs.estadoDocumentos}" var="estado" itemLabel="#{estado.estado}" 
+                                                   itemValue="#{estado.estado}"/>
                                 </p:selectOneMenu>
                                 <strong>Sección:</strong>
                                 <p:selectOneMenu  value="#{managedBeanGestionDocs.nombreSeccion}" >
-                                    <f:selectItems value="#{managedBeanGestionDocs.secciones}" var="seccion" itemLabel="#{seccion.seccion}" itemValue="#{seccion.seccion}"/>
+                                    <f:selectItems value="#{managedBeanGestionDocs.secciones}" var="seccion" itemLabel="#{seccion.seccion}" 
+                                                   itemValue="#{seccion.seccion}"/>
                                 </p:selectOneMenu>
                                 <strong>Ubicación:</strong>
                                 <p:inputText value="#{managedBeanGestionDocs.ubicacion}" maxlength="100" />
                                 <strong>Observación:</strong>
                                 <p:inputText value="#{managedBeanGestionDocs.observacion}" maxlength="120" />
                             </h:panelGrid>
-                            <p:commandButton value="Modificar"  action="#{managedBeanGestionDocs.editar()}" 
-                                                 update=":form:growl :form:Documentos @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])"
-                                                 style="display:block; text-align:center;margin: 0 auto;"/>
+                            <br></br>
+                            <p:commandButton value="Modificar"  action="#{managedBeanGestionDocs.editar()}" class="btn btn-success"
+                                             update=":form:growl :form:Documentos @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])"
+                                             style="display:block; text-align:center;margin: 0 auto;"/>
                         </p:outputPanel>
                     </p:dialog>
-
                 </h:form>
-
-
-
-
             </div>
-            
-</ui:define>
-        
 
+        </ui:define>
         
     </ui:composition>
-   
-    
+
 </html>
 

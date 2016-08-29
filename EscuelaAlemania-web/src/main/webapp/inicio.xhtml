@@ -5,31 +5,31 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
     <ui:composition template="plantilla.xhtml">
-        
-    
-        
+
         <ui:define name="init">
-             <f:metadata>
-            <f:event type="preRenderView" listener="#{managedBeanHome.init}" />
-        </f:metadata>
+
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{managedBeanInicio.init}" />
+            </f:metadata>
+
         </ui:define>
-        
+
         <ui:define name="alerta">
 
             <h:form id="alert">
                 <li class="dropdown">
-
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanHome.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
+                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanInicio.alertasTotal}" id="alertas1"/></span> 
+                        <i class="fa fa-bell fa-3x"></i>
                     </a>
-                    <!-- dropdown alerts-->
                     <ul class="dropdown-menu dropdown-alerts">
                         <li>
                             <a href="alertas.xhtml">
                                 <div>
                                     <i class="fa fa-comment fa-fw"></i>Alertas del sistema
-                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanHome.alertas}" id="alertas2"/></span>
+                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanInicio.alertas}" id="alertas2"/></span>
                                 </div>
                             </a>
                         </li>
@@ -38,80 +38,58 @@
                             <a href="alertas_usuario.xhtml">
                                 <div>
                                     <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
-                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanHome.alertasUsuario}" id="alertas3"/></span>
+                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanInicio.alertasUsuario}" id="alertas3"/></span>
                                 </div>
                             </a>
                         </li>
-
-
                     </ul>
-                    <!-- end dropdown-alerts -->
-
                 </li>
             </h:form>
-            
-        </ui:define>
-        
-        
-        <ui:define name="contenido">
-        <!-- end navbar side -->
-            <!--  page-wrapper -->
-            <div id="page-wrapper">
 
+        </ui:define>
+
+        <ui:define name="contenido">
+            
+            <div id="page-wrapper">
                 <div class="row">
-                    <!-- Page Header -->
                     <div class="col-lg-12">
                         <p:outputLabel class="page-header" value="Información" style="font-size: 33px "/>
                     </div>
-                    <!--End Page Header -->
                 </div>
-
                 <div class="row">
-                    <!-- Welcome -->
                     <div class="col-lg-12">
                         <div class="alert alert-info">
-                            <i class="fa fa-folder-open"></i>&nbsp;Bienvenido <b>#{managedBeanHome.usuario}.</b>
-                            <br/>&nbsp;Actualmente existen <b>#{managedBeanHome.total}</b> documentos en el sistema.
+                            <i class="fa fa-folder-open"></i>&nbsp;Bienvenido <b>#{managedBeanInicio.usuario}.</b>
+                            <br/>&nbsp;Actualmente existen <b>#{managedBeanInicio.total}</b> documentos en el sistema.
                         </div>
                     </div>
-                    <!--end  Welcome -->
                 </div>
-
-
                 <div class="row">
-                    <!--quick info section -->
                     <div class="col-lg-3">
                         <div class="alert alert-success text-center">
-                            <i class="fa fa-check-circle-o fa-3x"></i><b>&nbsp;#{managedBeanHome.completos}</b> Documentos<br/>completos
-
+                            <i class="fa fa-check-circle-o fa-3x"></i><b>&nbsp;#{managedBeanInicio.completos}</b> Documentos<br/>completos
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="alert alert-warning text-center">
-                            <i class="fa fa-exclamation fa-3x"></i><b>&nbsp;#{managedBeanHome.incompletos}</b> Documentos<br/>incompletos  
+                            <i class="fa fa-exclamation fa-3x"></i><b>&nbsp;#{managedBeanInicio.incompletos}</b> Documentos<br/>incompletos  
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="alert alert-warning text-center">
-                            <i class="fa fa-exclamation fa-3x"></i><b>&nbsp;#{managedBeanHome.desactualizados}</b> Documentos<br/>desactualizados
-
+                            <i class="fa fa-exclamation fa-3x"></i><b>&nbsp;#{managedBeanInicio.desactualizados}</b> Documentos<br/>desactualizados
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="alert alert-danger text-center">
-                            <i class="fa fa-exclamation-triangle fa-3x"></i><b>&nbsp;#{managedBeanHome.sinInformacion}</b> Documentos<br/>sin informacion
+                            <i class="fa fa-exclamation-triangle fa-3x"></i><b>&nbsp;#{managedBeanInicio.sinInformacion}</b> Documentos<br/>sin informacion
                         </div>
                     </div>
-                    <!--end quick info section -->
                 </div>
-
             </div>
-            <!-- end page-wrapper -->
-
-    </ui:define>
-        
+        </ui:define>
 
     </ui:composition>
-   
+
 </html>
 

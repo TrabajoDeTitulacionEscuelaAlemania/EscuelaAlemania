@@ -5,54 +5,45 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
     <ui:composition template="plantilla.xhtml">
-        
-        
+
         <ui:define name="init">
-            
+
             <f:metadata>
                 <f:event type="preRenderView" listener="#{managedBeanRealizarSimulacion.init}" />
             </f:metadata>
+
+        </ui:define>
+
+        <ui:define name="alerta">
             
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanRealizarSimulacion.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-alerts">
+                    <li>
+                        <a href="alertas.xhtml">
+                            <div>
+                                <i class="fa fa-comment fa-fw"></i>Alertas del sistema
+                                <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanRealizarSimulacion.alertas}" id="alertas2"/></span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="alertas_usuario.xhtml">
+                            <div>
+                                <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
+                                <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanRealizarSimulacion.alertasUsuario}" id="alertas3"/></span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ui:define>
-        
-        
-         <ui:define name="alerta">
 
-           
-                <li class="dropdown">
-
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanRealizarSimulacion.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
-                    </a>
-                    <!-- dropdown alerts-->
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="alertas.xhtml">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i>Alertas del sistema
-                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanRealizarSimulacion.alertas}" id="alertas2"/></span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="alertas_usuario.xhtml">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i>Alertas de usuarios
-                                    <span class="pull-right text-muted small"><p:outputLabel value="#{managedBeanRealizarSimulacion.alertasUsuario}" id="alertas3"/></span>
-                                </div>
-                            </a>
-                        </li>
-
-
-                    </ul>
-                    <!-- end dropdown-alerts -->
-
-                </li>
-
-        </ui:define>
-        
         <ui:define name="simulacion">
             <li class="active">
                 <a href="#"><i class="fa fa-gears fa-fw"></i>Simulaciones<span class="fa arrow"></span></a>
@@ -64,149 +55,133 @@
                         <a href="ver_simulacion.xhtml">Ver resultados</a>
                     </li>
                 </ul>
-                <!-- second-level-items -->
             </li>
         </ui:define>
 
         <ui:define name="contenido">
-            
             <div id="page-wrapper">
-
                 <div class="row">
-                    <!-- Page Header -->
                     <div class="col-lg-12">
                         <p:outputLabel class="page-header" value="Realizar simulación" style="font-size: 33px "/>
-                        
                     </div>
-                    <!--End Page Header -->
                 </div>
-
                 <h:form>
                     <p:growl id="growl" showDetail="true" />
-                        <h:panelGroup style="display:block; text-align:center">
-
-                            <h3><strong>Seleccione el programa que desea consultar:</strong></h3>
-                            <p:spacer width="5"/>
-                            <p:selectOneMenu value="#{managedBeanRealizarSimulacion.nombrePrograma}" effect="fold" >
-                                <f:selectItems value="#{managedBeanRealizarSimulacion.programas}" var="programa"
-                                               itemLabel="#{programa.programa}" itemValue="#{programa.programa}" />
-                            </p:selectOneMenu>
-                            <br/>
-                            <p:commandButton  class="btn btn-primary" value="Consultar evaluación" 
-                                              update="porcentaje nota panelPrincipal @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3]) growl" action="#{managedBeanRealizarSimulacion.obtenerUltimaSimulacion()}"/>
-                        </h:panelGroup>
+                    <h:panelGroup style="display:block; text-align:center">
+                        <h3><strong>Seleccione el programa que desea consultar:</strong></h3>
+                        <p:spacer width="5"/>
+                        <p:selectOneMenu value="#{managedBeanRealizarSimulacion.nombrePrograma}" effect="fold" >
+                            <f:selectItems value="#{managedBeanRealizarSimulacion.programas}" var="programa"
+                                           itemLabel="#{programa.programa}" itemValue="#{programa.programa}" />
+                        </p:selectOneMenu>
+                        <br/>
+                        <p:commandButton  value="Consultar evaluación" class="btn btn-success"
+                                          update="porcentaje nota panelPrincipal @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3]) growl" action="#{managedBeanRealizarSimulacion.obtenerUltimaSimulacion()}"/>
+                    </h:panelGroup>
                     <br/>
                     <div class="row">
                         <div class="col-lg-4">
                             <h:panelGroup  id="panelPrincipal" layout="block" class="panel panel-info">
-                    
-                        <div class="panel-heading">
-                            Resultados
-                        </div>
-                        <div class="panel-body">
-                            <p:panelGrid id="resultados" style="margin: 0 auto;display:block; text-align:center;">
-                                
-                                <f:facet name="header">
-                                    <p:row>
-                                        <p:column colspan="4"><h4><strong>Programa evaluado: "#{managedBeanRealizarSimulacion.nombrePrograma}"</strong></h4></p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column style="width:400px">Parámetro evaluado</p:column>
-                                        <p:column>Vital</p:column>
-                                        <p:column>Importante</p:column>
-                                        <p:column>Normal</p:column>
-                                    </p:row>
-                                </f:facet>
-                                <p:row>
-                                    <p:column>Documentos completos</p:column>
-                                    <p:column>
-                                        #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docCompletosVital}
-                                    </p:column>
-                                    <p:column>
-                                        #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docCompletosImportante}
-                                    </p:column>
-                                    <p:column>
-                                        #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docCompletosNormal}
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column>Documentos incompletos</p:column>
-                                    <p:column>
-                                        #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docIncompletosVital}
-                                    </p:column>
-                                    <p:column>
-                                        #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docIncompletosImportante}
-                                    </p:column>
-                                    <p:column>
-                                        #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docIncompletosNormal}
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column>Documentos desactualizados</p:column>
-                                    <p:column>
-                                        #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docDesactualizadosVital}
-                                    </p:column>
-                                    <p:column>
-                                        #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docDesactualizadosImportante}
-                                    </p:column>
-                                    <p:column>
-                                        #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docDesactualizadosNormal}
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column>Documentos sin información</p:column>
-                                    <p:column>
-                                        #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docSinInformacionVital}
-                                    </p:column>
-                                    <p:column>
-                                        #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docSinInformacionImportante}
-                                    </p:column>
-                                    <p:column>
-                                        #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docSinInformacionNormal}
-                                    </p:column>
-                                </p:row>
-                            </p:panelGrid>
-                    </div>
+                                <div class="panel-heading">
+                                    Resultados
+                                </div>
+                                <div class="panel-body">
+                                    <p:panelGrid id="resultados" style="margin: 0 auto;display:block; text-align:center;">
+                                        <f:facet name="header">
+                                            <p:row>
+                                                <p:column colspan="4"><h4><strong>Programa evaluado: "#{managedBeanRealizarSimulacion.nombrePrograma}"</strong></h4></p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column style="width:400px">Parámetro evaluado</p:column>
+                                                <p:column>Vital</p:column>
+                                                <p:column>Importante</p:column>
+                                                <p:column>Normal</p:column>
+                                            </p:row>
+                                        </f:facet>
+                                        <p:row>
+                                            <p:column>Documentos completos</p:column>
+                                            <p:column>
+                                                #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docCompletosVital}
+                                            </p:column>
+                                            <p:column>
+                                                #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docCompletosImportante}
+                                            </p:column>
+                                            <p:column>
+                                                #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docCompletosNormal}
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>Documentos incompletos</p:column>
+                                            <p:column>
+                                                #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docIncompletosVital}
+                                            </p:column>
+                                            <p:column>
+                                                #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docIncompletosImportante}
+                                            </p:column>
+                                            <p:column>
+                                                #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docIncompletosNormal}
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>Documentos desactualizados</p:column>
+                                            <p:column>
+                                                #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docDesactualizadosVital}
+                                            </p:column>
+                                            <p:column>
+                                                #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docDesactualizadosImportante}
+                                            </p:column>
+                                            <p:column>
+                                                #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docDesactualizadosNormal}
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>Documentos sin información</p:column>
+                                            <p:column>
+                                                #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docSinInformacionVital}
+                                            </p:column>
+                                            <p:column>
+                                                #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docSinInformacionImportante}
+                                            </p:column>
+                                            <p:column>
+                                                #{managedBeanRealizarSimulacion.simulacionAnterior eq null ? "-":managedBeanRealizarSimulacion.simulacionAnterior.docSinInformacionNormal}
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </div>
                                 <div class="panel-footer">
                                     Fecha de la simulación: #{managedBeanRealizarSimulacion.fechaSimulacion}
                                 </div>
-                                </h:panelGroup>
+                            </h:panelGroup>
                         </div>
                         <div class="col-lg-33">
-                            
-                    <h:panelGroup id="porcentaje" layout="block" class="panel panel-info">
-                        <div class="panel-heading">
-                            Porcentaje de aprobación
-                        </div>
-                        <div class="panel-body" style="display:block; text-align:center">
-                            <h1><p:outputLabel value="#{managedBeanRealizarSimulacion.simulacionAnterior eq null ? '' :managedBeanRealizarSimulacion.simulacionAnterior.porcentajeAprobacion}%"/>
-                            </h1>
-                        </div>
-                    </h:panelGroup>
+                            <h:panelGroup id="porcentaje" layout="block" class="panel panel-info">
+                                <div class="panel-heading">
+                                    Porcentaje de aprobación
+                                </div>
+                                <div class="panel-body" style="display:block; text-align:center">
+                                    <h1><p:outputLabel value="#{managedBeanRealizarSimulacion.simulacionAnterior eq null ? '' :managedBeanRealizarSimulacion.simulacionAnterior.porcentajeAprobacion}%"/>
+                                    </h1>
+                                </div>
+                            </h:panelGroup>
                             <p:spacer height="3px"/>
                             <h:panelGroup id="nota" layout="block" class="panel panel-info">
-                    
-                        <div class="panel-heading">
-                            Nota obtenida
+                                <div class="panel-heading">
+                                    Nota obtenida
+                                </div>
+                                <div class="panel-body" style="display:block; text-align:center">
+                                    <h1> <p:outputLabel value="#{managedBeanRealizarSimulacion.simulacionAnterior eq null ? '' :managedBeanRealizarSimulacion.simulacionAnterior.nota}" 
+                                                        style="color: #{managedBeanRealizarSimulacion.simulacionActual.nota ge 4.0 ? 'blue':'red'};"/></h1>
+                                </div>
+                            </h:panelGroup>
                         </div>
-                        <div class="panel-body" style="display:block; text-align:center">
-                            <h1> <p:outputLabel value="#{managedBeanRealizarSimulacion.simulacionAnterior eq null ? '' :managedBeanRealizarSimulacion.simulacionAnterior.nota}" 
-                                 style="color: #{managedBeanRealizarSimulacion.simulacionActual.nota ge 4.0 ? 'blue':'red'};"/></h1>
-                        </div>
-                                </h:panelGroup>
-                        </div>
-                  </div>
-                    </h:form>
-                
-            
+                    </div>
+                </h:form>
             </div>
-                
-</ui:define>
-        
-        
+
+        </ui:define>
+
     </ui:composition>
-   
-    
+
 </html>
 
 

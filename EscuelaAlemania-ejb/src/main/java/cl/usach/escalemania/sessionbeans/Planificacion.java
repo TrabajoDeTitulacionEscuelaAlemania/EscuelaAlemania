@@ -38,7 +38,7 @@ public class Planificacion implements PlanificacionLocal {
     @EJB
     private ConfiguracionMailFacadeLocal configuracionMailFacade;
 
-    //@Schedule(second = "*/50",minute = "*",hour = "*",dayOfMonth = "*")
+    //@Schedule(second = "30",minute = "40",hour = "22",dayOfMonth = "*")
     @Schedule(second = "1", minute = "1", hour = "9", dayOfMonth = "*")
     @Override
     public void setearEstadoDOcumentos() {
@@ -60,7 +60,7 @@ public class Planificacion implements PlanificacionLocal {
         }
     }
 
-    //@Schedule(second = "40",minute = "*/1",hour = "*",dayOfMonth = "*")
+    //@Schedule(second = "30",minute = "37",hour = "22",dayOfMonth = "*")
     @Schedule(second = "1", minute = "15", hour = "9", dayOfMonth = "*")
     @Override
     public void realizarSimulacion() {
@@ -132,6 +132,7 @@ public class Planificacion implements PlanificacionLocal {
         return "Ya se ha envaido una notificación";
     }
 
+    //@Schedule(second = "30",minute = "",hour = "22",dayOfMonth = "*")
     @Schedule(second = "1", minute = "30", hour = "9", dayOfMonth = "*")
     @Override
     public void notificarEstadoDocumenos() {

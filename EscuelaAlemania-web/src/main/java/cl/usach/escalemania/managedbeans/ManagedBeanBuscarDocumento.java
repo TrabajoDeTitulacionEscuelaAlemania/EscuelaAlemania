@@ -69,7 +69,7 @@ public class ManagedBeanBuscarDocumento {
         usuario=(String)sesisonMap.get("usuario");
         rol=(String)sesisonMap.get("rol");
         if(usuario==null)
-            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/home.xhtml?faces-redirect=true");
+            fc.getApplication().getNavigationHandler().handleNavigation(fc, null, "/login.xhtml?faces-redirect=true");
         else{
             if (!FacesContext.getCurrentInstance().isPostback()){
                 documentos=documentoFacade.findAll();

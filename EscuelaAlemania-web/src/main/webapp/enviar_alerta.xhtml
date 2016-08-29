@@ -5,26 +5,25 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
     <ui:composition template="plantilla.xhtml">
-        
-    
+
         <ui:define name="init">
-            
+
             <f:metadata>
                 <f:event type="preRenderView" listener="#{managedBeanEnviarAlerta.init}" />
             </f:metadata>
-            
+
         </ui:define>
-        
-         <ui:define name="alerta">
+
+        <ui:define name="alerta">
 
             <h:form id="alert">
                 <li class="dropdown">
-
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanEnviarAlerta.alertasTotal}" id="alertas1"/></span>  <i class="fa fa-bell fa-3x"></i>
+                        <span class="top-label label label-danger"><p:outputLabel value="#{managedBeanEnviarAlerta.alertasTotal}" id="alertas1"/></span>
+                        <i class="fa fa-bell fa-3x"></i>
                     </a>
-                    <!-- dropdown @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])s-->
                     <ul class="dropdown-menu dropdown-alerts">
                         <li>
                             <a href="alertas.xhtml">
@@ -43,41 +42,30 @@
                                 </div>
                             </a>
                         </li>
-
-
                     </ul>
-                    <!-- end dropdown-alerts -->
-
                 </li>
             </h:form>
 
         </ui:define>
-        
+
         <ui:define name="alertar_usuario">
             <li class="selected">
                 <a href="enviar_alerta.xhtml"><i class="fa fa-exclamation fa-fw"></i>Alertar usuario</a>
             </li>
         </ui:define>
-        
-        <ui:define name="contenido">
-            
-            <div id="page-wrapper">
 
+        <ui:define name="contenido">
+
+            <div id="page-wrapper">
                 <div class="row">
-                    <!-- Page Header -->
                     <div class="col-lg-12">
                         <p:outputLabel class="page-header" value="Enviar alertas" style="font-size: 33px "/>
-                        
                     </div>
-                    <!--End Page Header -->
                 </div>
-
                 <p:outputPanel deferred="true" rendered="#{managedBeanEnviarAlerta.rol != 'Administrador'}">
                     <h3>Información no disponible</h3>
                     <p>Usted no posee los privilegios necesarios para utilizar esta funcionalidad</p>
                 </p:outputPanel>
-                
-                
                 <h:form id="form" rendered="#{managedBeanEnviarAlerta.rol eq 'Administrador'}">
                     <p:growl id="growl" showDetail="true" />
                     <div class="panel panel-primary" style="margin-left: 10%;margin-right: 10%">
@@ -85,39 +73,33 @@
                             <p:outputLabel  value="Complete el formulario" style="font-size: 15px "/>
                         </div>
                         <div class="panel-body">
-                                        <div class="form-group">
-                                            <label>*Mensaje de la alerta</label>
-                                            <br/>
-                                            <p:inputTextarea class="form-control" value="#{managedBeanEnviarAlerta.mensajeAlerta}" 
-                                                             maxlength="500"  />
-                                        </div>
-                                        <div class="form-group">
-                                            <label>*Usuarios destinatarios</label>
-                                            <br/>
-                                            <p:selectCheckboxMenu value="#{managedBeanEnviarAlerta.destinosAlerta}" label="Usuario disponibles en el sistema">
-                                                <f:selectItems value="#{managedBeanEnviarAlerta.usuarios}" var="user"
-                                                               itemLabel="#{user.usuario}" itemValue="#{user.usuario}" />
-                                            </p:selectCheckboxMenu>
-                                        </div>
-                            <br/>
-                            <p:commandButton class="btn btn-primary" value="Enviar alerta" action="#{managedBeanEnviarAlerta.enviarAlerta()}"
-                                             style="display:block; text-align:center; margin: 0 auto" update="growl form @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
-                                        
-                                   
-                                </div>
+                            <div class="form-group">
+                                <label>*Mensaje de la alerta</label>
+                                <br/>
+                                <p:inputTextarea class="form-control" value="#{managedBeanEnviarAlerta.mensajeAlerta}" 
+                                                 maxlength="500"  />
                             </div>
-                       
-                   
-                    </h:form>
-                    
+                            <div class="form-group">
+                                <label>*Usuarios destinatarios</label>
+                                <br/>
+                                <p:selectCheckboxMenu value="#{managedBeanEnviarAlerta.destinosAlerta}" label="Usuario disponibles en el sistema">
+                                    <f:selectItems value="#{managedBeanEnviarAlerta.usuarios}" var="user"
+                                                   itemLabel="#{user.usuario}" itemValue="#{user.usuario}" />
+                                </p:selectCheckboxMenu>
+                            </div>
+                            <br/>
+                            <p:commandButton class="btn btn-success" value="Enviar alerta" action="#{managedBeanEnviarAlerta.enviarAlerta()}"
+                                             style="display:block; text-align:center; margin: 0 auto" 
+                                             update="growl form @([id$=alertas1]) @([id$=alertas2]) @([id$=alertas3])" />
+                        </div>
+                    </div>
+                </h:form>
             </div>
-            
-</ui:define>
-        
+
+        </ui:define>
 
     </ui:composition>
-   
-    
+
 </html>
 
 
