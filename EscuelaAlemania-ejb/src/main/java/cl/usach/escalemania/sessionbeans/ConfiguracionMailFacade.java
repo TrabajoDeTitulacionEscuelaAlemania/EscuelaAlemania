@@ -56,7 +56,7 @@ public class ConfiguracionMailFacade extends AbstractFacade<ConfiguracionMail> i
         final String mailInstitucion=parametroSistemaFacade.obtenerListaParametros("Mail Institucion").get(0).getValor();
         final String passMailInstitucion=parametroSistemaFacade.obtenerListaParametros("Contraseña Institucion").get(0).getValor();
         if(mailInstitucion.isEmpty() || passMailInstitucion.isEmpty())
-            return "Falta informacion respecto al correo electrónico de la institución";
+            return "Falta información respecto al correo electrónico de la institución";
         List<ConfiguracionMail> configuracionMails=configuracionMailFacade.findAll();
         if(configuracionMails==null)
             return "No existen datos para la confirguración del envío de correos electrónicos";

@@ -41,7 +41,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     @Override
     public String crearUsuario(String nuevoUsuario, String correoAsociado) {
         if(nuevoUsuario.isEmpty())
-            return "El nombre de usuario no puede estar vacio";
+            return "El nombre de usuario no puede estar vacío";
         Usuario usuario=obtenerUsuario(nuevoUsuario);
         if(usuario!=null)
             return "El nombre de usuario ya existe";
@@ -69,7 +69,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     @Override
     public String cambiarContraseña(String nombreUsuario, String contraseñaActual, String nuevaContraseña1, String nuevaContraseña2) {
         if(nuevaContraseña1.isEmpty() || nuevaContraseña2.isEmpty())
-            return "La nueva contraseña no puede estar vacia";
+            return "La nueva contraseña no puede estar vacía";
         String contraseña=validacion.passwordHash(contraseñaActual);
         String contraseña1=validacion.passwordHash(nuevaContraseña1);
         String contraseña2=validacion.passwordHash(nuevaContraseña2);

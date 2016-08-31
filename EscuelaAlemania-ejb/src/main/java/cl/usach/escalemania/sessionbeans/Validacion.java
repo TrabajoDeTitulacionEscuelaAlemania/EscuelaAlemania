@@ -43,7 +43,7 @@ public class Validacion implements ValidacionLocal {
             contraseña=passwordHash(contraseña);
             //System.out.println(contraseña);
             if(user.getContraseña().compareTo(contraseña)!=0)
-                return "Contraseña invalida";
+                return "Contraseña inválida";
             return user.getRol().getRol();
         }
             

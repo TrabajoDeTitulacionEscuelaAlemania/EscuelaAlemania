@@ -77,8 +77,9 @@ public class Planificacion implements PlanificacionLocal {
                     for (ParametroSistema ps : mailsSimulacion) {
                         mails.add(ps.getValor());
                     }
-                    String asunto = "Resultados simulacion mensual";
-                    String mensaje = "Se han realizado las simulaciones mensuales a todos los programas existentes. Para obtener los resultados ingrese al sistema y consulte por los resultados de la última simulación."
+                    String asunto = "Resultados simulación mensual";
+                    String mensaje = "Se han realizado las simulaciones mensuales a todos los programas existentes."
+                            + " Para obtener los resultados ingrese al sistema y consulte por los resultados de la última simulación."
                             + "\nSaludos.";
                     System.out.println(configuracionMailFacade.enviarMail(mails, mensaje, asunto));
                 }

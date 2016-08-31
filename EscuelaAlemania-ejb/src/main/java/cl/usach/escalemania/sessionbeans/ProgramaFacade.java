@@ -69,7 +69,7 @@ public class ProgramaFacade extends AbstractFacade<Programa> implements Programa
     @Override
     public String crearPrograma(String nombrePrograma) {
         if(nombrePrograma.isEmpty())
-            return "El nombre del programa no puede ser vacìo";
+            return "El nombre del programa no puede ser vacío";
         Programa programa = obtenerProgramaPorNombre(findAll(), nombrePrograma);
         if (programa != null) {
             return "El programa que intenta crear ya existe";
@@ -80,14 +80,14 @@ public class ProgramaFacade extends AbstractFacade<Programa> implements Programa
             create(nuevoPrograma);
             return "Programa creado existosamente";
         } catch (Exception e) {
-            return "Error inesperado al crear el programa. Por favor, intentelo nuevamente";
+            return "Error inesperado al crear el programa. Por favor, inténtelo nuevamente";
         }
     }
 
     @Override
     public String editarPrograma(String nombrePrograma, String nuevoNombrePrograma) {
         if(nuevoNombrePrograma.isEmpty())
-            return "El nombre del programa no puede ser vacìo";
+            return "El nombre del programa no puede ser vacío";
         Programa programa = obtenerProgramaPorNombre(findAll(), nuevoNombrePrograma);
         if (programa != null) {
             return "El nombre del programa ya está en uso";
@@ -98,7 +98,7 @@ public class ProgramaFacade extends AbstractFacade<Programa> implements Programa
             edit(programaModificado);
             return "Nombre del programa modificado existosamente";
         } catch (Exception e) {
-            return "Error inesperado al modificar el programa. Por favor, intentelo nuevamente";
+            return "Error inesperado al modificar el programa. Por favor, inténtelo nuevamente";
         }
     }
 
@@ -114,7 +114,7 @@ public class ProgramaFacade extends AbstractFacade<Programa> implements Programa
                 return "El programa fue elimando existosamente y sus documentos fueron movidos al programa " + programaDestino;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                return "Error inesperado al eliminar el programa. Por favor, intentelo nuevamente";
+                return "Error inesperado al eliminar el programa. Por favor, inténtelo nuevamente";
             }
         }
         try {
@@ -123,7 +123,7 @@ public class ProgramaFacade extends AbstractFacade<Programa> implements Programa
             remove(programaEliminar);
             return "El programa fue elimando existosamente junto a sus documentos";
         } catch (Exception e) {
-            return "Error inesperado al eliminar el programa. Por favor, intentelo nuevamente";
+            return "Error inesperado al eliminar el programa. Por favor, inténtelo nuevamente";
         }
     }
 

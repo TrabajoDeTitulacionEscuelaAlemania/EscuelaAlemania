@@ -41,7 +41,7 @@ public class AlertaFacade extends AbstractFacade<Alerta> implements AlertaFacade
     @Override
     public String enviarAlerta(String mensajeAlerta, List<String> destinosAlerta) {
         if(mensajeAlerta.isEmpty())
-            return "El mensaje de la alerta no puede estar vacio";
+            return "El mensaje de la alerta no puede estar vacío";
         if(destinosAlerta.isEmpty())
             return "La alerta se debe enviar a al menos un usuario";
         List<Usuario> usuarios=usuarioFacade.findAll();
@@ -61,7 +61,7 @@ public class AlertaFacade extends AbstractFacade<Alerta> implements AlertaFacade
             try {
                 create(alerta);
             } catch (Exception e) {
-                return "Error inseperado al crear las alertas. Por favor, inténtelo mas tarde";
+                return "Error inesperado al crear las alertas. Por favor, inténtelo mas tarde";
             }
             correo=user.getCorreo();
             if(correo!=null)
@@ -95,7 +95,7 @@ public class AlertaFacade extends AbstractFacade<Alerta> implements AlertaFacade
             edit(alerta);
             return "La alerta ha sido marcada como leida";
         } catch (Exception e) {
-            return "Error inesperado al marcar como leida la alerta. Por favro, inténtelo mas tarde";
+            return "Error inesperado al marcar como leida la alerta. Por favor, inténtelo mas tarde";
         }
     }
 

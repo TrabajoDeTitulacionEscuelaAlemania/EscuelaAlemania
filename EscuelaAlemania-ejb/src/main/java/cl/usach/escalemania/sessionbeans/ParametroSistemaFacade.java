@@ -60,25 +60,25 @@ public class ParametroSistemaFacade extends AbstractFacade<ParametroSistema> imp
                 parametroSistema.setValor(valorParametro);
             }else{
                 if(valorParametro.isEmpty())
-                    return "El parametro seleccionado no puede tener un valor vacio";
+                    return "El parámetro seleccionado no puede tener un valor vacío";
                 parametroSistema.setValor(valorParametro);
             }
             try {
                 edit(parametroSistema);
                 return "Cambios realizados exitosamente";
             } catch (Exception e) {
-                return "Ocurrió un error inesperado al modificar el parametro. Por favor, inténtelo mas tarde";
+                return "Ocurrió un error inesperado al modificar el parámetro. Por favor, inténtelo mas tarde";
             }
         }
         ConfiguracionMail configuracionMail=configuracionMailFacade.obtenerConfiguracionMailPorNombre(nombreParametro);
         if(valorParametro.isEmpty())
-            return "El parametro seleccionado no puede tener un valor vacio";
+            return "El parámetro seleccionado no puede tener un valor vacío";
         configuracionMail.setValor(valorParametro);
         try {
             configuracionMailFacade.edit(configuracionMail);
             return "Cambios realizados exitosamente";
         } catch (Exception e) {
-            return "Ocurrió un error inesperado al modificar el parametro. Por favor, inténtelo mas tarde";
+            return "Ocurrió un error inesperado al modificar el parámetro. Por favor, inténtelo mas tarde";
         }
     }
 
