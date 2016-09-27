@@ -87,7 +87,7 @@
                                     <br/>
                                     <br/>
                                     <p:contextMenu for="Usuarios">
-                                        <p:menuitem value="Reestablecer contraseña" update="reestablecerPass" onclick="PF('reestablecerPass').show()" 
+                                        <p:menuitem value="Restablecer contraseña" update="reestablecerPass" onclick="PF('reestablecerPass').show()" 
                                                     action="#{managedBeanConfiguracionSistema.irReestablecer()}"/>
                                         <p:menuitem value="Eliminar usuario" update="eliminarUser" onclick="PF('eliminarUser').show()"
                                                     action="#{managedBeanConfiguracionSistema.irEliminar()}"/>
@@ -107,15 +107,15 @@
                                                              action="#{managedBeanConfiguracionSistema.irCrear()}"/>
                                         </f:facet>
                                     </p:dataTable>
-                                    <p:dialog  header="Reestablecer contraseña" widgetVar="reestablecerPass" modal="true" showEffect="fade" hideEffect="fade" 
+                                    <p:dialog  header="Restablecer contraseña" widgetVar="reestablecerPass" modal="true" showEffect="fade" hideEffect="fade" 
                                                resizable="false">
                                         <p:outputPanel id="reestablecerPass" style="display:block; text-align:center;margin: 0 auto;">
                                             <h:panelGrid  border="0" columns="1" rendered="#{not empty managedBeanConfiguracionSistema.usuarioSeleccionado}"  >
-                                                <p:outputLabel value="Al reestablecer la contraseña de este usuario, esta será 
+                                                <p:outputLabel value="Al restablecer la contraseña de este usuario, esta será 
                                                                el mismo valor que su nombre de usuario. Es decir, la contraseña será 
                                                                #{managedBeanConfiguracionSistema.nombreUsuarioReestablecer}" />
                                                 <br/>
-                                                <p:outputLabel value="¿Desea reestablecer la contraseña de este usuario?" />
+                                                <p:outputLabel value="¿Desea restablecer la contraseña de este usuario?" />
                                             </h:panelGrid>
                                             <br></br>
                                             <p:commandButton  value="Si" action="#{managedBeanConfiguracionSistema.reestablecerContraseña()}" class="btn btn-primary"
@@ -249,7 +249,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>
-                                                                    Mail al que se avisará cuando se realize la simulacion mensual
+                                                                    Mail al que se avisará cuando se realice la simulacion mensual
                                                                 </td>
                                                                 <td>
                                                                     <p:outputLabel id="PMS" value="#{managedBeanConfiguracionSistema.mailSimulacion.valor}"

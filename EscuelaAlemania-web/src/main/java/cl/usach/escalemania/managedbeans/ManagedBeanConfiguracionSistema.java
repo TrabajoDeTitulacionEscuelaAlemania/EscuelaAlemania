@@ -134,7 +134,7 @@ public class ManagedBeanConfiguracionSistema {
     
     public void reestablecerContraseña(){
         String resultado=usuarioFacade.reestablecerContraseña(nombreUsuarioReestablecer);
-        validarActualizar(resultado, "Contraseña reestablecida correctamente", "reestablecerPass");
+        validarActualizar(resultado, "Contraseña restablecida correctamente", "reestablecerPass");
     }
     
     public void irEliminar(){

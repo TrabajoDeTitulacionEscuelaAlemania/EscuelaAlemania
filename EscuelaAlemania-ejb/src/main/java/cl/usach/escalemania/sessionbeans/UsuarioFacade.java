@@ -93,9 +93,9 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         usuario.setContraseña(validacion.passwordHash(usuario.getUsuario()));
         try {
             edit(usuario);
-            return "Contraseña reestablecida correctamente";
+            return "Contraseña restablecida correctamente";
         } catch (Exception e) {
-            return "Error inesperado al reestablecer contraseña del usuario. Por favor, inténtelo mas tarde";
+            return "Error inesperado al restablecer contraseña del usuario. Por favor, inténtelo mas tarde";
         }
     }
 
