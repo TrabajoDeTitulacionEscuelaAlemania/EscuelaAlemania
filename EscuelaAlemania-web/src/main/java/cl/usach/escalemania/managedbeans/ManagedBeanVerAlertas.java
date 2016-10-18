@@ -98,8 +98,6 @@ public class ManagedBeanVerAlertas {
     }
     
      public void irAEditar(){
-        System.out.println("Ir a editar");
-        System.out.println(documentoElegido.getNombre());
         nombreDocumento=documentoElegido.getNombre();
         nombreEstadoDocumento=documentoElegido.getEstadoDocumento().getEstado();
         ubicacion=documentoElegido.getUbicacion();
@@ -108,7 +106,6 @@ public class ManagedBeanVerAlertas {
     }
      
      public void editar(){
-        System.out.println("Editar");
         String msg = documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, nombreEstadoDocumento), 
                 ubicacion,
                 seccionFacade.obtenerPorNombre(nombreSeccion, secciones),

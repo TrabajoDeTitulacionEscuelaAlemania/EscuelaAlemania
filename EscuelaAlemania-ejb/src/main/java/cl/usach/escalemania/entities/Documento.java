@@ -63,10 +63,10 @@ public class Documento implements Serializable {
     @Column(nullable = true, length = 15)
     private String ultimoUsuario;
     
-    private String fechaModificacionFormateada;
+
 
     public String getFechaModificacionFormateada() {
-        fechaModificacionFormateada=new SimpleDateFormat("yyyy-MM-dd").format(fechaModificacion);
+        String fechaModificacionFormateada=new SimpleDateFormat("yyyy-MM-dd").format(fechaModificacion);
         return fechaModificacionFormateada;
     }
 
@@ -76,10 +76,6 @@ public class Documento implements Serializable {
 
     public void setUltimoUsuario(String ultimoUsuario) {
         this.ultimoUsuario = ultimoUsuario;
-    }
-
-    public void setFechaModificacionFormateada(String fechaModificacionFormateada) {
-        this.fechaModificacionFormateada = fechaModificacionFormateada;
     }
 
     public String getObservacion() {

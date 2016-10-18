@@ -47,37 +47,46 @@ public class ConfiguracionMailFacade extends AbstractFacade<ConfiguracionMail> i
 
     @Override
     public ConfiguracionMail obtenerConfiguracionMailPorNombre(String nombreParametro) {
-        Query query=em.createNamedQuery("ConfiguracionMail.findByName").setParameter("tipo", nombreParametro);
-        return (ConfiguracionMail)query.getSingleResult();
+        try {
+            Query query=em.createNamedQuery("ConfiguracionMail.findByName").setParameter("tipo", nombreParametro);
+            return (ConfiguracionMail)query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
     
     @Override
     public String enviarMail(List<String> destinos, String mensaje, String asunto){
-        final String mailInstitucion=parametroSistemaFacade.obtenerListaParametros("Mail Institucion").get(0).getValor();
-        final String passMailInstitucion=parametroSistemaFacade.obtenerListaParametros("Contraseña Institucion").get(0).getValor();
-        if(mailInstitucion.isEmpty() || passMailInstitucion.isEmpty())
-            return "Falta información respecto al correo electrónico de la institución";
-        List<ConfiguracionMail> configuracionMails=configuracionMailFacade.findAll();
-        if(configuracionMails==null)
-            return "No existen datos para la confirguración del envío de correos electrónicos";
-        Properties props = new Properties();
-        for(ConfiguracionMail cm:configuracionMails)
-            props.put(cm.getTipo(), cm.getValor());
-        String destino="";
-        for(int i=0;i<destinos.size();i++)
-            if(i==destinos.size()-1)
-                destino=destino+destinos.get(i);
-            else
-                destino=destino+destinos.get(i)+",";
-            
         try {
+            final String mailInstitucion = parametroSistemaFacade.obtenerListaParametros("Mail Institucion").get(0).getValor();
+            final String passMailInstitucion = parametroSistemaFacade.obtenerListaParametros("Contraseña Institucion").get(0).getValor();
+            if (mailInstitucion.isEmpty() || passMailInstitucion.isEmpty()) {
+                return "Falta información respecto al correo electrónico de la institución";
+            }
+            List<ConfiguracionMail> configuracionMails = configuracionMailFacade.findAll();
+            if (configuracionMails == null) {
+                return "No existen datos para la confirguración del envío de correos electrónicos";
+            }
+            Properties props = new Properties();
+            for (ConfiguracionMail cm : configuracionMails) {
+                props.put(cm.getTipo(), cm.getValor());
+            }
+            String destino = "";
+            for (int i = 0; i < destinos.size(); i++) {
+                if (i == destinos.size() - 1) {
+                    destino = destino + destinos.get(i);
+                } else {
+                    destino = destino + destinos.get(i) + ",";
+                }
+            }
             Authenticator authenticator = new Authenticator() {
-                                        @Override
-                                        protected PasswordAuthentication getPasswordAuthentication(){
-                                                return new PasswordAuthentication(mailInstitucion, passMailInstitucion);}}; 
-            Session session=Session.getInstance(props,authenticator);
-            
-            Message message=new MimeMessage(session);
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(mailInstitucion, passMailInstitucion);
+                }
+            };
+            Session session = Session.getInstance(props, authenticator);
+            Message message = new MimeMessage(session);
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destino));
             message.setSubject(asunto);
             message.setText(mensaje);
@@ -85,6 +94,6 @@ public class ConfiguracionMailFacade extends AbstractFacade<ConfiguracionMail> i
             return "Mail enviado exitosamente";
         } catch (Exception e) {
             return "Error al enviar el correo electrónico";
-        }        
+        }
     }
 }

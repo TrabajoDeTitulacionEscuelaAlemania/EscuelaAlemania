@@ -38,57 +38,71 @@ public class Planificacion implements PlanificacionLocal {
     @EJB
     private ConfiguracionMailFacadeLocal configuracionMailFacade;
 
-    //@Schedule(second = "30",minute = "40",hour = "22",dayOfMonth = "*")
+    //@Schedule(second = "1",minute = "33",hour = "12",dayOfMonth = "*")
     @Schedule(second = "1", minute = "1", hour = "9", dayOfMonth = "*")
     @Override
     public void setearEstadoDOcumentos() {
-        List<ParametroSistema> fechas = parametroSistemaFacade.obtenerListaParametros("Setear Estado");
-        String fechaActual = new SimpleDateFormat("dd-MM").format(new Date());
-        if (fechas != null) {
-            for (ParametroSistema fecha : fechas) {
-                if (fechaActual.compareTo(fecha.getValor()) == 0) {
-                    List<Documento> documentos = documentoFacade.findAll();
-                    List<EstadoDocumento> estadoDocumentos = estadoDocumentoFacade.findAll();
-                    EstadoDocumento estadoDocumento = estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, "Desactualizado");
-                    for (Documento documento : documentos) {
-                        documento.setEstadoDocumento(estadoDocumento);
-                        documentoFacade.edit(documento);
+        try {
+            List<ParametroSistema> fechas = parametroSistemaFacade.obtenerListaParametros("Setear Estado");
+            String fechaActual = new SimpleDateFormat("dd-MM").format(new Date());
+            if (fechas != null) {
+                for (ParametroSistema fecha : fechas) {
+                    if (fechaActual.compareTo(fecha.getValor()) == 0) {
+                        System.out.println("Seteo");
+                        List<Documento> documentos = documentoFacade.findAll();
+                        List<EstadoDocumento> estadoDocumentos = estadoDocumentoFacade.findAll();
+                        EstadoDocumento estadoDocumento = estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, "Desactualizado");
+                        for (Documento documento : documentos) {
+                            documento.setEstadoDocumento(estadoDocumento);
+                            documentoFacade.edit(documento);
+                        }
+                        break;
                     }
-                    break;
+                    System.out.println("No Seteo");
                 }
             }
+        } catch (Exception e) {
+            System.out.println("Error al setera estados programado: "+e.getMessage());
         }
     }
 
-    //@Schedule(second = "30",minute = "37",hour = "22",dayOfMonth = "*")
+    //@Schedule(second = "10",minute = "33",hour = "12",dayOfMonth = "*")
     @Schedule(second = "1", minute = "15", hour = "9", dayOfMonth = "*")
     @Override
     public void realizarSimulacion() {
-        List<ParametroSistema> fechas = parametroSistemaFacade.obtenerListaParametros("Simulacion Mensual");
-        String fechaActual = new SimpleDateFormat("dd").format(new Date());
-        if (fechas != null) {
-            if (fechaActual.compareTo(fechas.get(0).getValor()) == 0) {
-                List<Programa> programas = programaFacade.findAll();
-                for(Programa prog:programas)
-                    simulacionFacade.crearSimulacion(prog.getPrograma(), programas);
-                List<ParametroSistema> mailsSimulacion = parametroSistemaFacade.obtenerListaParametros("Mail Simulacion");
-                if (mailsSimulacion != null) {
-                    List<String> mails = new ArrayList<>();
-                    for (ParametroSistema ps : mailsSimulacion) {
-                        mails.add(ps.getValor());
+        try {
+            List<ParametroSistema> fechas = parametroSistemaFacade.obtenerListaParametros("Simulacion Mensual");
+            String fechaActual = new SimpleDateFormat("dd").format(new Date());
+            if (fechas != null) {
+                if (fechaActual.compareTo(fechas.get(0).getValor()) == 0) {
+                    System.out.println("evaluo");
+                    List<Programa> programas = programaFacade.findAll();
+                    for (Programa prog : programas) {
+                        simulacionFacade.crearSimulacion(prog.getPrograma(), programas);
                     }
-                    String asunto = "Resultados simulación mensual";
-                    String mensaje = "Se han realizado las simulaciones mensuales a todos los programas existentes."
-                            + " Para obtener los resultados ingrese al sistema y consulte por los resultados de la última simulación."
-                            + "\nSaludos.";
-                    System.out.println(configuracionMailFacade.enviarMail(mails, mensaje, asunto));
+                    List<ParametroSistema> mailsSimulacion = parametroSistemaFacade.obtenerListaParametros("Mail Simulacion");
+                    if (mailsSimulacion != null) {
+                        List<String> mails = new ArrayList<>();
+                        for (ParametroSistema ps : mailsSimulacion) {
+                            mails.add(ps.getValor());
+                        }
+                        String asunto = "Resultados simulación mensual";
+                        String mensaje = "Se han realizado las simulaciones mensuales a todos los programas existentes."
+                                + " Para obtener los resultados ingrese al sistema y consulte por los resultados de la última simulación."
+                                + "\nSaludos.";
+                        System.out.println(configuracionMailFacade.enviarMail(mails, mensaje, asunto));
+                    }
                 }
+                System.out.println("No evaluo");
             }
+        } catch (Exception e) {
+            System.out.println("Error al realizar la simulación programada: "+e.getMessage());
         }
     }
 
     @Override
     public String revisionEstadoDocumentos() {
+    System.out.println("Inicie el schedule");
         ParametroSistema frecuenciaRevision = parametroSistemaFacade.obtenerParametroPorNombre("Frecuencia revision documentos");
         ParametroSistema mailNotificacion = parametroSistemaFacade.obtenerParametroPorNombre("Mail notificacion");
         List<String> mails = new ArrayList<>();
@@ -97,6 +111,7 @@ public class Planificacion implements PlanificacionLocal {
         String asunto = "Notificación sobre estado de documentos";
         String contenido = "El sistema posee actualmente sobre el 30% de sus documentos con estado incompleto, "
                 + "desactualizado o sin información. Exactamente, esta cifra bordea el ";
+    System.out.println(frecuenciaRevision+"-------------"+mailNotificacion);
         switch (Integer.parseInt(frecuenciaRevision.getValor())) {
             case 1:
                 resultadoRevision = porcentajeDocumentosAlerta();
@@ -133,11 +148,16 @@ public class Planificacion implements PlanificacionLocal {
         return "Ya se ha envaido una notificación";
     }
 
-    //@Schedule(second = "30",minute = "",hour = "22",dayOfMonth = "*")
+    //@Schedule(second = "10",minute = "*/3",hour = "*",dayOfMonth = "*")
     @Schedule(second = "1", minute = "30", hour = "9", dayOfMonth = "*")
     @Override
     public void notificarEstadoDocumenos() {
-        revisionEstadoDocumentos();
+        try {
+            revisionEstadoDocumentos();
+        } catch (Exception e) {
+            System.out.println("Error al notificar estados programado: "+e.getMessage());
+        }
+        
     }
 
     public boolean notificacionSemanal() {

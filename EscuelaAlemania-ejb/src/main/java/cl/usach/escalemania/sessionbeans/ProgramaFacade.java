@@ -113,7 +113,7 @@ public class ProgramaFacade extends AbstractFacade<Programa> implements Programa
                 remove(programaEliminar);
                 return "El programa fue elimando existosamente y sus documentos fueron movidos al programa " + programaDestino;
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println("Error al eliminar programa: "+e.getMessage());
                 return "Error inesperado al eliminar el programa. Por favor, inténtelo nuevamente";
             }
         }

@@ -40,7 +40,6 @@ public class ManagedBeanUltimosCambios {
 
    
     public void init(){
-        System.out.println("INIT");
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, Object> sesisonMap = fc.getExternalContext().getSessionMap();
         usuario = (String) sesisonMap.get("usuario");

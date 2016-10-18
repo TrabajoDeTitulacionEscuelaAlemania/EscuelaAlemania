@@ -125,7 +125,6 @@ public class ManagedBeanConfiguracionSistema {
             if(mes.compareTo("04")!=0 && mes.compareTo("06")!=0 && mes.compareTo("09")!=0 && mes.compareTo("11")!=0)
                 dias.add("31");
         }
-        System.out.println("Cargue diassssss");
     }
     
     public void irReestablecer(){

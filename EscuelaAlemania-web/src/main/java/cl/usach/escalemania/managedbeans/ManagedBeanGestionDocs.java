@@ -82,7 +82,6 @@ public class ManagedBeanGestionDocs {
     private int alertasTotal;
 
     public void init(){
-        System.out.println("INIT");
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, Object> sesisonMap = fc.getExternalContext().getSessionMap();
         usuario = (String) sesisonMap.get("usuario");
@@ -102,7 +101,6 @@ public class ManagedBeanGestionDocs {
     }
     
     public void initPrograma(){
-        System.out.println("INIT");
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
         usuario=(String)sesisonMap.get("usuario");
@@ -127,7 +125,6 @@ public class ManagedBeanGestionDocs {
     }
     
     public void initSeccion() {
-        System.out.println("INIT");
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, Object> sesisonMap = fc.getExternalContext().getSessionMap();
         usuario = (String) sesisonMap.get("usuario");
@@ -149,7 +146,6 @@ public class ManagedBeanGestionDocs {
     }
     
     public void initEstado(){
-        System.out.println("INIT");
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
         usuario=(String)sesisonMap.get("usuario");
@@ -173,7 +169,6 @@ public class ManagedBeanGestionDocs {
     }
     
     public void filtrarPorPrograma(){
-        System.out.println(categoriaSeleccionada.size());
         documentosPrograma=new ArrayList<>();
         if(!categoriaSeleccionada.isEmpty()){
             for(String programa: categoriaSeleccionada){
@@ -181,14 +176,12 @@ public class ManagedBeanGestionDocs {
             }
             documentosPrograma=documentoFacade.eliminarDuplicados(documentosPrograma);
             documentos=documentosPrograma;
-            System.out.println(documentosPrograma.size());
         }else
             documentos=null;
          documentosFiltrados=null;
     }
     
     public void filtrarPorEstado() {
-        System.out.println(categoriaSeleccionada.size());
         documentosEstado = new ArrayList<>();
         if (!categoriaSeleccionada.isEmpty()) {
             for (String estado : categoriaSeleccionada) {
@@ -196,14 +189,12 @@ public class ManagedBeanGestionDocs {
             }
             documentosEstado = documentoFacade.eliminarDuplicados(documentosEstado);
             documentos=documentosEstado;
-            System.out.println(documentosEstado.size());
         }else
             documentos=null;
          documentosFiltrados=null;
     }
 
     public void filtrarPorSeccion() {
-        System.out.println(categoriaSeleccionada.size());
         documentosSeccion = new ArrayList<>();
         if (!categoriaSeleccionada.isEmpty()) {
             for (String seccion : categoriaSeleccionada) {
@@ -211,14 +202,12 @@ public class ManagedBeanGestionDocs {
             }
             documentosSeccion = documentoFacade.eliminarDuplicados(documentosSeccion);
             documentos=documentosSeccion;
-            System.out.println(documentosSeccion.size());
         }else
             documentos=null;
          documentosFiltrados=null;
     }
   
     public void editar(){
-        System.out.println("Editar");
         msg=documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, nombreEstadoDocumento), 
                 ubicacion, 
                 seccionFacade.obtenerPorNombre(nombreSeccion, secciones), 
@@ -261,8 +250,6 @@ public class ManagedBeanGestionDocs {
     
     
     public void irAEditar(){
-        System.out.println("Ir a editar");
-        System.out.println(documentoElegido.getNombre());
         nombreDocumento=documentoElegido.getNombre();
         nombreEstadoDocumento=documentoElegido.getEstadoDocumento().getEstado();
         ubicacion=documentoElegido.getUbicacion();

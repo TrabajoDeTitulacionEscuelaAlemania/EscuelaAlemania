@@ -63,7 +63,6 @@ public class ManagedBeanBuscarDocumento {
 
 
     public void cargarDatos(){
-        System.out.println("INIT");
         fc=FacesContext.getCurrentInstance();
         Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
         usuario=(String)sesisonMap.get("usuario");
@@ -85,8 +84,6 @@ public class ManagedBeanBuscarDocumento {
     }
     
     public void irAEditar(){
-        System.out.println("Ir a editar");
-        System.out.println(documentoElegido.getNombre());
         nombreDocumento=documentoElegido.getNombre();
         nombreEstadoDocumento=documentoElegido.getEstadoDocumento().getEstado();
         ubicacion=documentoElegido.getUbicacion();
@@ -96,7 +93,6 @@ public class ManagedBeanBuscarDocumento {
     }
     
     public void editar(){
-        System.out.println("Editar");
         fc=FacesContext.getCurrentInstance();
         msg=documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, nombreEstadoDocumento), 
                 ubicacion, 
@@ -124,7 +120,6 @@ public class ManagedBeanBuscarDocumento {
     }
     
     public void buscar(){
-        System.out.println("Buscar");
         resultadoDocumentos=documentoFacade.buscarDocumento(busqueda, documentos);
     }
 

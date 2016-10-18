@@ -80,7 +80,6 @@ public class ManagedBeanRealizarSimulacion {
     private int alertasTotal;
     
     public void init(){
-        System.out.println("INIT");
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String,Object> sesisonMap=fc.getExternalContext().getSessionMap();
         usuario=(String)sesisonMap.get("usuario");
@@ -207,7 +206,6 @@ public class ManagedBeanRealizarSimulacion {
     }
     
     public void editar(){
-        System.out.println("Editar");
         String msg = documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, nombreEstadoDocumento), 
                 ubicacion,
                 seccionFacade.obtenerPorNombre(nombreSeccion, secciones),
